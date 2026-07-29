@@ -1251,7 +1251,7 @@
 
         <div class="stay-gallery reveal">
           <figure>
-            <img src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-src="img/hotel-lujo-sala.webp" fetchpriority="low" alt="Sala moderna con ventanales y vista panorámica" loading="lazy" decoding="async">
+            <img src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-src="img/hotel-principal-piscina.webp" fetchpriority="low" alt="Piscina exterior y alojamiento de lujo en Guatapé" loading="lazy" decoding="async">
             <figcaption class="stay-visual-label">Experiencia de lujo</figcaption>
           </figure>
           <figure><img src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-src="img/hotel-lujo-habitacion.webp" fetchpriority="low" alt="Habitación moderna con terraza y vista al paisaje" loading="lazy" decoding="async"></figure>
@@ -1597,6 +1597,7 @@
 
     const hotelImages = numberedMedia("img", "hotel", 19);
     const newHotelImages = [
+      "img/hotel-principal-piscina.webp",
       "img/hotel-lujo-sala.webp",
       "img/hotel-lujo-habitacion.webp",
       "img/hotel-lujo-jacuzzi.webp",
@@ -1604,6 +1605,7 @@
       "img/hotel-cabana-atardecer.webp"
     ];
     const newHotelAlts = [
+      "Piscina exterior y alojamiento de lujo en Guatapé",
       "Sala moderna con ventanales y vista panorámica",
       "Habitación moderna con terraza y vista al paisaje",
       "Jacuzzi privado con vista al embalse de Guatapé",
@@ -1683,7 +1685,7 @@
         description: "Ponemos a tu disposición hoteles de diferentes categorías, desde opciones económicas hasta experiencias de lujo. Te ayudamos a consultar una opción según tus fechas, el número de viajeros y el tipo de experiencia que buscas.",
         images: [...newHotelImages, "img/poster-hospedaje.webp", ...hotelImages],
         alts: [...newHotelAlts, "Publicidad de hoteles y cabañas en Guatapé", ...hotelImages.map((_, index) => `Fotografía real del hospedaje ${index + 1}`)],
-        features: ["24 fotografías reales organizadas en una sola galería", "Opciones económicas y experiencias de lujo", "Disponibilidad y características confirmadas por WhatsApp"]
+        features: ["25 fotografías reales organizadas en una sola galería", "Opciones económicas y experiencias de lujo", "Disponibilidad y características confirmadas por WhatsApp"]
       },
       wakeboard: {
         category: "Experiencia náutica",
