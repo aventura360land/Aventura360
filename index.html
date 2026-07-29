@@ -293,6 +293,7 @@
     }
     .nautical-section .section-head,.nautical-section .nautical-grid,.nautical-section .nautical-safety{position:relative;z-index:1}
     .nautical-section .section-copy>p{color:rgba(255,255,255,.7)}
+    .nautical-scroll-cue{display:none}
     .nautical-grid{display:grid;grid-template-columns:repeat(12,1fr);gap:1.15rem}
     .nautical-card{
       grid-column:span 4;min-height:440px;border-radius:26px;overflow:hidden;position:relative;
@@ -632,6 +633,7 @@
     @keyframes spin{to{transform:rotate(360deg)}}
     @keyframes marquee{to{transform:translateX(-50%)}}
     @keyframes pulse{0%{transform:scale(1);opacity:.7}70%{transform:scale(1.5);opacity:0}100%{opacity:0}}
+    @keyframes nauticalCue{0%,100%{transform:translateX(0)}50%{transform:translateX(5px)}}
     @keyframes routeFlow{to{stroke-dashoffset:-28}}
     @keyframes mapWaterFlow{to{stroke-dashoffset:-76}}
     @keyframes mapCloudFloat{to{translate:28px 0}}
@@ -739,6 +741,14 @@
       .nautical-grid{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;margin-inline:-16px;padding:0 16px 18px;gap:.85rem;scrollbar-width:none}
       .nautical-grid::-webkit-scrollbar{display:none}
       .nautical-card,.nautical-card:first-child,.nautical-card:nth-child(2){min-width:84vw;min-height:480px;scroll-snap-align:center}
+      .nautical-card.reveal{opacity:1;transform:none}
+      .nautical-scroll-cue{
+        display:flex;align-items:center;gap:.45rem;width:max-content;margin:-1.7rem 0 1rem auto;
+        padding:.55rem .75rem;border:1px solid rgba(255,255,255,.16);border-radius:999px;
+        background:rgba(255,255,255,.07);color:rgba(255,255,255,.82);
+        font-size:.7rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;
+      }
+      .nautical-scroll-cue svg{width:18px;animation:nauticalCue 1.3s ease-in-out infinite}
       .journey-card{margin-left:30px}
       .experience-story{margin-top:2.8rem}
       .experience-story+.experience-story{margin-top:4rem}
@@ -960,8 +970,8 @@
             </div>
           </article>
 
-          <article class="service-card poster-card reveal" data-category="agua">
-            <img src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-src="img/poster-lancha.webp" fetchpriority="low" alt="Publicidad de los paseos en lancha" loading="lazy" decoding="async">
+          <article class="service-card poster-card poster-compact reveal" data-category="agua">
+            <img src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-src="img/poster-lancha-lujo.webp" fetchpriority="low" alt="Publicidad de los paseos en lancha de lujo" loading="lazy" decoding="async">
             <span class="service-number">05</span><span class="service-category">Agua</span>
             <div class="service-content">
               <h3>Paseos en lancha</h3>
@@ -1014,7 +1024,12 @@
           </div>
         </div>
 
-        <div class="nautical-grid">
+        <div class="nautical-scroll-cue" role="note">
+          <span>Desliza para ver más</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </div>
+
+        <div class="nautical-grid" aria-label="Opciones náuticas; desliza horizontalmente para conocerlas">
           <article class="nautical-card reveal">
             <img src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-src="img/jetski-04.webp" fetchpriority="low" alt="Visitante recorriendo el embalse en Jet Ski" loading="lazy" decoding="async">
             <span class="nautical-number">01</span><span class="nautical-real">Fotos reales</span>
@@ -1573,7 +1588,7 @@
           entries.forEach(entry => {
             if (entry.isIntersecting) loadDeferredImage(entry.target);
           });
-        }, { rootMargin: "420px 0px", threshold: 0.01 });
+        }, { rootMargin: "420px", threshold: 0.01 });
       }
       images.forEach(image => deferredMediaObserver.observe(image));
     }
@@ -1706,8 +1721,8 @@
         category: "Experiencia náutica",
         title: "Paseos en lancha",
         description: "Conoce en un solo lugar las lanchas para grupos de hasta siete o cinco personas y los planchones disponibles para recorrer el embalse.",
-        images: ["img/poster-lancha.webp", ...lancha7Images, ...lancha5Images, ...planchonImages],
-        alts: ["Publicidad de los paseos en lancha", ...lancha7Images.map((_, index) => `Fotografía real de la lancha para hasta siete personas ${index + 1}`), ...lancha5Images.map((_, index) => `Fotografía real de la lancha para hasta cinco personas ${index + 1}`), ...planchonImages.map((_, index) => `Fotografía real del planchón ${index + 1}`)],
+        images: ["img/poster-lancha-lujo.webp", ...lancha7Images, ...lancha5Images, ...planchonImages],
+        alts: ["Publicidad de los paseos en lancha de lujo", ...lancha7Images.map((_, index) => `Fotografía real de la lancha para hasta siete personas ${index + 1}`), ...lancha5Images.map((_, index) => `Fotografía real de la lancha para hasta cinco personas ${index + 1}`), ...planchonImages.map((_, index) => `Fotografía real del planchón ${index + 1}`)],
         features: ["Lancha hasta 7 personas, lancha hasta 5 personas y planchones", "8 fotografías reales y video de la embarcación", "Recorrido, capacidad y disponibilidad confirmados por WhatsApp"],
         videos: [
           { src: "video/lancha-5-video.mp4", poster: "img/lancha5-03.webp", label: "Lancha para hasta 5 personas" }
@@ -1717,16 +1732,16 @@
         category: "Experiencia náutica",
         title: "Lancha para hasta 7 personas",
         description: "Una embarcación de mayor capacidad para compartir el recorrido por el embalse. Consulta disponibilidad y condiciones para tu grupo.",
-        images: ["img/poster-lancha.webp", ...lancha7Images],
-        alts: ["Publicidad de los paseos en lancha", ...lancha7Images.map((_, index) => `Fotografía real de la lancha para hasta siete personas ${index + 1}`)],
+        images: ["img/poster-lancha-lujo.webp", ...lancha7Images],
+        alts: ["Publicidad de los paseos en lancha de lujo", ...lancha7Images.map((_, index) => `Fotografía real de la lancha para hasta siete personas ${index + 1}`)],
         features: ["Capacidad máxima informada: 7 personas", "2 fotografías reales de sus espacios", "Recorrido y condiciones por confirmar"]
       },
       lancha5: {
         category: "Experiencia náutica",
         title: "Lancha para hasta 5 personas",
         description: "Una alternativa compacta para grupos pequeños, con fotografías reales y un video que permite conocer mejor la embarcación.",
-        images: ["img/poster-lancha.webp", ...lancha5Images],
-        alts: ["Publicidad de los paseos en lancha", ...lancha5Images.map((_, index) => `Fotografía real de la lancha para hasta cinco personas ${index + 1}`)],
+        images: ["img/poster-lancha-lujo.webp", ...lancha5Images],
+        alts: ["Publicidad de los paseos en lancha de lujo", ...lancha5Images.map((_, index) => `Fotografía real de la lancha para hasta cinco personas ${index + 1}`)],
         features: ["Capacidad máxima informada: 5 personas", "3 fotografías reales y video de la embarcación", "Recorrido y condiciones por confirmar"]
       },
       planchon: {
