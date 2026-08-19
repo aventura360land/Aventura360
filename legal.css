@@ -67,7 +67,6 @@ h1,h2,h3{font-family:var(--display);letter-spacing:-.03em;line-height:1.08}
 .callout{background:var(--paper);border:1px solid var(--line);border-left:4px solid var(--aqua);border-radius:0 18px 18px 0;padding:1.15rem 1.35rem;margin-top:1.1rem}
 .callout p{font-size:.94rem;color:var(--muted)}
 
-.pendiente{background:#fff2c9;border-bottom:2px solid var(--orange);padding:0 .3rem;border-radius:4px;font-weight:600;color:#6b4a00}
 
 .legal-contact{background:var(--deep);color:#fff;border-radius:26px;padding:clamp(1.8rem,4vw,2.6rem);margin-top:1rem}
 .legal-contact h2{border:0;color:#fff;font-size:clamp(1.4rem,3vw,2rem);margin-bottom:.7rem;padding:0}
@@ -83,7 +82,8 @@ h1,h2,h3{font-family:var(--display);letter-spacing:-.03em;line-height:1.08}
 
 @media (max-width:600px){
   .legal-header .wrap{height:66px}
-  .brand-name small{display:none}
+  .brand-name{font-size:.88rem}
+  .brand-name small{font-size:.42rem;letter-spacing:.14em}
   .toc{border-radius:18px}
 }
 @media (prefers-reduced-motion:reduce){

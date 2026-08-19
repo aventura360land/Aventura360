@@ -1,0 +1,14 @@
+XEBAX ADVENTURE CONNECTION - Actualizacion
+==========================================
+Se suben estos 4 archivos a la raiz del sitio, sobrescribiendo los actuales.
+No hay imagenes nuevas: las que ya subiste siguen sirviendo.
+
+index.html
+  - El encabezado muestra el nombre completo tambien en celular
+    (antes el CSS ocultaba la linea "ADVENTURE CONNECTION" bajo 620px)
+  - La foto del Cristo entra a la galeria del visor de "Vuelo en helicoptero"
+
+privacidad.html / terminos.html / legal.css
+  - Se quitaron los campos que no tenemos: razon social, NIT, direccion y correo
+  - Todo el contacto legal queda por WhatsApp 300 618 2215
+  - Ya no queda ningun marcador amarillo pendiente por completar
