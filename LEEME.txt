@@ -3,17 +3,18 @@ XEBAX ADVENTURE CONNECTION - Actualizacion
 Se suben estos 4 archivos a la raiz del sitio, sobrescribiendo los actuales.
 No hay imagenes nuevas.
 
-CAMBIOS
-1. WhatsApp nuevo: 321 805 8102
-   - 17 enlaces wa.me y 5 textos visibles actualizados en las tres paginas
-   - Incluye el boton flotante, la barra superior, el pie y el enlace que
-     arma el visor de experiencias por JavaScript
-   - No queda ninguna referencia al 300 618 2215
+WHATSAPP: LOS DOS NUMEROS
+  300 618 2215 -> linea principal. Va en todos los botones de accion:
+     barra del 50%, boton del menu, hero, cada experiencia, hospedaje,
+     boton flotante y el enlace que arma el visor por JavaScript.
+  321 805 8102 -> segunda linea. Aparece junto a la principal en:
+     la tarjeta de cierre (segundo boton) y la lista de contacto del pie.
+  Ambos figuran tambien en privacidad.html y terminos.html.
 
-2. index.html
-   - El encabezado muestra el nombre completo tambien en celular
-   - La foto del Cristo entra a la galeria del visor de "Vuelo en helicoptero"
+OTROS CAMBIOS
+  - El encabezado muestra el nombre completo tambien en celular
+  - La foto del Cristo entra a la galeria del visor de "Vuelo en helicoptero"
+  - Paginas legales sin razon social, NIT, direccion ni correo
 
-3. privacidad.html / terminos.html / legal.css
-   - Sin razon social, NIT, direccion ni correo
-   - Todo el contacto legal queda por WhatsApp
+SI QUIERES INVERTIR LAS LINEAS
+  Basta con intercambiar los dos numeros en el archivo; avisame y lo hago yo.
