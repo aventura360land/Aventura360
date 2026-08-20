@@ -918,6 +918,24 @@
       .stay-copy{padding-top:.25rem}
     }
 
+    /* En escritorio ambas columnas ocupan la misma altura. La galería deja
+       de terminar a media sección y el título conserva una lectura más fluida. */
+    @media (min-width:1061px){
+      .stay-grid{
+        grid-template-columns:minmax(420px,.92fr) minmax(0,1.08fr);
+        align-items:stretch;
+      }
+      .stay-copy{
+        display:flex;flex-direction:column;justify-content:center;
+        padding-block:.5rem;
+      }
+      .stay-copy h2{font-size:clamp(3.4rem,4.7vw,4.75rem)}
+      .stay-gallery{
+        min-height:620px;align-self:stretch;
+        grid-template-rows:repeat(2,minmax(0,1fr));
+      }
+    }
+
     /* Respiración general algo más ajustada. */
     @media (min-width:621px){
       .section{padding:clamp(4rem,6.6vw,6.4rem) 0}
@@ -1436,9 +1454,9 @@
           <div class="story-media">
             <span class="story-badge">Experiencia de aire</span>
             <figure><img width="1100" height="825" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-src="img/helicoptero-piedra.webp" data-srcset="img/helicoptero-piedra-sm.webp 820w, img/helicoptero-piedra.webp 1100w" sizes="(max-width:900px) 46vw, 24vw" fetchpriority="low" alt="Helicóptero volando sobre la Piedra y el embalse" loading="lazy" decoding="async"></figure>
-            <figure class="portrait"><img width="618" height="1100" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-src="img/helicoptero-cabina.webp" fetchpriority="low" alt="Momento dentro del helicóptero" loading="lazy" decoding="async"></figure>
-            <figure><img width="880" height="1100" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-src="img/helicoptero-vista.webp" data-srcset="img/helicoptero-vista-sm.webp 820w, img/helicoptero-vista.webp 880w" sizes="(max-width:900px) 46vw, 24vw" fetchpriority="low" alt="Vista del embalse desde la cabina" loading="lazy" decoding="async"></figure>
-            <figure class="poster"><img width="1063" height="1100" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-src="img/helicoptero-poster.webp" data-srcset="img/helicoptero-poster-sm.webp 820w, img/helicoptero-poster.webp 1063w" sizes="(max-width:900px) 46vw, 24vw" fetchpriority="low" alt="Pieza visual sobre el vuelo sobre El Peñol" loading="lazy" decoding="async"></figure>
+            <figure class="portrait"><img width="1100" height="1100" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-src="img/helicoptero-cliente-01.webp" fetchpriority="low" alt="Cliente disfrutando el vuelo panorámico sobre el embalse" loading="lazy" decoding="async"></figure>
+            <figure class="portrait"><img width="1100" height="1100" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-src="img/helicoptero-cliente-02.webp" fetchpriority="low" alt="Pasajera fotografiando Guatapé desde el helicóptero" loading="lazy" decoding="async"></figure>
+            <figure class="portrait"><img width="1100" height="1100" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-src="img/helicoptero-cliente-03.webp" fetchpriority="low" alt="Cliente preparada para iniciar la experiencia en helicóptero" loading="lazy" decoding="async"></figure>
           </div>
           <div class="story-copy">
             <span class="kicker light">La escala cambia desde arriba</span>
