@@ -1,20 +1,28 @@
-XEBAX ADVENTURE CONNECTION - Actualizacion
-==========================================
-Se suben estos 4 archivos a la raiz del sitio, sobrescribiendo los actuales.
-No hay imagenes nuevas.
+XEBAX ADVENTURE CONNECTION - Seccion JetCar
+===========================================
+Se copia sobre la carpeta del sitio respetando la estructura y se sobrescribe.
 
-WHATSAPP: LOS DOS NUMEROS
-  300 618 2215 -> linea principal. Va en todos los botones de accion:
-     barra del 50%, boton del menu, hero, cada experiencia, hospedaje,
-     boton flotante y el enlace que arma el visor por JavaScript.
-  321 805 8102 -> segunda linea. Aparece junto a la principal en:
-     la tarjeta de cierre (segundo boton) y la lista de contacto del pie.
-  Ambos figuran tambien en privacidad.html y terminos.html.
+QUE TRAE
+  index.html            seccion JetCar nueva + tarjeta 08 en Experiencias +
+                        entrada "JetCar" en el menu + galeria + cinta de texto
+  privacidad.html
+  terminos.html         los dos numeros de WhatsApp
+  legal.css
+  img/  (24 archivos)   afiche JetCar, 7 fotos y 2 caratulas de video
+                        .webp version completa | -sm movil | -th miniatura
+  video/ (2 archivos)   jetcar-recorrido.mp4 (39s) y jetcar-velocidad.mp4 (19s)
+                        recomprimidos, cargan solo al darle play
 
-OTROS CAMBIOS
-  - El encabezado muestra el nombre completo tambien en celular
-  - La foto del Cristo entra a la galeria del visor de "Vuelo en helicoptero"
-  - Paginas legales sin razon social, NIT, direccion ni correo
+DONDE QUEDA CADA FOTO
+  poster-jetcar             afiche: mosaico de la seccion, tarjeta 08, visor
+  jetcar-duo-embalse        Ferrari y Lamborghini juntos: tarjeta ancha + galeria
+  jetcar-rolls-royce        Rolls negro con interior naranja en marcha: mosaico
+  jetcar-piedra             frente a La Piedra: mosaico
+  jetcar-lamborghini-verde  Lambo verde de atras: bloque narrativo
+  jetcar-rolls-negro        Rolls negro detenido: bloque narrativo
+  jetcar-rolls-blanco       Rolls blanco al atardecer: bloque narrativo
+  jetcar-ferrari-roja       Ferrari roja en marcha: bloque narrativo
+  Las 8 estan en el visor que abre "Ver fotografias".
 
-SI QUIERES INVERTIR LAS LINEAS
-  Basta con intercambiar los dos numeros en el archivo; avisame y lo hago yo.
+DESPUES DE SUBIR
+  Ctrl+F5 para limpiar cache.

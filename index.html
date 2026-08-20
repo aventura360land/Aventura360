@@ -57,13 +57,14 @@
     main>.services-section{order:4}
     main>.story-showcase{order:5}
     main>.nautical-section{order:6}
-    main>.stay-section{order:7}
-    main>.journey{order:8}
-    main>.reel{order:9}
-    main>.destinations{order:10}
-    main>.about{order:11}
-    main>.gallery-section{order:12}
-    main>.closing{order:13}
+    main>.jetcar-section{order:7}
+    main>.stay-section{order:8}
+    main>.journey{order:9}
+    main>.reel{order:10}
+    main>.destinations{order:11}
+    main>.about{order:12}
+    main>.gallery-section{order:13}
+    main>.closing{order:14}
     a{color:inherit;text-decoration:none}
     button{font:inherit}
     img{display:block;width:100%;height:auto}
@@ -815,6 +816,50 @@
       .reveal{opacity:1;transform:none}
     }
 
+    /* ===== JetCar ===== */
+    .jetcar-section{background:var(--deep);color:#fff;overflow:hidden}
+    .jetcar-section::before{
+      content:"";position:absolute;right:-160px;top:60px;width:460px;height:460px;border-radius:50%;
+      background:radial-gradient(circle,rgba(180,214,74,.16),transparent 68%);pointer-events:none;
+    }
+    .jetcar-section .wrap{position:relative;z-index:1}
+    .jetcar-section .section-copy h2,.jetcar-section .story-copy h3{color:#fff}
+    .jetcar-section .section-copy>p,.jetcar-section .story-copy>p{color:rgba(255,255,255,.76)}
+    .jetcar-section .kicker{color:var(--lime)}
+    .jetcar-section .story-tag{border-color:rgba(255,255,255,.26);background:rgba(255,255,255,.08);color:#fff}
+    .jetcar-section .story-video figcaption{background:rgba(6,45,43,.82)}
+
+    .jetcar-hero{
+      display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);
+      gap:clamp(1.5rem,3vw,2.6rem);align-items:stretch;margin-bottom:clamp(1.5rem,3vw,2.4rem);
+    }
+    .jetcar-poster{position:relative;border-radius:32px;overflow:hidden;min-height:320px;background:#02121a}
+    .jetcar-poster img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+    .jetcar-fleet{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+    .jetcar-card{
+      position:relative;border-radius:26px;overflow:hidden;min-height:190px;
+      border:1px solid rgba(255,255,255,.14);background:#04201f;
+    }
+    .jetcar-card img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .7s cubic-bezier(.2,.8,.2,1)}
+    .jetcar-card:hover img{transform:scale(1.05)}
+    .jetcar-card::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(2,18,26,0) 45%,rgba(2,18,26,.88))}
+    .jetcar-card figcaption{
+      position:absolute;left:0;right:0;bottom:0;z-index:2;display:flex;flex-direction:column;
+      gap:.2rem;padding:1rem 1.15rem;
+    }
+    .jetcar-card b{font-family:var(--display);font-size:.95rem;font-weight:800;letter-spacing:-.02em;line-height:1.1}
+    .jetcar-card span{font-size:.7rem;line-height:1.3;color:rgba(255,255,255,.74)}
+    .jetcar-card.wide{grid-column:span 2;min-height:210px}
+
+    @media (max-width:900px){
+      .jetcar-hero{grid-template-columns:1fr}
+      .jetcar-poster{min-height:300px}
+    }
+    @media (max-width:620px){
+      .jetcar-fleet{grid-template-columns:1fr}
+      .jetcar-card.wide{grid-column:auto}
+    }
+
     /* Segundo número de WhatsApp en la tarjeta de cierre */
     .btn-wa-alt{background:rgba(255,255,255,.14);color:#fff;border:1px solid rgba(255,255,255,.32)}
     .btn-wa-alt:hover{background:rgba(255,255,255,.22)}
@@ -964,6 +1009,7 @@
       <nav class="nav-links" id="navLinks" aria-label="Navegación principal">
         <a href="#experiencias" data-section="experiencias">Experiencias</a>
         <a href="#nautico" data-section="nautico">Náutico</a>
+        <a href="#jetcar" data-section="jetcar">JetCar</a>
         <a href="#hospedaje" data-section="hospedaje">Hospedaje</a>
         <a href="#destinos" data-section="destinos">Destinos</a>
         <a href="#nosotros" data-section="nosotros">Nosotros</a>
@@ -1066,8 +1112,8 @@
 
     <div class="marquee" aria-hidden="true">
       <div class="marquee-track">
-        <span>Guatapé <i></i> Helicóptero <i></i> Cuatrimotos <i></i> Paintball <i></i> Jet Ski <i></i> Flyboard <i></i> Lanchas <i></i> Hospedaje <i></i></span>
-        <span>Guatapé <i></i> Helicóptero <i></i> Cuatrimotos <i></i> Paintball <i></i> Jet Ski <i></i> Flyboard <i></i> Lanchas <i></i> Hospedaje <i></i></span>
+        <span>Guatapé <i></i> JetCar <i></i> Helicóptero <i></i> Cuatrimotos <i></i> Paintball <i></i> Jet Ski <i></i> Flyboard <i></i> Lanchas <i></i> Hospedaje <i></i></span>
+        <span>Guatapé <i></i> JetCar <i></i> Helicóptero <i></i> Cuatrimotos <i></i> Paintball <i></i> Jet Ski <i></i> Flyboard <i></i> Lanchas <i></i> Hospedaje <i></i></span>
       </div>
     </div>
 
@@ -1159,9 +1205,19 @@
             </div>
           </article>
 
+          <article class="service-card poster-card poster-banner reveal" data-category="agua">
+            <img width="1280" height="1024" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-src="img/poster-jetcar.webp" data-srcset="img/poster-jetcar-sm.webp 820w, img/poster-jetcar.webp 1280w" sizes="92vw" fetchpriority="low" alt="Publicidad de la experiencia JetCar en Guatapé" loading="lazy" decoding="async">
+            <span class="service-number">08</span><span class="service-category">Agua</span>
+            <div class="service-content">
+              <h3>JetCar Guatapé</h3>
+              <p>Conduce un superdeportivo anfibio sobre el embalse, con La Piedra de fondo.</p>
+              <button class="service-open" type="button" data-service="jetcar">Ver experiencia <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></button>
+            </div>
+          </article>
+
           <article class="service-card poster-card poster-compact service-wide reveal" data-category="agua">
             <img width="1280" height="732" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-src="img/poster-wakeboard.webp" data-srcset="img/poster-wakeboard-sm.webp 820w, img/poster-wakeboard.webp 1280w" sizes="(max-width:900px) 92vw, 46vw" fetchpriority="low" alt="Publicidad de la experiencia de Wakeboard en Guatapé" loading="lazy" decoding="async">
-            <span class="service-number">08</span><span class="service-category">Agua</span>
+            <span class="service-number">09</span><span class="service-category">Agua</span>
             <div class="service-content">
               <h3>Wakeboard en Guatapé</h3>
               <p>Adrenalina sobre el agua con equipo profesional, instructores y el embalse como escenario.</p>
@@ -1171,7 +1227,7 @@
 
           <article class="service-card poster-card poster-compact service-wide reveal" data-category="estadia">
             <img width="1280" height="853" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-src="img/poster-dia-de-sol.webp" data-srcset="img/poster-dia-de-sol-sm.webp 820w, img/poster-dia-de-sol.webp 1280w" sizes="(max-width:900px) 92vw, 46vw" fetchpriority="low" alt="Publicidad del plan Día de Sol en Guatapé" loading="lazy" decoding="async">
-            <span class="service-number">09</span><span class="service-category">Plan de descanso</span>
+            <span class="service-number">10</span><span class="service-category">Plan de descanso</span>
             <div class="service-content">
               <h3>Día de Sol en Guatapé</h3>
               <p>Piscina, zonas verdes, descanso, almuerzo y refrigerio para disfrutar un día completo.</p>
@@ -1392,6 +1448,76 @@
                 <figcaption>La experiencia</figcaption>
                 <video controls playsinline preload="none" poster="img/helicoptero-cabina.webp">
                   <source src="video/helicoptero-experiencia.mp4" type="video/mp4">
+                </video>
+              </figure>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section jetcar-section" id="jetcar" data-nav-section aria-label="Experiencia JetCar en Guatapé">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <div class="section-copy">
+            <span class="kicker">Lo más exclusivo sobre el agua</span>
+            <h2>JetCar Guatapé</h2>
+            <p>Superdeportivos anfibios que recorren el embalse: la silueta de un Lamborghini, un Ferrari o un Rolls-Royce navegando frente a La Piedra.</p>
+          </div>
+        </div>
+
+        <div class="jetcar-hero reveal">
+          <figure class="jetcar-poster">
+            <img width="1280" height="1024" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-src="img/poster-jetcar.webp" data-srcset="img/poster-jetcar-sm.webp 820w, img/poster-jetcar.webp 1280w" sizes="(max-width:900px) 92vw, 52vw" fetchpriority="low" alt="Publicidad de la experiencia JetCar en Guatapé" loading="lazy" decoding="async">
+          </figure>
+          <div class="jetcar-fleet">
+            <figure class="jetcar-card wide">
+              <img width="1100" height="619" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-src="img/jetcar-duo-embalse.webp" data-srcset="img/jetcar-duo-embalse-sm.webp 820w, img/jetcar-duo-embalse.webp 1100w" sizes="(max-width:900px) 92vw, 44vw" fetchpriority="low" alt="Ferrari y Lamborghini anfibios navegando juntos en el embalse" loading="lazy" decoding="async">
+              <figcaption><b>Ferrari y Lamborghini</b><span>Los dos modelos en el mismo recorrido</span></figcaption>
+            </figure>
+            <figure class="jetcar-card">
+              <img width="1100" height="1014" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-src="img/jetcar-rolls-royce.webp" data-srcset="img/jetcar-rolls-royce-sm.webp 820w, img/jetcar-rolls-royce.webp 1100w" sizes="(max-width:900px) 46vw, 22vw" fetchpriority="low" alt="Rolls-Royce anfibio negro con interior naranja sobre el agua" loading="lazy" decoding="async">
+              <figcaption><b>Rolls-Royce</b><span>Cuatro puestos</span></figcaption>
+            </figure>
+            <figure class="jetcar-card">
+              <img width="1100" height="476" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-src="img/jetcar-piedra.webp" data-srcset="img/jetcar-piedra-sm.webp 820w, img/jetcar-piedra.webp 720w" sizes="(max-width:900px) 46vw, 22vw" fetchpriority="low" alt="JetCars navegando con La Piedra del Peñol al fondo" loading="lazy" decoding="async">
+              <figcaption><b>Frente a La Piedra</b><span>El recorrido clásico</span></figcaption>
+            </figure>
+          </div>
+        </div>
+
+        <article class="experience-story reveal">
+          <div class="story-media">
+            <span class="story-badge">Experiencia de agua</span>
+            <figure><img width="1100" height="734" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-src="img/jetcar-lamborghini-verde.webp" data-srcset="img/jetcar-lamborghini-verde-sm.webp 820w, img/jetcar-lamborghini-verde.webp 1100w" sizes="(max-width:900px) 46vw, 24vw" fetchpriority="low" alt="Lamborghini anfibio verde visto desde atrás en el embalse" loading="lazy" decoding="async"></figure>
+            <figure><img width="1100" height="734" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-src="img/jetcar-rolls-negro.webp" data-srcset="img/jetcar-rolls-negro-sm.webp 820w, img/jetcar-rolls-negro.webp 1100w" sizes="(max-width:900px) 46vw, 24vw" fetchpriority="low" alt="Rolls-Royce anfibio negro detenido sobre el agua" loading="lazy" decoding="async"></figure>
+            <figure><img width="1100" height="714" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-src="img/jetcar-rolls-blanco.webp" data-srcset="img/jetcar-rolls-blanco-sm.webp 820w, img/jetcar-rolls-blanco.webp 1100w" sizes="(max-width:900px) 46vw, 24vw" fetchpriority="low" alt="Rolls-Royce anfibio blanco navegando al atardecer" loading="lazy" decoding="async"></figure>
+            <figure><img width="720" height="432" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-src="img/jetcar-ferrari-roja.webp" fetchpriority="low" alt="Ferrari anfibio rojo en movimiento sobre el agua" loading="lazy" decoding="async"></figure>
+          </div>
+          <div class="story-copy">
+            <span class="kicker">Velocidad · Exclusividad · Guatapé</span>
+            <h3>Conduce un superdeportivo sobre el embalse.</h3>
+            <p>El JetCar se maneja sobre el agua como una moto acuática, pero con la carrocería de un superdeportivo. La experiencia se realiza acompañada, con chaleco y las indicaciones del operador antes de salir.</p>
+            <div class="story-tags">
+              <span class="story-tag">100% seguro</span>
+              <span class="story-tag">Adrenalina garantizada</span>
+              <span class="story-tag">Guatapé como nunca</span>
+            </div>
+            <div class="story-actions">
+              <button class="btn btn-primary" type="button" data-service="jetcar">Ver fotografías</button>
+              <a class="btn btn-wa" href="https://wa.me/573006182215?text=Hola%20XEBAX%20Adventure%20Connection%2C%20quiero%20informaci%C3%B3n%20sobre%20la%20experiencia%20JetCar" target="_blank" rel="noopener">Consultar por WhatsApp</a>
+            </div>
+            <div class="story-video-grid">
+              <figure class="story-video">
+                <figcaption>Sobre el agua</figcaption>
+                <video controls playsinline preload="none" poster="img/jetcar-video-recorrido.webp">
+                  <source src="video/jetcar-recorrido.mp4" type="video/mp4">
+                </video>
+              </figure>
+              <figure class="story-video">
+                <figcaption>A bordo</figcaption>
+                <video controls playsinline preload="none" poster="img/jetcar-video-velocidad.webp">
+                  <source src="video/jetcar-velocidad.mp4" type="video/mp4">
                 </video>
               </figure>
             </div>
@@ -1627,6 +1753,8 @@
           <button class="gallery-item wide reveal" type="button" data-gallery="18"><img width="1100" height="495" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-src="img/montecielo-panoramica.webp" data-srcset="img/montecielo-panoramica-sm.webp 820w, img/montecielo-panoramica.webp 1100w" sizes="(max-width:700px) 46vw, 30vw" data-fallback="img/hotel-aliado-06.webp" fetchpriority="low" alt="Complejo de hospedaje Montecielo en Guatapé" loading="lazy" decoding="async"></button>
           <button class="gallery-item tall reveal" type="button" data-gallery="19"><img width="1100" height="692" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-src="img/cristo-proyecto.webp" data-srcset="img/cristo-proyecto-sm.webp 820w, img/cristo-proyecto.webp 1100w" sizes="(max-width:700px) 46vw, 30vw" data-fallback="img/helicoptero-piedra.webp" fetchpriority="low" alt="Proyecto del Cristo más grande del mundo" loading="lazy" decoding="async"></button>
           <button class="gallery-item reveal" type="button" data-gallery="20"><img width="660" height="880" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-src="img/cabana-pareja-01.webp" data-fallback="img/hotel-lujo-habitacion.webp" fetchpriority="low" alt="Cabaña para pareja con vista al paisaje" loading="lazy" decoding="async"></button>
+          <button class="gallery-item wide reveal" type="button" data-gallery="22"><img width="1100" height="619" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-src="img/jetcar-duo-embalse.webp" data-srcset="img/jetcar-duo-embalse-sm.webp 820w, img/jetcar-duo-embalse.webp 1100w" sizes="(max-width:700px) 46vw, 30vw" fetchpriority="low" alt="Ferrari y Lamborghini anfibios en el embalse" loading="lazy" decoding="async"></button>
+          <button class="gallery-item reveal" type="button" data-gallery="23"><img width="1100" height="1014" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-src="img/jetcar-rolls-royce.webp" data-srcset="img/jetcar-rolls-royce-sm.webp 820w, img/jetcar-rolls-royce.webp 1100w" sizes="(max-width:700px) 46vw, 30vw" fetchpriority="low" alt="Rolls-Royce anfibio sobre el agua" loading="lazy" decoding="async"></button>
           <button class="gallery-item reveal" type="button" data-gallery="21"><img width="660" height="880" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-src="img/cabana-pareja-02.webp" data-fallback="img/hotel-lujo-jacuzzi.webp" fetchpriority="low" alt="Cabaña para pareja con jacuzzi privado" loading="lazy" decoding="async"></button>
         </div>
         <div class="gallery-more">
@@ -1669,7 +1797,7 @@
             <span class="brand-mark" aria-hidden="true"></span>
             <span class="brand-name">XEBAX<small>ADVENTURE CONNECTION</small></span>
           </div>
-          <p>Te asesoramos, te conectamos y te acercamos a la aventura que estás buscando: experiencias por tierra, aire y agua, Paintball y hospedaje en Guatapé y El Peñol.</p>
+          <p>Te asesoramos, te conectamos y te acercamos a la aventura que estás buscando: experiencias por tierra, aire y agua, JetCar, Paintball y hospedaje en Guatapé y El Peñol.</p>
         </div>
         <div>
           <h4>Explora</h4>
@@ -1677,6 +1805,7 @@
             <li><a href="#experiencias">Experiencias</a></li>
             <li><a href="#destacadas">Aire y tierra</a></li>
             <li><a href="#nautico">Experiencias náuticas</a></li>
+            <li><a href="#jetcar">JetCar</a></li>
             <li><a href="#hospedaje">Hospedaje</a></li>
             <li><a href="#destinos">Mapa visual</a></li>
             <li><a href="#galeria">Galería</a></li>
@@ -1929,6 +2058,14 @@
         alts: [...newHotelAlts, "Publicidad de hoteles y cabañas en Guatapé", ...hotelImages.map((_, index) => `Fotografía real del hospedaje ${index + 1}`)],
         features: ["Cabañas para pareja, hoteles y complejos como Montecielo", "37 fotografías reales organizadas en una sola galería", "Disponibilidad y características confirmadas por WhatsApp"]
       },
+      jetcar: {
+        category: "Experiencia náutica exclusiva",
+        title: "JetCar Guatapé",
+        description: "Superdeportivos anfibios que recorren el embalse de Guatapé. Se conducen sobre el agua con acompañamiento del operador, chaleco y una explicación previa. Los modelos disponibles y la duración del recorrido se confirman al momento de reservar.",
+        images: ["img/poster-jetcar.webp", "img/jetcar-duo-embalse.webp", "img/jetcar-lamborghini-verde.webp", "img/jetcar-piedra.webp", "img/jetcar-rolls-royce.webp", "img/jetcar-rolls-negro.webp", "img/jetcar-rolls-blanco.webp", "img/jetcar-ferrari-roja.webp"],
+        alts: ["Publicidad de la experiencia JetCar en Guatapé", "Ferrari y Lamborghini anfibios navegando juntos", "Lamborghini anfibio verde visto desde atrás", "JetCars con La Piedra del Peñol al fondo", "Rolls-Royce anfibio negro con interior naranja en marcha", "Rolls-Royce anfibio negro detenido sobre el agua", "Rolls-Royce anfibio blanco al atardecer", "Ferrari anfibio rojo en movimiento"],
+        features: ["Modelos Lamborghini, Ferrari y Rolls-Royce", "Acompañamiento y chaleco durante todo el recorrido", "Disponibilidad y duración confirmadas por WhatsApp"]
+      },
       flyboard: {
         category: "Experiencia náutica",
         title: "Flyboard en Guatapé",
@@ -2052,7 +2189,9 @@
       { src: "img/montecielo-panoramica.webp", alt: "Complejo de hospedaje Montecielo en Guatapé" },
       { src: "img/cristo-proyecto.webp", alt: "Proyecto del Cristo más grande del mundo" },
       { src: "img/cabana-pareja-01.webp", alt: "Cabaña para pareja con vista al paisaje" },
-      { src: "img/cabana-pareja-02.webp", alt: "Cabaña para pareja con jacuzzi privado" }
+      { src: "img/cabana-pareja-02.webp", alt: "Cabaña para pareja con jacuzzi privado" },
+      { src: "img/jetcar-duo-embalse.webp", alt: "Ferrari y Lamborghini anfibios en el embalse" },
+      { src: "img/jetcar-rolls-royce.webp", alt: "Rolls-Royce anfibio sobre el agua" }
     ];
 
     const aviso = $("#aviso");
