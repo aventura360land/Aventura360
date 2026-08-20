@@ -888,18 +888,16 @@
 
     /* ===== Ajuste de espacios en blanco ===== */
 
-    /* Cabeceras de sección: cuando el bloque de texto va solo, el párrafo pasa
-       a la derecha del título en vez de dejar media pantalla vacía. */
+    /* Las cabeceras vuelven a leerse como un solo bloque: título y descripción
+       permanecen juntos, sin saltar a extremos opuestos de la pantalla. */
     @media (min-width:901px){
-      .section-head>.section-copy:only-child{
-        display:grid;grid-template-columns:minmax(0,1.02fr) minmax(0,.98fr);
-        column-gap:clamp(2rem,4vw,3.6rem);align-items:end;width:100%;max-width:none;
-      }
-      .section-head>.section-copy:only-child .kicker{grid-column:1;grid-row:1}
-      .section-head>.section-copy:only-child h2{grid-column:1;grid-row:2;margin-bottom:0}
-      .section-head>.section-copy:only-child>p{
-        grid-column:2;grid-row:2;max-width:52ch;padding-bottom:.75rem;
-      }
+      .section-head>.section-copy:only-child{display:block;width:auto;max-width:760px}
+
+      /* En Experiencias los filtros quedan debajo de la introducción. Así no
+         aparecen flotando a la derecha a la altura de la última línea. */
+      .services-section .section-head{display:block}
+      .services-section .section-copy{max-width:760px}
+      .services-section .filters{justify-content:flex-start;margin-top:1.4rem}
     }
 
     /* Aire y tierra: la columna de fotos se estira hasta igualar el texto,
@@ -942,6 +940,11 @@
       .experience-story{margin-top:3.4rem}
       .experience-story+.experience-story{margin-top:5rem}
       .section-head{margin-bottom:2.4rem}
+
+      /* Evita que se sumen dos rellenos completos entre Experiencias y el
+         bloque de aire/tierra, que generaban una franja vacía excesiva. */
+      .services-section{padding-bottom:clamp(2.5rem,3vw,3.5rem)}
+      .story-showcase{padding-top:clamp(2.5rem,3vw,3.5rem)}
     }
 
     /* ===== Aviso de privacidad ===== */
