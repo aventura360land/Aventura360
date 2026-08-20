@@ -816,6 +816,27 @@
       .reveal{opacity:1;transform:none}
     }
 
+    /* Franja de destino bajo la cabecera de Experiencias */
+    .destino-band{
+      display:grid;grid-template-columns:minmax(0,1.45fr) minmax(0,1fr);
+      gap:1.1rem;margin:0 0 clamp(1.6rem,3vw,2.4rem);
+    }
+    .destino-card{position:relative;border-radius:28px;overflow:hidden;min-height:230px;background:var(--deep)}
+    .destino-card img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .8s cubic-bezier(.2,.8,.2,1)}
+    .destino-card:hover img{transform:scale(1.04)}
+    .destino-card::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(6,45,43,0) 48%,rgba(6,45,43,.88))}
+    .destino-card figcaption{
+      position:absolute;left:0;right:0;bottom:0;z-index:2;display:flex;flex-direction:column;
+      gap:.2rem;padding:1.05rem 1.2rem;color:#fff;
+    }
+    .destino-card.alta img{object-position:50% 16%}
+    .destino-card b{font-family:var(--display);font-size:1.02rem;font-weight:800;letter-spacing:-.02em;line-height:1.1}
+    .destino-card span{font-size:.72rem;line-height:1.3;color:rgba(255,255,255,.76)}
+    @media (max-width:900px){
+      .destino-band{grid-template-columns:1fr}
+      .destino-card{min-height:210px}
+    }
+
     /* ===== JetCar ===== */
     .jetcar-section{background:var(--deep);color:#fff;overflow:hidden}
     .jetcar-section::before{
@@ -1122,7 +1143,7 @@
         <div class="section-head reveal">
           <div class="section-copy">
             <span class="kicker">Todo reunido en un solo lugar</span>
-            <h2>Elige cómo quieres vivir Guatapé</h2>
+            <h2>Elige cómo quieres vivir Guatapé y El Peñol</h2>
             <p>Cada experiencia reúne su publicidad, fotografías reales, opciones disponibles y acceso directo para consultar por WhatsApp.</p>
           </div>
           <div class="filters" role="group" aria-label="Filtrar experiencias">
@@ -1132,6 +1153,17 @@
             <button class="filter" type="button" data-filter="agua" aria-pressed="false">Agua</button>
             <button class="filter" type="button" data-filter="estadia" aria-pressed="false">Hospedaje</button>
           </div>
+        </div>
+
+        <div class="destino-band reveal">
+          <figure class="destino-card">
+            <img width="1200" height="675" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-src="img/destino-parque-principal.webp" data-srcset="img/destino-parque-principal-sm.webp 820w, img/destino-parque-principal.webp 1200w" sizes="(max-width:900px) 92vw, 56vw" fetchpriority="low" alt="Parque principal con su iglesia, palmeras y puestos de artesanías" loading="lazy" decoding="async">
+            <figcaption><b>El parque y su iglesia</b><span>El punto de encuentro del pueblo</span></figcaption>
+          </figure>
+          <figure class="destino-card alta">
+            <img width="1200" height="1200" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-src="img/destino-plazoleta-paz.webp" data-srcset="img/destino-plazoleta-paz-sm.webp 820w, img/destino-plazoleta-paz.webp 1200w" sizes="(max-width:900px) 92vw, 38vw" fetchpriority="low" alt="Escultura alada de la Plazoleta de la Paz sobre su fuente" loading="lazy" decoding="async">
+            <figcaption><b>Plazoleta de la Paz</b><span>Una parada obligada</span></figcaption>
+          </figure>
         </div>
 
         <div class="services-grid" id="servicesGrid">
