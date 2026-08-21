@@ -818,11 +818,13 @@
 
     /* Franja de destino bajo la cabecera de Experiencias */
     .destino-band{
-      display:grid;grid-template-columns:minmax(0,1.45fr) minmax(0,1fr);
+      display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
       gap:1.1rem;margin:0 0 clamp(1.6rem,3vw,2.4rem);
     }
     .destino-card{position:relative;border-radius:28px;overflow:hidden;min-height:230px;background:var(--deep)}
+    .destino-card.piedra-principal{grid-column:1/-1;min-height:clamp(260px,30vw,390px)}
     .destino-card img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .8s cubic-bezier(.2,.8,.2,1)}
+    .destino-card.piedra-principal img{object-position:center 44%}
     .destino-card:hover img{transform:scale(1.04)}
     .destino-card::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(6,45,43,0) 48%,rgba(6,45,43,.88))}
     .destino-card figcaption{
@@ -834,7 +836,7 @@
     .destino-card span{font-size:.72rem;line-height:1.3;color:rgba(255,255,255,.76)}
     @media (max-width:900px){
       .destino-band{grid-template-columns:1fr}
-      .destino-card{min-height:210px}
+      .destino-card,.destino-card.piedra-principal{min-height:210px}
     }
 
     /* ===== JetCar ===== */
@@ -1252,6 +1254,10 @@
         </div>
 
         <div class="destino-band reveal">
+          <figure class="destino-card piedra-principal">
+            <img width="1600" height="900" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-src="img/destino-piedra-principal.webp" data-srcset="img/destino-piedra-principal-sm.webp 820w, img/destino-piedra-principal.webp 1600w" sizes="(max-width:900px) 92vw, 1200px" fetchpriority="low" alt="Vista panorámica de La Piedra del Peñol y su zona turística" loading="lazy" decoding="async">
+            <figcaption><b>La Piedra del Peñol</b><span>El gran símbolo de la región</span></figcaption>
+          </figure>
           <figure class="destino-card">
             <img width="1200" height="675" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-src="img/destino-parque-principal.webp" data-srcset="img/destino-parque-principal-sm.webp 820w, img/destino-parque-principal.webp 1200w" sizes="(max-width:900px) 92vw, 56vw" fetchpriority="low" alt="Réplica del Viejo Peñol junto al parque, palmeras y puestos de artesanías" loading="lazy" decoding="async">
             <figcaption><b>Réplica del Viejo Peñol</b><span>Memoria del antiguo pueblo</span></figcaption>
@@ -1268,7 +1274,7 @@
             <span class="service-number">01</span><span class="service-category">Hospedaje</span>
             <div class="service-content">
               <h3>Hoteles y cabañas</h3>
-              <p>Explora espacios reales para descansar y completar tu experiencia según tus fechas y tipo de viaje.</p>
+              <p>Opciones para cada presupuesto: desde estadías económicas hasta alojamientos de lujo.</p>
               <button class="service-open" type="button" data-service="hospedaje">Ver publicidad y fotografías <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></button>
             </div>
           </article>
