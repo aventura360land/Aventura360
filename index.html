@@ -1009,6 +1009,9 @@
     .service-card.poster-card.poster-banner{grid-column:span 12}
     .services-grid.is-filtered .service-card.poster-banner:not(.is-hidden){grid-column:span 6}
     .service-card.poster-card.poster-banner>img{aspect-ratio:2.4/1;object-fit:cover;object-position:50% 4%}
+    /* El afiche ubica los JetCars en la parte baja: este encuadre los mantiene
+       visibles en lugar de recortar la zona principal de la experiencia. */
+    .service-card.poster-card.jetcar-service-card>img{object-position:50% 38%}
 
     .stay-gallery figure.wide{grid-column:span 2}
 
@@ -1026,12 +1029,106 @@
       .highlights-grid{grid-template-columns:1fr}
       .stay-gallery figure.wide{grid-column:1/-1}
       .service-card.poster-card.poster-banner>img{aspect-ratio:16/10}
+      .service-card.poster-card.jetcar-service-card>img{object-position:50% 50%}
     }
     /* a partir de 620px la grilla pasa a una sola columna: la tarjeta ancha
        debe ocuparla entera, si no genera columnas implícitas */
     @media (max-width:620px){
       .service-card.poster-card.poster-banner{grid-column:1/-1}
       .service-card.poster-card.poster-banner>img{aspect-ratio:2/1}
+    }
+
+    /* Hero con afiche horizontal: respeta su proporción 16:9 para mostrar
+       completa la fotografía y toda la información sin franjas vacías. */
+    .hero.hero-poster{min-height:auto;padding-bottom:clamp(4rem,6vw,5.5rem)}
+    .hero.hero-poster .hero-grid{
+      grid-template-columns:minmax(0,.88fr) minmax(520px,1.12fr);
+      gap:clamp(2rem,4vw,4.5rem);
+    }
+    .hero.hero-poster .hero-visual{
+      width:100%;max-width:none;min-height:0;aspect-ratio:16/9;margin:0;
+    }
+    .hero.hero-poster .hero-main{
+      inset:0;border-radius:30px;transform:none;transition:none;
+      border:1px solid rgba(13,90,82,.12);background:var(--deep);
+    }
+    .hero.hero-poster .hero-main img{width:100%;height:100%;object-fit:cover;object-position:center}
+    .hero.hero-poster .hero-main::after{display:none}
+
+    @media (max-width:1060px){
+      .hero.hero-poster .hero-grid{grid-template-columns:1fr;gap:1.5rem}
+      .hero.hero-poster .hero-visual{
+        width:min(960px,100%);min-height:0;margin:1rem auto 0;
+      }
+    }
+    @media (max-width:620px){
+      .hero.hero-poster{padding:155px 0 3.75rem}
+      .hero.hero-poster .hero-grid{gap:.75rem}
+      .hero.hero-poster .hero-visual{min-height:0;margin-top:1rem;aspect-ratio:16/9}
+      .hero.hero-poster .hero-main{inset:0;border-radius:18px}
+    }
+
+    /* Cabaña para grupos: una ficha propia, compacta y separada de la
+       galería general de hoteles. */
+    .group-stay-wrap{position:relative;z-index:1;margin-top:clamp(2.75rem,6vw,5.5rem)}
+    .group-stay-card{
+      display:grid;grid-template-columns:minmax(0,1.16fr) minmax(340px,.84fr);
+      overflow:hidden;border:1px solid rgba(13,90,82,.16);border-radius:32px;
+      background:rgba(255,255,255,.82);box-shadow:var(--shadow-soft);
+    }
+    .group-stay-media{
+      display:grid;grid-template-columns:minmax(0,1.75fr) minmax(145px,.75fr);
+      grid-template-rows:repeat(2,minmax(0,1fr));gap:.65rem;padding:.65rem;
+      height:clamp(470px,42vw,560px);background:var(--deep);
+    }
+    .group-stay-photo{
+      position:relative;min-width:0;min-height:0;overflow:hidden;padding:0;border:0;
+      border-radius:18px;background:#0b3935;cursor:pointer;
+    }
+    .group-stay-photo.main{grid-row:1/-1;border-radius:24px 46px 24px 24px}
+    .group-stay-photo img{width:100%;height:100%;object-fit:cover;object-position:center;transition:transform .55s ease}
+    .group-stay-photo:hover img,.group-stay-photo:focus-visible img{transform:scale(1.035)}
+    .group-stay-photo:focus-visible{outline:3px solid var(--orange);outline-offset:-4px}
+    .group-stay-photo-label{
+      position:absolute;left:14px;bottom:14px;padding:.48rem .68rem;border-radius:999px;
+      background:rgba(6,45,43,.82);color:#fff;font-size:.62rem;font-weight:800;
+      letter-spacing:.08em;text-transform:uppercase;backdrop-filter:blur(8px);
+    }
+    .group-stay-copy{display:flex;flex-direction:column;justify-content:center;padding:clamp(2rem,4vw,3.6rem)}
+    .group-stay-copy h3{font-size:clamp(2.7rem,4.5vw,4.6rem);margin:.8rem 0 1rem}
+    .group-stay-copy>p{color:var(--muted);font-size:1rem}
+    .group-stay-features{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.6rem;margin:1.45rem 0 .2rem}
+    .group-stay-features span{
+      display:flex;align-items:center;min-height:54px;padding:.72rem .8rem;border:1px solid var(--line);
+      border-radius:14px;background:#fff;color:var(--water);font-size:.72rem;font-weight:800;line-height:1.3;
+    }
+    .group-stay-copy .story-actions{margin:1.35rem 0 .35rem}
+    .group-stay-copy .stay-note{margin-top:.7rem}
+
+    .service-dialog{max-height:calc(100vh - 32px);overflow:auto}
+    .dialog-video.is-portrait{background:var(--deep)}
+    .dialog-video.is-portrait video{height:min(48vh,420px);aspect-ratio:auto;object-fit:contain}
+
+    @media (max-width:1060px){
+      .group-stay-card{grid-template-columns:1fr}
+      .group-stay-media{height:clamp(420px,65vw,540px)}
+      .group-stay-copy{padding:clamp(2rem,6vw,3.6rem)}
+    }
+    @media (max-width:620px){
+      .group-stay-wrap{margin-top:2.6rem}
+      .group-stay-card{border-radius:24px}
+      .group-stay-media{
+        height:390px;grid-template-columns:repeat(2,minmax(0,1fr));
+        grid-template-rows:245px 135px;gap:.5rem;padding:.5rem;
+      }
+      .group-stay-photo.main{grid-column:1/-1;grid-row:auto;border-radius:18px 42px 18px 18px}
+      .group-stay-photo{border-radius:15px}
+      .group-stay-copy{padding:1.7rem 1.25rem 2rem}
+      .group-stay-copy h3{font-size:clamp(2.55rem,13vw,3.25rem)}
+      .group-stay-features{grid-template-columns:1fr}
+      .group-stay-copy .story-actions{flex-direction:column;align-items:stretch}
+      .group-stay-copy .story-actions .btn{width:100%}
+      .dialog-video.is-portrait video{height:min(52vh,360px)}
     }
   </style>
 </head>
@@ -1071,7 +1168,7 @@
   </header>
 
   <main>
-    <section class="hero" id="inicio" data-nav-section>
+    <section class="hero hero-poster" id="inicio" data-nav-section>
       <div class="wrap hero-grid">
         <div class="hero-copy reveal">
           <span class="location-chip">
@@ -1102,30 +1199,8 @@
 
         <div class="hero-visual reveal" id="heroVisual">
           <figure class="hero-main">
-            <img src="img/piedra-base.webp" alt="Vista de la Piedra del Peñol en Guatapé" fetchpriority="high">
-            <figcaption class="hero-caption">
-              <small>Destino extraordinario</small>
-              <strong>Guatapé, Colombia</strong>
-            </figcaption>
+            <img width="1536" height="864" src="img/hero-vive-el-cielo.webp" srcset="img/hero-vive-el-cielo-sm.webp 820w, img/hero-vive-el-cielo.webp 1536w" sizes="(max-width:1060px) calc(100vw - 48px), 56vw" alt="Afiche Vive el cielo de XEBAX con pasajero en helicóptero sobre el embalse de Guatapé" fetchpriority="high" decoding="async">
           </figure>
-
-          <div class="hero-orbit" aria-hidden="true">
-            <svg viewBox="0 0 120 120">
-              <defs><path id="orbitPath" d="M60,60 m-43,0 a43,43 0 1,1 86,0 a43,43 0 1,1 -86,0"/></defs>
-              <text fill="white" font-size="8" font-family="Inter" font-weight="700" letter-spacing="2">
-                <textPath href="#orbitPath">XEBAX · ADVENTURE CONNECTION · </textPath>
-              </text>
-            </svg>
-            <b>XBX</b>
-          </div>
-
-          <div class="hero-stamp">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m16 8-2.5 5.5L8 16l2.5-5.5L16 8Z"/></svg>
-            <div><span>Tu próxima aventura</span><b>Empieza aquí</b></div>
-          </div>
-
-          <figure class="float-card one"><img src="img/cuatrimoto-grupo.webp" alt="Grupo durante un recorrido en cuatrimoto"></figure>
-          <figure class="float-card two"><img src="img/helicoptero-piedra.webp" alt="Helicóptero sobrevolando la Piedra del Peñol"></figure>
         </div>
       </div>
       <a class="scroll-cue" href="#experiencias">Desliza para explorar</a>
@@ -1178,8 +1253,8 @@
 
         <div class="destino-band reveal">
           <figure class="destino-card">
-            <img width="1200" height="675" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-src="img/destino-parque-principal.webp" data-srcset="img/destino-parque-principal-sm.webp 820w, img/destino-parque-principal.webp 1200w" sizes="(max-width:900px) 92vw, 56vw" fetchpriority="low" alt="Parque principal con su iglesia, palmeras y puestos de artesanías" loading="lazy" decoding="async">
-            <figcaption><b>El parque y su iglesia</b><span>El punto de encuentro del pueblo</span></figcaption>
+            <img width="1200" height="675" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-src="img/destino-parque-principal.webp" data-srcset="img/destino-parque-principal-sm.webp 820w, img/destino-parque-principal.webp 1200w" sizes="(max-width:900px) 92vw, 56vw" fetchpriority="low" alt="Réplica del Viejo Peñol junto al parque, palmeras y puestos de artesanías" loading="lazy" decoding="async">
+            <figcaption><b>Réplica del Viejo Peñol</b><span>Memoria del antiguo pueblo</span></figcaption>
           </figure>
           <figure class="destino-card alta">
             <img width="1200" height="1200" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-src="img/destino-plazoleta-paz.webp" data-srcset="img/destino-plazoleta-paz-sm.webp 820w, img/destino-plazoleta-paz.webp 1200w" sizes="(max-width:900px) 92vw, 38vw" fetchpriority="low" alt="Escultura alada de la Plazoleta de la Paz sobre su fuente" loading="lazy" decoding="async">
@@ -1218,7 +1293,7 @@
             </div>
           </article>
 
-          <article class="service-card poster-card poster-banner reveal" data-category="agua">
+          <article class="service-card poster-card poster-banner jetcar-service-card reveal" data-category="agua">
             <img width="1280" height="1024" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-src="img/poster-jetcar.webp" data-srcset="img/poster-jetcar-sm.webp 820w, img/poster-jetcar.webp 1280w" sizes="92vw" fetchpriority="low" alt="Publicidad de la experiencia JetCar en Guatapé" loading="lazy" decoding="async">
             <span class="service-number">04</span><span class="service-category">Agua</span>
             <div class="service-content">
@@ -1595,18 +1670,52 @@
             <a class="btn btn-wa" href="https://wa.me/573006182215?text=Hola%20XEBAX%20Adventure%20Connection%2C%20quiero%20consultar%20opciones%20de%20hospedaje%20en%20Guatap%C3%A9" target="_blank" rel="noopener">Consultar hospedaje</a>
             <button class="btn btn-primary" type="button" data-service="hospedaje">Ver galería completa</button>
           </div>
-          <small class="stay-note">Fotografías reales del alojamiento. La disponibilidad se confirma directamente durante la consulta.</small>
+          <small class="stay-note">Fotografías reales de los alojamientos. La disponibilidad se confirma directamente durante la consulta.</small>
         </div>
 
         <div class="stay-gallery reveal">
           <figure>
-            <img width="640" height="640" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-src="img/hotel-principal-piscina.webp" fetchpriority="low" alt="Piscina exterior y alojamiento de lujo en Guatapé" loading="lazy" decoding="async">
-            <figcaption class="stay-visual-label">Experiencia de lujo</figcaption>
+            <img width="720" height="497" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-src="img/hotel-nuevo-jacuzzi-vista.webp" fetchpriority="low" alt="Jacuzzi privado en una terraza con vista al embalse" loading="lazy" decoding="async">
+            <figcaption class="stay-visual-label">Nueva opción de hospedaje</figcaption>
           </figure>
-          <figure class="wide"><img width="1100" height="495" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-src="img/montecielo-panoramica.webp" data-srcset="img/montecielo-panoramica-sm.webp 820w, img/montecielo-panoramica.webp 1100w" sizes="(max-width:900px) 50vw, 25vw" data-fallback="img/hotel-aliado-06.webp" fetchpriority="low" alt="Vista panorámica del complejo Montecielo en Guatapé" loading="lazy" decoding="async"></figure>
-          <figure><img width="660" height="880" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-src="img/cabana-pareja-01.webp" data-fallback="img/hotel-lujo-habitacion.webp" fetchpriority="low" alt="Cabaña para pareja con cama king y vista al paisaje" loading="lazy" decoding="async"></figure>
-          <figure><img width="660" height="880" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-src="img/cabana-pareja-02.webp" data-fallback="img/hotel-lujo-jacuzzi.webp" fetchpriority="low" alt="Cabaña para pareja con jacuzzi privado en Guatapé" loading="lazy" decoding="async"></figure>
+          <figure class="wide"><img width="720" height="521" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-src="img/hotel-nuevo-habitacion-balcon.webp" fetchpriority="low" alt="Habitación moderna con balcón y vista al embalse" loading="lazy" decoding="async"></figure>
+          <figure><img width="720" height="922" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-src="img/hotel-nuevo-terraza-social.webp" fetchpriority="low" alt="Terraza social de madera con mobiliario y luces cálidas" loading="lazy" decoding="async"></figure>
+          <figure><img width="720" height="1217" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-src="img/hotel-nuevo-restaurante.webp" fetchpriority="low" alt="Restaurante del hospedaje con vegetación y mobiliario moderno" loading="lazy" decoding="async"></figure>
         </div>
+      </div>
+
+      <div class="wrap group-stay-wrap">
+        <article class="group-stay-card reveal" aria-labelledby="cabana12Title">
+          <div class="group-stay-media" aria-label="Vista previa de la cabaña para grupos">
+            <button class="group-stay-photo main" type="button" data-service="cabana12" aria-label="Abrir galería de la habitación con vista a La Piedra y el embalse">
+              <img width="1179" height="1339" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-src="img/cabana12-habitacion-vista.webp" fetchpriority="low" alt="Habitación de la cabaña con vista a La Piedra y el embalse" loading="lazy" decoding="async">
+              <span class="group-stay-photo-label">Vista a La Piedra</span>
+            </button>
+            <button class="group-stay-photo" type="button" data-service="cabana12" aria-label="Abrir galería del jacuzzi de la cabaña">
+              <img width="1179" height="1317" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-src="img/cabana12-jacuzzi-noche.webp" fetchpriority="low" alt="Jacuzzi privado de la cabaña durante la noche" loading="lazy" decoding="async">
+            </button>
+            <button class="group-stay-photo" type="button" data-service="cabana12" aria-label="Abrir galería de los espacios interiores y la terraza">
+              <img width="1179" height="1344" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-src="img/cabana12-interior-terraza.webp" fetchpriority="low" alt="Interior de la cabaña conectado con la terraza" loading="lazy" decoding="async">
+            </button>
+          </div>
+
+          <div class="group-stay-copy">
+            <span class="kicker">Alojamiento para grupos</span>
+            <h3 id="cabana12Title">Cabaña para hasta 12 personas.</h3>
+            <p>Una opción amplia para familias y grupos que quieren compartir el viaje sin renunciar a espacios privados, zonas exteriores y una vista privilegiada de Guatapé.</p>
+            <div class="group-stay-features" role="list" aria-label="Características de la cabaña">
+              <span role="listitem">Capacidad máxima: 12 personas</span>
+              <span role="listitem">Jacuzzi privado</span>
+              <span role="listitem">Vista a La Piedra y el embalse</span>
+              <span role="listitem">Cocina equipada y terraza</span>
+            </div>
+            <div class="story-actions">
+              <button class="btn btn-primary" type="button" data-service="cabana12">Ver 9 fotos y 2 videos</button>
+              <a class="btn btn-wa" href="https://wa.me/573006182215?text=Hola%20XEBAX%20Adventure%20Connection%2C%20quiero%20consultar%20disponibilidad%20de%20la%20caba%C3%B1a%20para%2012%20personas" target="_blank" rel="noopener">Consultar disponibilidad</a>
+            </div>
+            <small class="stay-note">La distribución, tarifa y disponibilidad se confirman directamente según las fechas de la reserva.</small>
+          </div>
+        </article>
       </div>
     </section>
 
@@ -1809,6 +1918,14 @@
           <button class="gallery-item wide reveal" type="button" data-gallery="22"><img width="1100" height="619" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-src="img/jetcar-duo-embalse.webp" data-srcset="img/jetcar-duo-embalse-sm.webp 820w, img/jetcar-duo-embalse.webp 1100w" sizes="(max-width:700px) 46vw, 30vw" fetchpriority="low" alt="Ferrari y Lamborghini anfibios en el embalse" loading="lazy" decoding="async"></button>
           <button class="gallery-item reveal" type="button" data-gallery="23"><img width="1100" height="1014" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-src="img/jetcar-rolls-royce.webp" data-srcset="img/jetcar-rolls-royce-sm.webp 820w, img/jetcar-rolls-royce.webp 1100w" sizes="(max-width:700px) 46vw, 30vw" fetchpriority="low" alt="Rolls-Royce anfibio sobre el agua" loading="lazy" decoding="async"></button>
           <button class="gallery-item reveal" type="button" data-gallery="21"><img width="660" height="880" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-src="img/cabana-pareja-02.webp" data-fallback="img/hotel-lujo-jacuzzi.webp" fetchpriority="low" alt="Cabaña para pareja con jacuzzi privado" loading="lazy" decoding="async"></button>
+          <button class="gallery-item wide reveal" type="button" data-gallery="24"><img width="720" height="497" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-src="img/hotel-nuevo-jacuzzi-vista.webp" fetchpriority="low" alt="Jacuzzi privado con vista al embalse" loading="lazy" decoding="async"></button>
+          <button class="gallery-item reveal" type="button" data-gallery="25"><img width="720" height="521" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-src="img/hotel-nuevo-habitacion-balcon.webp" fetchpriority="low" alt="Habitación con balcón y vista" loading="lazy" decoding="async"></button>
+          <button class="gallery-item tall reveal" type="button" data-gallery="26"><img width="720" height="922" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-src="img/hotel-nuevo-terraza-social.webp" fetchpriority="low" alt="Terraza social de madera" loading="lazy" decoding="async"></button>
+          <button class="gallery-item reveal" type="button" data-gallery="27"><img width="720" height="1211" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-src="img/hotel-nuevo-bano.webp" fetchpriority="low" alt="Baño moderno con ducha de vidrio" loading="lazy" decoding="async"></button>
+          <button class="gallery-item tall reveal" type="button" data-gallery="28"><img width="720" height="1175" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-src="img/hotel-nuevo-exterior.webp" fetchpriority="low" alt="Exterior del alojamiento en la montaña" loading="lazy" decoding="async"></button>
+          <button class="gallery-item reveal" type="button" data-gallery="29"><img width="720" height="908" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-src="img/hotel-nuevo-cocineta.webp" fetchpriority="low" alt="Cocineta equipada dentro de la habitación" loading="lazy" decoding="async"></button>
+          <button class="gallery-item tall reveal" type="button" data-gallery="30"><img width="720" height="1217" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-src="img/hotel-nuevo-restaurante.webp" fetchpriority="low" alt="Restaurante del hospedaje" loading="lazy" decoding="async"></button>
+          <button class="gallery-item wide reveal" type="button" data-gallery="31"><img width="720" height="511" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-src="img/hotel-nuevo-habitacion.webp" fetchpriority="low" alt="Habitación moderna del nuevo hospedaje" loading="lazy" decoding="async"></button>
         </div>
         <div class="gallery-more">
           <button class="btn btn-primary gallery-toggle" id="galleryToggle" type="button" aria-expanded="false" aria-controls="galleryGrid">
@@ -1997,7 +2114,28 @@
 
     const hotelImages = numberedMedia("img", "hotel", 19);
     const cabanaParejaImages = ["img/cabana-pareja-01.webp", "img/cabana-pareja-02.webp"];
+    const latestHotelImages = [
+      "img/hotel-nuevo-jacuzzi-vista.webp",
+      "img/hotel-nuevo-habitacion-balcon.webp",
+      "img/hotel-nuevo-terraza-social.webp",
+      "img/hotel-nuevo-bano.webp",
+      "img/hotel-nuevo-exterior.webp",
+      "img/hotel-nuevo-cocineta.webp",
+      "img/hotel-nuevo-restaurante.webp",
+      "img/hotel-nuevo-habitacion.webp"
+    ];
+    const latestHotelAlts = [
+      "Jacuzzi privado en una terraza con vista al embalse",
+      "Habitación moderna con balcón y vista al embalse",
+      "Terraza social de madera con mobiliario y luces cálidas",
+      "Baño moderno con ducha de vidrio y espejo iluminado",
+      "Exterior del alojamiento construido sobre la montaña",
+      "Cocineta equipada dentro de la habitación",
+      "Restaurante del hospedaje con vegetación y mobiliario moderno",
+      "Habitación moderna con cama doble y acabados contemporáneos"
+    ];
     const newHotelImages = [
+      ...latestHotelImages,
       "img/montecielo-panoramica.webp",
       ...cabanaParejaImages,
       "img/hotel-principal-piscina.webp",
@@ -2017,6 +2155,7 @@
       "img/hotel-cabana-atardecer.webp"
     ];
     const newHotelAlts = [
+      ...latestHotelAlts,
       "Vista panorámica del complejo Montecielo en Guatapé",
       "Cabaña para pareja con cama king y vista al paisaje",
       "Cabaña para pareja con jacuzzi privado",
@@ -2035,6 +2174,28 @@
       "Jacuzzi privado con vista al embalse de Guatapé",
       "Cabaña colorida cerca de la Piedra del Peñol",
       "Cabaña tradicional durante el atardecer"
+    ];
+    const cabana12Images = [
+      "img/cabana12-habitacion-vista.webp",
+      "img/cabana12-jacuzzi-noche.webp",
+      "img/cabana12-interior-terraza.webp",
+      "img/cabana12-cocina-vista.webp",
+      "img/cabana12-terraza-jacuzzi.webp",
+      "img/cabana12-terraza-noche.webp",
+      "img/cabana12-habitacion-jacuzzi.webp",
+      "img/cabana12-bano-01.webp",
+      "img/cabana12-bano-02.webp"
+    ];
+    const cabana12Alts = [
+      "Habitación con vista a La Piedra y el embalse",
+      "Jacuzzi privado iluminado durante la noche",
+      "Interior de la cabaña conectado con la terraza",
+      "Cocina equipada con vista al paisaje",
+      "Terraza exterior con jacuzzi privado",
+      "Terraza de madera iluminada durante el atardecer",
+      "Habitación con cocineta y acceso al jacuzzi",
+      "Baño moderno con ducha de vidrio",
+      "Segundo baño con ducha y acabados contemporáneos"
     ];
     const jetskiImages = numberedMedia("img", "jetski", 6);
     const jetskiSimpleImages = numberedMedia("img", "jetski-simple", 2);
@@ -2109,7 +2270,19 @@
         description: "Ponemos a tu disposición hoteles de diferentes categorías, desde opciones económicas hasta experiencias de lujo. Te ayudamos a consultar una opción según tus fechas, el número de viajeros y el tipo de experiencia que buscas.",
         images: [...newHotelImages, "img/poster-hospedaje.webp", ...hotelImages],
         alts: [...newHotelAlts, "Publicidad de hoteles y cabañas en Guatapé", ...hotelImages.map((_, index) => `Fotografía real del hospedaje ${index + 1}`)],
-        features: ["Cabañas para pareja, hoteles y complejos como Montecielo", "37 fotografías reales organizadas en una sola galería", "Disponibilidad y características confirmadas por WhatsApp"]
+        features: ["Cabañas para pareja, hoteles y complejos como Montecielo", "45 fotografías reales organizadas en una sola galería", "Disponibilidad y características confirmadas por WhatsApp"]
+      },
+      cabana12: {
+        category: "Alojamiento para grupos",
+        title: "Cabaña para hasta 12 personas",
+        description: "Una alternativa amplia para familias y grupos, con habitaciones, cocina, terraza, jacuzzi privado y vistas de La Piedra y el embalse. La distribución y las condiciones se confirman según las fechas de la reserva.",
+        images: cabana12Images,
+        alts: cabana12Alts,
+        features: ["Capacidad máxima de 12 personas", "Jacuzzi privado y terraza", "Cocina equipada", "Vista a La Piedra y el embalse"],
+        videos: [
+          { src: "video/cabana12-recorrido-01.mp4", poster: "img/cabana12-terraza-jacuzzi.webp", label: "Recorrido por la cabaña", portrait: true },
+          { src: "video/cabana12-recorrido-02.mp4", poster: "img/cabana12-interior-terraza.webp", label: "Habitaciones y zonas comunes", portrait: true }
+        ]
       },
       jetcar: {
         category: "Experiencia náutica exclusiva",
@@ -2244,7 +2417,15 @@
       { src: "img/cabana-pareja-01.webp", alt: "Cabaña para pareja con vista al paisaje" },
       { src: "img/cabana-pareja-02.webp", alt: "Cabaña para pareja con jacuzzi privado" },
       { src: "img/jetcar-duo-embalse.webp", alt: "Ferrari y Lamborghini anfibios en el embalse" },
-      { src: "img/jetcar-rolls-royce.webp", alt: "Rolls-Royce anfibio sobre el agua" }
+      { src: "img/jetcar-rolls-royce.webp", alt: "Rolls-Royce anfibio sobre el agua" },
+      { src: "img/hotel-nuevo-jacuzzi-vista.webp", alt: "Jacuzzi privado con vista al embalse" },
+      { src: "img/hotel-nuevo-habitacion-balcon.webp", alt: "Habitación con balcón y vista" },
+      { src: "img/hotel-nuevo-terraza-social.webp", alt: "Terraza social de madera" },
+      { src: "img/hotel-nuevo-bano.webp", alt: "Baño moderno con ducha de vidrio" },
+      { src: "img/hotel-nuevo-exterior.webp", alt: "Exterior del alojamiento en la montaña" },
+      { src: "img/hotel-nuevo-cocineta.webp", alt: "Cocineta equipada dentro de la habitación" },
+      { src: "img/hotel-nuevo-restaurante.webp", alt: "Restaurante del hospedaje" },
+      { src: "img/hotel-nuevo-habitacion.webp", alt: "Habitación moderna del nuevo hospedaje" }
     ];
 
     const aviso = $("#aviso");
@@ -2406,7 +2587,7 @@
       dialogFeatures.innerHTML = data.features.map(feature => `<div class="dialog-feature"><span>✓</span>${feature}</div>`).join("");
       const videos = data.videos || [];
       dialogVideos.innerHTML = videos.map(video => `
-        <figure class="dialog-video">
+        <figure class="dialog-video ${video.portrait ? "is-portrait" : ""}">
           <video controls playsinline preload="none" poster="${video.poster}">
             <source src="${video.src}" type="video/mp4">
           </video>
@@ -2418,6 +2599,8 @@
         ? "Consultar requisitos y disponibilidad"
         : data.category === "Opciones de estadía"
           ? "Consultar disponibilidad del hospedaje"
+          : data.category === "Alojamiento para grupos"
+            ? "Consultar disponibilidad de la cabaña"
           : "Consultar esta experiencia por WhatsApp";
       $$("[data-dialog-image]", dialogThumbs).forEach(button => button.addEventListener("click", () => updateDialogImage(data, Number(button.dataset.dialogImage))));
       updateDialogImage(data, 0);
