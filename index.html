@@ -1472,6 +1472,113 @@
     @media (max-width:700px){
       .cabana-reminder{grid-template-columns:1fr}
     }
+
+    /* ===== Visores compactos y carga visual sin marcos vacíos ===== */
+    .service-card.poster-card.flyboard-service-card{
+      grid-template-columns:minmax(320px,348px) minmax(0,1fr);min-height:520px;
+    }
+    .service-card.poster-card.flyboard-service-card>img{min-height:520px}
+    .service-card.poster-card.flyboard-service-card .service-content{
+      justify-content:center;padding:clamp(2.2rem,4.4vw,4.6rem);
+    }
+    .service-card.poster-card.flyboard-service-card .service-content h3{
+      font-size:clamp(3.35rem,5vw,5rem);line-height:.9;margin:.82rem 0 .75rem;
+    }
+    .service-card.poster-card.flyboard-service-card .service-content p{
+      max-width:570px;font-size:1rem;line-height:1.58;margin:0;
+    }
+    .service-card.poster-card.flyboard-service-card .service-open{margin-top:.15rem}
+
+    .service-dialog{
+      width:min(1180px,calc(100% - 32px));height:min(760px,calc(100svh - 32px));
+      max-height:calc(100svh - 32px);overflow:hidden;
+    }
+    .dialog-grid{
+      grid-template-columns:minmax(0,1.14fr) minmax(360px,.86fr);height:100%;min-height:0;
+    }
+    .dialog-media{
+      --dialog-bg:none;min-height:0;height:100%;overflow:hidden;isolation:isolate;background:#062d2b;
+    }
+    .dialog-media::before{
+      content:"";position:absolute;inset:-34px;z-index:0;
+      background-image:linear-gradient(rgba(3,28,27,.38),rgba(3,28,27,.58)),var(--dialog-bg);
+      background-position:center;background-size:cover;filter:blur(22px) saturate(.9);transform:scale(1.08);
+      opacity:.88;transition:background-image .2s ease;
+    }
+    .dialog-media::after{
+      z-index:2;background:linear-gradient(0deg,rgba(3,28,27,.74) 0,rgba(3,28,27,.05) 30%,transparent 54%);
+    }
+    .dialog-main{
+      z-index:1;background:transparent;padding:14px 0 92px;object-fit:contain;transition:opacity .16s ease;
+    }
+    .dialog-media.single-image .dialog-main{padding:14px 0}
+    .dialog-media.is-loading .dialog-main{opacity:.18!important}
+    .dialog-loader{
+      position:absolute;left:50%;top:50%;z-index:4;width:46px;height:46px;margin:-23px 0 0 -23px;
+      border:4px solid rgba(255,255,255,.28);border-top-color:#fff;border-radius:50%;
+      animation:dialogSpin .72s linear infinite;
+    }
+    .dialog-loader[hidden]{display:none}
+    @keyframes dialogSpin{to{transform:rotate(360deg)}}
+    .dialog-thumbs{
+      left:18px;right:18px;bottom:16px;padding:8px;border-radius:16px;
+      background:rgba(2,25,24,.6);backdrop-filter:blur(10px);scrollbar-width:none;
+    }
+    .dialog-thumbs::-webkit-scrollbar{display:none}
+    .dialog-thumb{flex-basis:76px;width:76px;height:58px;background:#e7efec}
+    .dialog-thumb img{width:100%;height:100%;object-fit:cover}
+    .dialog-count{bottom:92px}
+    .dialog-body{
+      min-height:0;padding:clamp(1.6rem,3vw,2.65rem);overflow-y:auto;overscroll-behavior:contain;
+      scrollbar-width:thin;scrollbar-color:rgba(6,45,43,.45) transparent;
+    }
+    .dialog-body h3{font-size:clamp(2.45rem,4.2vw,3.65rem);margin:.62rem 0 .78rem;line-height:.94}
+    .dialog-body>p{font-size:.94rem;line-height:1.55}
+    .dialog-features{gap:.52rem;margin:1.25rem 0 1.45rem}
+    .dialog-feature{padding:.68rem .78rem;font-size:.8rem}
+    .dialog-feature span{flex:0 0 25px}
+    .dialog-videos{margin:0 0 1.3rem}
+
+    .lightbox-wrap{--lightbox-bg:none;position:relative;overflow:hidden;isolation:isolate}
+    .lightbox-wrap::before{
+      content:"";position:absolute;inset:-40px;z-index:0;
+      background-image:linear-gradient(rgba(1,17,16,.55),rgba(1,17,16,.72)),var(--lightbox-bg);
+      background-position:center;background-size:cover;filter:blur(28px) saturate(.9);transform:scale(1.08);
+    }
+    .lightbox-wrap::after{
+      content:"";position:absolute;left:50%;top:50%;z-index:0;width:48px;height:48px;margin:-24px 0 0 -24px;
+      border:4px solid rgba(255,255,255,.24);border-top-color:#fff;border-radius:50%;
+      animation:dialogSpin .72s linear infinite;opacity:0;transition:opacity .15s;
+    }
+    .lightbox-wrap.is-loading::after{opacity:1}
+    .lightbox img{position:relative;z-index:1;transition:opacity .16s ease}
+    .lightbox-wrap.is-loading img{opacity:.18}
+    .lightbox-close,.lightbox-nav,.lightbox-count{z-index:3}
+
+    @media (max-width:900px){
+      .service-card.poster-card.flyboard-service-card{min-height:0}
+      .service-card.poster-card.flyboard-service-card>img{min-height:0}
+      .service-card.poster-card.flyboard-service-card .service-content{padding:1.55rem 1.3rem 1.7rem}
+      .service-card.poster-card.flyboard-service-card .service-content h3{font-size:clamp(2.9rem,11vw,4.2rem)}
+
+      .service-dialog{height:auto;max-height:calc(100svh - 20px);width:min(760px,calc(100% - 20px))}
+      .dialog-grid{grid-template-columns:1fr;height:auto;max-height:calc(100svh - 20px);overflow-y:auto}
+      .dialog-media{height:clamp(320px,52svh,480px);min-height:320px}
+      .dialog-body{min-height:0;overflow:visible;padding:1.5rem}
+    }
+    @media (max-width:620px){
+      .service-dialog{width:calc(100% - 12px);border-radius:20px}
+      .dialog-grid{max-height:calc(100svh - 12px)}
+      .dialog-media{height:46svh;min-height:285px}
+      .dialog-main{padding:8px 0 78px}
+      .dialog-media.single-image .dialog-main{padding:8px 0}
+      .dialog-thumbs{left:10px;right:10px;bottom:9px;padding:6px}
+      .dialog-thumb{flex-basis:68px;width:68px;height:52px}
+      .dialog-count{bottom:76px}
+      .dialog-body{padding:1.25rem 1rem 1.35rem}
+      .dialog-body h3{font-size:clamp(2.25rem,11vw,3.05rem)}
+      .dialog-features{grid-template-columns:1fr;margin:1rem 0 1.2rem}
+    }
   </style>
 </head>
 <body>
@@ -2404,6 +2511,7 @@
       <div class="dialog-grid">
         <div class="dialog-media">
           <img class="dialog-main" id="dialogMainImage" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" alt="">
+          <span class="dialog-loader" id="dialogLoader" hidden aria-hidden="true"></span>
           <button class="dialog-close" type="button" data-close-service aria-label="Cerrar">×</button>
           <button class="dialog-nav dialog-prev" type="button" id="dialogPrev" aria-label="Imagen anterior">‹</button>
           <button class="dialog-nav dialog-next" type="button" id="dialogNext" aria-label="Imagen siguiente">›</button>
@@ -2438,10 +2546,36 @@
 
     const mediaPlaceholder = "data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=";
     let deferredMediaObserver = null;
+    const preloadedMedia = new Map();
+
+    function preloadImage(source, priority = "auto") {
+      if (!source) return Promise.resolve(source);
+      if (preloadedMedia.has(source)) return preloadedMedia.get(source);
+      const request = new Promise(resolve => {
+        const probe = new Image();
+        probe.decoding = "async";
+        if ("fetchPriority" in probe) probe.fetchPriority = priority;
+        const settle = () => resolve(source);
+        probe.addEventListener("load", settle, { once: true });
+        probe.addEventListener("error", settle, { once: true });
+        probe.src = source;
+      });
+      preloadedMedia.set(source, request);
+      return request;
+    }
+
+    function preloadAround(sources, index) {
+      if (!sources?.length) return;
+      [index, index + 1, index - 1].forEach((position, order) => {
+        const normalized = (position + sources.length) % sources.length;
+        preloadImage(sources[normalized], order === 0 ? "high" : "low");
+      });
+    }
 
     function loadDeferredImage(image) {
       const source = image.dataset.src;
       if (!source) return;
+      image.loading = "eager";
       if (image.dataset.srcset) {
         image.srcset = image.dataset.srcset;
         image.removeAttribute("data-srcset");
@@ -2463,12 +2597,13 @@
           entries.forEach(entry => {
             if (entry.isIntersecting) loadDeferredImage(entry.target);
           });
-        }, { rootMargin: "420px", threshold: 0.01 });
+        }, { rootMargin: "1100px 0px", threshold: 0.01 });
       }
       images.forEach(image => deferredMediaObserver.observe(image));
     }
 
     observeDeferredMedia();
+    $$('main img[data-src]').slice(0, 8).forEach(loadDeferredImage);
 
     // Si una imagen aún no está cargada en el servidor, se muestra una alternativa.
     const imageFallbacks = {
@@ -2914,6 +3049,8 @@
 
     const serviceDialog = $("#serviceDialog");
     const dialogMainImage = $("#dialogMainImage");
+    const dialogMedia = $(".dialog-media", serviceDialog);
+    const dialogLoader = $("#dialogLoader");
     const dialogThumbs = $("#dialogThumbs");
     const dialogCategory = $("#dialogCategory");
     const dialogTitle = $("#dialogTitle");
@@ -2924,17 +3061,17 @@
     const dialogCount = $("#dialogCount");
     let activeServiceData = null;
     let activeDialogIndex = 0;
+    let dialogImageRequest = 0;
 
-    function updateDialogImage(data, index) {
+    async function updateDialogImage(data, index) {
       const normalizedIndex = (index + data.images.length) % data.images.length;
+      const source = data.images[normalizedIndex];
+      const requestId = ++dialogImageRequest;
       activeServiceData = data;
       activeDialogIndex = normalizedIndex;
-      dialogMainImage.style.opacity = "0";
-      window.setTimeout(() => {
-        dialogMainImage.src = data.images[normalizedIndex];
-        dialogMainImage.alt = data.alts[normalizedIndex];
-        dialogMainImage.style.opacity = "1";
-      }, 130);
+      dialogMedia.classList.add("is-loading");
+      dialogLoader.hidden = false;
+      dialogMedia.style.setProperty("--dialog-bg", `url("${source.replace(/["\\]/g, "\\$&")}")`);
       dialogCount.textContent = `${normalizedIndex + 1} / ${data.images.length}`;
       $$(".dialog-thumb", dialogThumbs).forEach((thumb, thumbIndex) => {
         thumb.classList.toggle("active", thumbIndex === normalizedIndex);
@@ -2946,6 +3083,16 @@
           behavior: "smooth"
         });
       }
+      preloadAround(data.images, normalizedIndex);
+      await preloadImage(source, "high");
+      if (requestId !== dialogImageRequest) return;
+      dialogMainImage.src = source;
+      dialogMainImage.alt = data.alts[normalizedIndex] || data.title;
+      try { await dialogMainImage.decode(); } catch {}
+      if (requestId !== dialogImageRequest) return;
+      dialogMedia.classList.remove("is-loading");
+      dialogLoader.hidden = true;
+      dialogMainImage.style.opacity = "1";
     }
 
     function openService(serviceKey) {
@@ -2956,14 +3103,14 @@
       dialogDescription.textContent = data.description;
       dialogThumbs.innerHTML = data.images.map((image, index) => `
         <button class="dialog-thumb ${index === 0 ? "active" : ""}" type="button" data-dialog-image="${index}" aria-label="Ver imagen ${index + 1}">
-          <img src="${mediaPlaceholder}" data-src="${image.replace(".webp", "-th.webp")}" width="200" height="150" fetchpriority="low" alt="" loading="lazy" decoding="async">
+          <img src="${index < 6 ? image.replace(".webp", "-th.webp") : mediaPlaceholder}" ${index < 6 ? "" : `data-src="${image.replace(".webp", "-th.webp")}"`} width="200" height="150" fetchpriority="${index < 3 ? "high" : "low"}" alt="" loading="${index < 6 ? "eager" : "lazy"}" decoding="async">
         </button>`).join("");
       const hasMultipleImages = data.images.length > 1;
+      dialogMedia.classList.toggle("single-image", !hasMultipleImages);
       $("#dialogPrev").hidden = !hasMultipleImages;
       $("#dialogNext").hidden = !hasMultipleImages;
       dialogCount.hidden = !hasMultipleImages;
       dialogThumbs.hidden = !hasMultipleImages;
-      observeDeferredMedia(dialogThumbs);
       dialogFeatures.innerHTML = data.features.map(feature => `<div class="dialog-feature"><span>✓</span>${feature}</div>`).join("");
       const videos = data.videos || [];
       dialogVideos.innerHTML = videos.map(video => `
@@ -2983,12 +3130,22 @@
             ? "Consultar disponibilidad de la cabaña"
           : "Consultar esta experiencia por WhatsApp";
       $$("[data-dialog-image]", dialogThumbs).forEach(button => button.addEventListener("click", () => updateDialogImage(data, Number(button.dataset.dialogImage))));
-      updateDialogImage(data, 0);
       serviceDialog.showModal();
       document.body.classList.add("dialog-open");
+      observeDeferredMedia(dialogThumbs);
+      updateDialogImage(data, 0);
     }
 
-    $$("[data-service]").forEach(button => button.addEventListener("click", () => openService(button.dataset.service)));
+    $$("[data-service]").forEach(button => {
+      const warmService = () => {
+        const data = serviceData[button.dataset.service];
+        if (data) preloadAround(data.images, 0);
+      };
+      button.addEventListener("pointerenter", warmService, { once: true, passive: true });
+      button.addEventListener("focusin", warmService, { once: true });
+      button.addEventListener("touchstart", warmService, { once: true, passive: true });
+      button.addEventListener("click", () => openService(button.dataset.service));
+    });
     $("#dialogPrev").addEventListener("click", () => {
       if (activeServiceData) updateDialogImage(activeServiceData, activeDialogIndex - 1);
     });
@@ -3000,6 +3157,9 @@
       if (event.target === serviceDialog) serviceDialog.close();
     });
     serviceDialog.addEventListener("close", () => {
+      dialogImageRequest++;
+      dialogMedia.classList.remove("is-loading", "single-image");
+      dialogLoader.hidden = true;
       $$("video", dialogVideos).forEach(video => video.pause());
       document.body.classList.remove("dialog-open");
     });
@@ -3108,27 +3268,42 @@
     });
 
     const lightbox = $("#lightbox");
+    const lightboxWrap = $(".lightbox-wrap", lightbox);
     const lightboxImage = $("#lightboxImage");
     const lightboxCount = $("#lightboxCount");
     let lightboxIndex = 0;
+    let lightboxImageRequest = 0;
 
-    function renderLightbox(index) {
+    async function renderLightbox(index) {
       lightboxIndex = (index + galleryImages.length) % galleryImages.length;
       const image = galleryImages[lightboxIndex];
+      const requestId = ++lightboxImageRequest;
+      lightboxWrap.classList.add("is-loading");
+      lightboxWrap.style.setProperty("--lightbox-bg", `url("${image.src.replace(/["\\]/g, "\\$&")}")`);
+      preloadAround(galleryImages.map(item => item.src), lightboxIndex);
+      await preloadImage(image.src, "high");
+      if (requestId !== lightboxImageRequest) return;
       lightboxImage.src = image.src;
       lightboxImage.alt = image.alt;
+      try { await lightboxImage.decode(); } catch {}
+      if (requestId !== lightboxImageRequest) return;
+      lightboxWrap.classList.remove("is-loading");
       lightboxCount.textContent = `${lightboxIndex + 1} / ${galleryImages.length}`;
     }
     function openLightbox(index) {
-      renderLightbox(index);
       lightbox.showModal();
       document.body.classList.add("dialog-open");
+      renderLightbox(index);
     }
     $$(".gallery-item").forEach(item => item.addEventListener("click", () => openLightbox(Number(item.dataset.gallery))));
     $("#lightboxPrev").addEventListener("click", () => renderLightbox(lightboxIndex - 1));
     $("#lightboxNext").addEventListener("click", () => renderLightbox(lightboxIndex + 1));
     $("[data-close-lightbox]").addEventListener("click", () => lightbox.close());
-    lightbox.addEventListener("close", () => document.body.classList.remove("dialog-open"));
+    lightbox.addEventListener("close", () => {
+      lightboxImageRequest++;
+      lightboxWrap.classList.remove("is-loading");
+      document.body.classList.remove("dialog-open");
+    });
 
     document.addEventListener("keydown", event => {
       if (event.key === "Escape") closeMenu();
