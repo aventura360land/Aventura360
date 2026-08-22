@@ -5,11 +5,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>XEBAX Adventure Connection · Vive la aventura al máximo</title>
-  <meta name="description" content="Te conectamos con las mejores experiencias: vuelos panorámicos, cuatrimotos, Jet Ski, Flyboard, lanchas, Paintball y hospedaje en Guatapé y El Peñol. Consulta por WhatsApp.">
+  <meta name="description" content="Experiencias y hospedajes en Guatapé y El Peñol: cabaña destacada para 12 personas, vuelos panorámicos, cuatrimotos, JetCar y actividades náuticas. Consulta por WhatsApp.">
   <meta name="theme-color" content="#08312f">
   <link rel="icon" href="img/logo-xebax-mark.webp" type="image/webp">
   <meta property="og:title" content="XEBAX Adventure Connection · Vive la aventura al máximo">
-  <meta property="og:description" content="Te asesoramos, te conectamos y te acercamos a la aventura que estás buscando en Guatapé y El Peñol.">
+  <meta property="og:description" content="Conoce la cabaña destacada para 12 personas y las experiencias de aire, tierra y agua disponibles en Guatapé y El Peñol.">
   <meta property="og:type" content="website">
   <meta property="og:image" content="img/logo-xebax.webp">
   <link rel="preload" as="image" href="img/piedra-base.webp" imagesrcset="img/piedra-base-sm.webp 820w, img/piedra-base.webp 1100w" imagesizes="(max-width:900px) 90vw, 45vw" type="image/webp">
@@ -52,6 +52,7 @@
     body.menu-open,body.dialog-open{overflow:hidden}
     main{display:flex;flex-direction:column}
     main>.hero{order:1}
+    main>.cabana-feature{order:2}
     main>.highlights{order:2}
     main>.marquee{order:3}
     main>.services-section{order:4}
@@ -1197,6 +1198,92 @@
       .section-head+.experience-story{margin-top:0}
       .experience-story+.experience-story{margin-top:3.25rem}
     }
+
+    /* ===== Cabaña destacada: acceso inmediato y recordatorio integrado ===== */
+    .hero.hero-poster{padding-bottom:clamp(2.25rem,3vw,3.25rem)}
+    .hero-cabana-link{
+      display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:.8rem;
+      width:min(100%,560px);margin-top:1.25rem;padding:.62rem .75rem .62rem .62rem;
+      border:1px solid rgba(13,90,82,.16);border-radius:18px;background:rgba(255,255,255,.72);
+      box-shadow:0 14px 34px -28px rgba(6,45,43,.8);transition:.25s ease;
+    }
+    .hero-cabana-link:hover{transform:translateY(-2px);border-color:rgba(239,123,39,.55);box-shadow:var(--shadow-soft)}
+    .hero-cabana-thumb{
+      width:52px;aspect-ratio:1179/1301;overflow:hidden;border-radius:12px;background:var(--deep);
+    }
+    .hero-cabana-thumb img{width:100%;height:100%;object-fit:contain}
+    .hero-cabana-link strong{display:block;font-family:var(--display);font-size:.98rem;line-height:1.15;color:var(--ink)}
+    .hero-cabana-link small{display:block;margin-top:.18rem;color:var(--muted);font-size:.69rem;line-height:1.35}
+    .hero-cabana-arrow{
+      width:34px;height:34px;display:grid;place-items:center;border-radius:50%;background:var(--orange);color:#fff;
+      font-size:1.1rem;font-weight:800;
+    }
+
+    .cabana-feature{
+      padding:0 0 clamp(1.5rem,2vw,2rem);background:var(--sand);scroll-margin-top:138px;
+    }
+    .cabana-feature + .highlights{padding-top:clamp(.8rem,1.5vw,1.3rem)}
+    .cabana-feature .group-stay-wrap{margin-top:0}
+    .cabana-feature .group-stay-card{
+      grid-template-columns:minmax(360px,.82fr) minmax(0,1.18fr);background:var(--deep);color:#fff;
+      border-color:rgba(255,255,255,.14);box-shadow:0 28px 70px -34px rgba(6,45,43,.72);
+    }
+    .cabana-feature .group-stay-copy{order:-1;padding:clamp(2rem,3.5vw,3.3rem)}
+    .cabana-feature .group-stay-copy .kicker{color:var(--lime)}
+    .cabana-feature .group-stay-copy h3{font-size:clamp(2.8rem,4vw,4.25rem);margin:.75rem 0 .9rem}
+    .cabana-feature .group-stay-copy>p{color:rgba(255,255,255,.76)}
+    .cabana-feature .group-stay-features{margin:1.15rem 0 .1rem}
+    .cabana-feature .group-stay-features span{
+      min-height:48px;border-color:rgba(255,255,255,.14);background:rgba(255,255,255,.08);color:#fff;
+    }
+    .cabana-feature .group-stay-copy .stay-note{color:rgba(255,255,255,.58)}
+    .cabana-feature .group-stay-media{
+      height:auto;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));grid-template-rows:1fr;
+      align-content:center;align-items:center;gap:.65rem;padding:.85rem;background:#041f1e;
+    }
+    .cabana-feature .group-stay-photo,
+    .cabana-feature .group-stay-photo.main{
+      grid-column:auto;grid-row:auto;aspect-ratio:1179/1339;border-radius:20px;align-self:center;
+    }
+    .cabana-feature .group-stay-photo img{object-fit:contain;transform:none!important}
+
+    .cabana-reminder{
+      display:grid;grid-template-columns:92px minmax(0,1fr) auto;align-items:center;gap:1.1rem;
+      margin-top:1.4rem;padding:.85rem 1rem;border-radius:22px;background:var(--deep);color:#fff;
+      border:1px solid rgba(255,255,255,.12);box-shadow:var(--shadow-soft);
+    }
+    .cabana-reminder-media{aspect-ratio:1179/1317;overflow:hidden;border-radius:14px;background:#041f1e}
+    .cabana-reminder-media img{width:100%;height:100%;object-fit:contain}
+    .cabana-reminder-copy span{color:var(--lime);font-size:.64rem;font-weight:800;letter-spacing:.13em;text-transform:uppercase}
+    .cabana-reminder-copy h3{font-size:clamp(1.45rem,2.4vw,2rem);margin:.12rem 0 .3rem}
+    .cabana-reminder-copy p{max-width:680px;color:rgba(255,255,255,.7);font-size:.78rem;line-height:1.45}
+    .cabana-reminder .btn{white-space:nowrap}
+
+    @media (max-width:1060px){
+      .cabana-feature .group-stay-card{grid-template-columns:1fr}
+      .cabana-feature .group-stay-media{grid-template-columns:repeat(3,minmax(0,1fr));padding:.75rem}
+    }
+    @media (max-width:700px){
+      .cabana-reminder{grid-template-columns:76px minmax(0,1fr);gap:.85rem}
+      .cabana-reminder .btn{grid-column:1/-1;width:100%}
+    }
+    @media (max-width:620px){
+      .hero-cabana-link{margin-top:1rem}
+      .cabana-feature{padding-bottom:1.5rem}
+      .cabana-feature .group-stay-card{border-radius:24px}
+      .cabana-feature .group-stay-copy{padding:1.7rem 1.25rem 1.5rem}
+      .cabana-feature .group-stay-copy h3{font-size:clamp(2.5rem,12.5vw,3.2rem)}
+      .cabana-feature .group-stay-media{
+        display:flex;height:auto;overflow-x:auto;gap:.6rem;padding:.65rem;scroll-snap-type:x mandatory;
+        scrollbar-width:none;
+      }
+      .cabana-feature .group-stay-media::-webkit-scrollbar{display:none}
+      .cabana-feature .group-stay-photo,
+      .cabana-feature .group-stay-photo.main{
+        flex:0 0 74%;min-width:74%;height:auto;aspect-ratio:1179/1339;scroll-snap-align:center;
+      }
+      .cabana-reminder{margin-top:1rem;padding:.75rem;border-radius:18px}
+    }
   </style>
 </head>
 <body>
@@ -1258,10 +1345,16 @@
               Consultar por WhatsApp
             </a>
           </div>
-          <div class="hero-note">
-            <span aria-hidden="true"><i></i><i></i><i></i></span>
-            <p>Pueblo, Piedra, cuatrimotos y vuelo panorámico.</p>
-          </div>
+          <a class="hero-cabana-link" href="#cabana12" aria-label="Ir a la cabaña destacada para 12 personas">
+            <span class="hero-cabana-thumb" aria-hidden="true">
+              <img width="1179" height="1301" src="img/cabana12-terraza-jacuzzi.webp" alt="">
+            </span>
+            <span>
+              <strong>Cabaña destacada para 12 personas</strong>
+              <small>Jacuzzi, cocina, terraza y vista a La Piedra · Ver fotos y videos</small>
+            </span>
+            <span class="hero-cabana-arrow" aria-hidden="true">→</span>
+          </a>
         </div>
 
         <div class="hero-visual reveal" id="heroVisual">
@@ -1270,7 +1363,43 @@
           </figure>
         </div>
       </div>
-      <a class="scroll-cue" href="#experiencias">Desliza para explorar</a>
+      <a class="scroll-cue" href="#cabana12">Conoce la cabaña destacada</a>
+    </section>
+
+    <section class="section cabana-feature" id="cabana12" aria-label="Cabaña destacada para grupos de hasta 12 personas">
+      <div class="wrap group-stay-wrap">
+        <article class="group-stay-card reveal" aria-labelledby="cabana12Title">
+          <div class="group-stay-media" aria-label="Vista previa de la cabaña; selecciona una imagen para abrir la galería">
+            <button class="group-stay-photo main" type="button" data-service="cabana12" aria-label="Abrir galería de la habitación con vista a La Piedra y el embalse">
+              <img width="1179" height="1339" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-src="img/cabana12-habitacion-vista.webp" fetchpriority="low" alt="Habitación de la cabaña con vista a La Piedra y el embalse" loading="lazy" decoding="async">
+              <span class="group-stay-photo-label">Vista a La Piedra</span>
+            </button>
+            <button class="group-stay-photo" type="button" data-service="cabana12" aria-label="Abrir galería del jacuzzi privado de la cabaña">
+              <img width="1179" height="1317" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-src="img/cabana12-jacuzzi-noche.webp" fetchpriority="low" alt="Jacuzzi privado de la cabaña durante la noche" loading="lazy" decoding="async">
+            </button>
+            <button class="group-stay-photo" type="button" data-service="cabana12" aria-label="Abrir galería de los espacios interiores y la terraza">
+              <img width="1179" height="1344" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-src="img/cabana12-interior-terraza.webp" fetchpriority="low" alt="Interior de la cabaña conectado con la terraza" loading="lazy" decoding="async">
+            </button>
+          </div>
+
+          <div class="group-stay-copy">
+            <span class="kicker">Hospedaje destacado</span>
+            <h3 id="cabana12Title">Cabaña para hasta 12 personas.</h3>
+            <p>Una opción amplia para familias y grupos, con espacios privados, zonas exteriores y una vista privilegiada de Guatapé.</p>
+            <div class="group-stay-features" role="list" aria-label="Características de la cabaña">
+              <span role="listitem">Capacidad: hasta 12 personas</span>
+              <span role="listitem">Jacuzzi privado</span>
+              <span role="listitem">Vista a La Piedra y el embalse</span>
+              <span role="listitem">Cocina equipada y terraza</span>
+            </div>
+            <div class="story-actions">
+              <button class="btn btn-primary" type="button" data-service="cabana12">Ver 9 fotos y 2 videos</button>
+              <a class="btn btn-wa" href="https://wa.me/573006182215?text=Hola%20XEBAX%20Adventure%20Connection%2C%20quiero%20consultar%20disponibilidad%20de%20la%20caba%C3%B1a%20para%2012%20personas" target="_blank" rel="noopener">Consultar disponibilidad</a>
+            </div>
+            <small class="stay-note">La distribución, tarifa y disponibilidad se confirman directamente según las fechas de la reserva.</small>
+          </div>
+        </article>
+      </div>
     </section>
 
     <section class="highlights" aria-label="Lugares destacados de la región">
@@ -1296,8 +1425,8 @@
 
     <div class="marquee" aria-hidden="true">
       <div class="marquee-track">
-        <span>Guatapé <i></i> JetCar <i></i> Helicóptero <i></i> Cuatrimotos <i></i> Paintball <i></i> Jet Ski <i></i> Flyboard <i></i> Lanchas <i></i> Hospedaje <i></i></span>
-        <span>Guatapé <i></i> JetCar <i></i> Helicóptero <i></i> Cuatrimotos <i></i> Paintball <i></i> Jet Ski <i></i> Flyboard <i></i> Lanchas <i></i> Hospedaje <i></i></span>
+        <span>Cabaña para 12 <i></i> Guatapé <i></i> JetCar <i></i> Helicóptero <i></i> Cuatrimotos <i></i> Paintball <i></i> Jet Ski <i></i> Flyboard <i></i> Lanchas <i></i> Hospedaje <i></i></span>
+        <span>Cabaña para 12 <i></i> Guatapé <i></i> JetCar <i></i> Helicóptero <i></i> Cuatrimotos <i></i> Paintball <i></i> Jet Ski <i></i> Flyboard <i></i> Lanchas <i></i> Hospedaje <i></i></span>
       </div>
     </div>
 
@@ -1435,6 +1564,17 @@
           </article>
         </div>
         <p class="nautical-safety unified-note"><b>Una experiencia, toda la información:</b> abre cualquier tarjeta para recorrer su galería completa, conocer sus opciones y consultar disponibilidad. Las condiciones y requisitos se confirman directamente con el operador.</p>
+        <aside class="cabana-reminder reveal" aria-label="Recordatorio de la cabaña para 12 personas">
+          <span class="cabana-reminder-media" aria-hidden="true">
+            <img width="1179" height="1317" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-src="img/cabana12-jacuzzi-noche.webp" alt="" loading="lazy" decoding="async">
+          </span>
+          <div class="cabana-reminder-copy">
+            <span>Hospedaje para grupos</span>
+            <h3>¿Viajan hasta 12 personas?</h3>
+            <p>Conoce la cabaña destacada con jacuzzi, cocina, terraza y vista a La Piedra.</p>
+          </div>
+          <button class="btn btn-primary" type="button" data-service="cabana12">Ver fotos y videos</button>
+        </aside>
       </div>
     </section>
 
@@ -1756,39 +1896,6 @@
         </div>
       </div>
 
-      <div class="wrap group-stay-wrap">
-        <article class="group-stay-card reveal" aria-labelledby="cabana12Title">
-          <div class="group-stay-media" aria-label="Vista previa de la cabaña para grupos">
-            <button class="group-stay-photo main" type="button" data-service="cabana12" aria-label="Abrir galería de la habitación con vista a La Piedra y el embalse">
-              <img width="1179" height="1339" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-src="img/cabana12-habitacion-vista.webp" fetchpriority="low" alt="Habitación de la cabaña con vista a La Piedra y el embalse" loading="lazy" decoding="async">
-              <span class="group-stay-photo-label">Vista a La Piedra</span>
-            </button>
-            <button class="group-stay-photo" type="button" data-service="cabana12" aria-label="Abrir galería del jacuzzi de la cabaña">
-              <img width="1179" height="1317" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-src="img/cabana12-jacuzzi-noche.webp" fetchpriority="low" alt="Jacuzzi privado de la cabaña durante la noche" loading="lazy" decoding="async">
-            </button>
-            <button class="group-stay-photo" type="button" data-service="cabana12" aria-label="Abrir galería de los espacios interiores y la terraza">
-              <img width="1179" height="1344" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-src="img/cabana12-interior-terraza.webp" fetchpriority="low" alt="Interior de la cabaña conectado con la terraza" loading="lazy" decoding="async">
-            </button>
-          </div>
-
-          <div class="group-stay-copy">
-            <span class="kicker">Alojamiento para grupos</span>
-            <h3 id="cabana12Title">Cabaña para hasta 12 personas.</h3>
-            <p>Una opción amplia para familias y grupos que quieren compartir el viaje sin renunciar a espacios privados, zonas exteriores y una vista privilegiada de Guatapé.</p>
-            <div class="group-stay-features" role="list" aria-label="Características de la cabaña">
-              <span role="listitem">Capacidad máxima: 12 personas</span>
-              <span role="listitem">Jacuzzi privado</span>
-              <span role="listitem">Vista a La Piedra y el embalse</span>
-              <span role="listitem">Cocina equipada y terraza</span>
-            </div>
-            <div class="story-actions">
-              <button class="btn btn-primary" type="button" data-service="cabana12">Ver 9 fotos y 2 videos</button>
-              <a class="btn btn-wa" href="https://wa.me/573006182215?text=Hola%20XEBAX%20Adventure%20Connection%2C%20quiero%20consultar%20disponibilidad%20de%20la%20caba%C3%B1a%20para%2012%20personas" target="_blank" rel="noopener">Consultar disponibilidad</a>
-            </div>
-            <small class="stay-note">La distribución, tarifa y disponibilidad se confirman directamente según las fechas de la reserva.</small>
-          </div>
-        </article>
-      </div>
     </section>
 
     <section class="reel" aria-label="Reel visual de Guatapé">
