@@ -1367,6 +1367,111 @@
       .gallery-intro-side{padding-bottom:0}
       .gallery-intro-side .text-link{margin-top:.75rem}
     }
+
+    /* ===== Contraste publicitario y afiche vertical sin huecos ===== */
+    .hero-cabana-link{
+      border-color:rgba(239,123,39,.38);
+      background:linear-gradient(135deg,#fff8ed 0%,#ffe4bf 100%);
+      box-shadow:0 16px 34px -24px rgba(190,77,10,.58);
+    }
+    .hero-cabana-thumb{background:#fff;border:2px solid rgba(239,123,39,.3)}
+    .hero-cabana-arrow{background:var(--deep);box-shadow:0 8px 18px -10px rgba(6,45,43,.8)}
+
+    .cabana-feature .group-stay-card{
+      background:#fff3df;color:var(--ink);border:2px solid rgba(239,123,39,.46);
+      box-shadow:0 28px 65px -34px rgba(190,77,10,.54);
+    }
+    .cabana-feature .group-stay-copy{
+      background:linear-gradient(142deg,#fb8c2b 0%,#ef6d1d 58%,#db5114 100%);
+      color:#fff;
+    }
+    .cabana-feature .group-stay-copy .kicker{
+      display:inline-flex;width:max-content;padding:.45rem .72rem;border-radius:999px;
+      color:#fff;background:var(--deep);
+    }
+    .cabana-feature .group-stay-copy>p{color:rgba(255,255,255,.88)}
+    .cabana-feature .group-stay-features span{
+      border-color:rgba(255,255,255,.34);background:rgba(255,255,255,.16);color:#fff;
+    }
+    .cabana-feature .group-stay-copy .stay-note{color:rgba(255,255,255,.76)}
+    .cabana-feature .group-stay-media{background:#fff0dc}
+    .cabana-feature .group-stay-photo,
+    .cabana-feature .group-stay-photo.main{
+      background:var(--deep);border:2px solid rgba(255,255,255,.78);
+      box-shadow:0 18px 34px -22px rgba(100,47,12,.62);
+    }
+    .cabana-feature .btn-primary{background:var(--deep);color:#fff;box-shadow:none}
+    .cabana-feature .btn-primary:hover{background:#0b4944}
+
+    .cabana-reminder{
+      grid-template-columns:minmax(300px,.72fr) minmax(360px,1fr) minmax(210px,auto);
+      gap:clamp(.9rem,1.6vw,1.65rem);padding:.85rem;border:2px solid rgba(255,255,255,.72);
+      background:linear-gradient(118deg,#ff922f 0%,#f37720 52%,#de5516 100%);
+      box-shadow:0 24px 54px -30px rgba(186,70,6,.72),inset 6px 0 0 var(--deep);
+    }
+    .cabana-reminder::after{color:rgba(6,45,43,.1)}
+    .cabana-reminder-gallery{gap:.48rem}
+    .cabana-reminder-gallery span{
+      border:2px solid rgba(255,255,255,.82);background:var(--deep);
+      box-shadow:0 13px 24px -18px rgba(74,28,2,.75);
+    }
+    .cabana-reminder-copy>span{
+      display:inline-flex;width:max-content;padding:.4rem .62rem;border-radius:999px;
+      color:#fff;background:var(--deep);letter-spacing:.11em;
+    }
+    .cabana-reminder-copy h3{font-size:clamp(2rem,2.7vw,2.8rem);margin:.42rem 0 .48rem}
+    .cabana-reminder-copy p{color:rgba(255,255,255,.92)}
+    .cabana-reminder-points{margin-top:.7rem}
+    .cabana-reminder-points b{background:rgba(6,45,43,.18);border-color:rgba(255,255,255,.34)}
+    .cabana-reminder .btn-primary{background:var(--deep);color:#fff;box-shadow:none}
+    .cabana-reminder .btn-primary:hover{background:#0b4944}
+    .cabana-reminder .btn-wa{border:2px solid rgba(255,255,255,.68);box-shadow:none}
+
+    .service-card.poster-card.flyboard-service-card{
+      grid-column:span 12;display:grid;grid-template-columns:minmax(340px,390px) minmax(0,1fr);
+      min-height:520px;background:#041f1e;overflow:hidden;
+    }
+    .services-grid.is-filtered .service-card.flyboard-service-card:not(.is-hidden){grid-column:span 12}
+    .service-card.poster-card.flyboard-service-card>img{
+      grid-column:1;grid-row:1;width:100%;height:100%!important;min-height:520px;
+      aspect-ratio:auto!important;object-fit:contain!important;object-position:center!important;background:#071b1b;
+    }
+    .service-card.poster-card.flyboard-service-card:hover>img{transform:none}
+    .flyboard-service-card .service-content{
+      grid-column:2;grid-row:1;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;
+      padding:clamp(2rem,4.4vw,4.75rem);
+      background:
+        radial-gradient(circle at 86% 18%,rgba(186,226,44,.2),transparent 31%),
+        linear-gradient(135deg,#063b39 0%,#052f2d 55%,#031f1e 100%);
+    }
+    .flyboard-kicker{
+      display:inline-flex;padding:.46rem .7rem;border-radius:999px;background:var(--lime);color:var(--deep);
+      font-size:.7rem;font-weight:900;letter-spacing:.13em;text-transform:uppercase;
+    }
+    .flyboard-service-card .service-content h3{
+      max-width:620px;margin:.8rem 0 .65rem;font-size:clamp(3rem,5.7vw,5.7rem);line-height:.9;
+    }
+    .flyboard-service-card .service-content p{max-width:570px;font-size:1rem;line-height:1.58;color:rgba(255,255,255,.82)}
+    .flyboard-points{display:flex;flex-wrap:wrap;gap:.5rem;margin:1.2rem 0 1.3rem}
+    .flyboard-points b{
+      padding:.48rem .7rem;border:1px solid rgba(255,255,255,.2);border-radius:999px;
+      background:rgba(255,255,255,.08);font-size:.72rem;
+    }
+
+    @media (max-width:1060px){
+      .cabana-reminder{grid-template-columns:minmax(0,1fr) minmax(330px,.9fr)}
+    }
+    @media (max-width:900px){
+      .service-card.poster-card.flyboard-service-card{display:flex;flex-direction:column;min-height:0}
+      .service-card.poster-card.flyboard-service-card>img{
+        width:100%;height:auto!important;min-height:0;aspect-ratio:853/1280!important;object-fit:contain!important;
+      }
+      .flyboard-service-card .service-content{padding:1.6rem 1.35rem 1.75rem}
+      .flyboard-service-card .service-content h3{font-size:clamp(2.8rem,12vw,4.5rem)}
+    }
+    @media (max-width:700px){
+      .cabana-reminder{grid-template-columns:1fr}
+    }
   </style>
 </head>
 <body>
@@ -1616,12 +1721,16 @@
             </div>
           </article>
 
-          <article class="service-card poster-card poster-banner reveal" data-category="agua">
+          <article class="service-card poster-card flyboard-service-card reveal" data-category="agua">
             <img width="853" height="1280" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-src="img/poster-flyboard.webp" data-srcset="img/poster-flyboard-sm.webp 820w, img/poster-flyboard.webp 853w" sizes="92vw" fetchpriority="low" alt="Publicidad de la experiencia de Flyboard en Guatapé" loading="lazy" decoding="async">
             <span class="service-number">08</span><span class="service-category">Agua</span>
             <div class="service-content">
+              <span class="flyboard-kicker">Publicidad completa</span>
               <h3>Flyboard</h3>
               <p>Vuela sobre el agua con equipo profesional y acompañamiento durante toda la experiencia.</p>
+              <div class="flyboard-points" aria-label="Características principales">
+                <b>Equipo profesional</b><b>Vuelo sobre el agua</b><b>Acompañamiento</b>
+              </div>
               <button class="service-open" type="button" data-service="flyboard">Ver experiencia <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></button>
             </div>
           </article>
