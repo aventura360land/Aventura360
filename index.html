@@ -1579,6 +1579,46 @@
       .dialog-body h3{font-size:clamp(2.25rem,11vw,3.05rem)}
       .dialog-features{grid-template-columns:1fr;margin:1rem 0 1.2rem}
     }
+
+    /* ===== Centrado real del visor y Flyboard de ancho contenido ===== */
+    #serviceDialog{
+      position:fixed;inset:0;width:100vw;height:100svh;margin:0;padding:16px;
+      max-width:none;max-height:none;overflow:hidden;background:transparent;
+    }
+    #serviceDialog[open]{display:grid;place-items:center}
+    #serviceDialog .service-dialog{margin:0}
+
+    @media (min-width:701px){
+      .service-card.poster-card.flyboard-service-card{
+        grid-column:1/-1;justify-self:center;width:min(840px,100%);display:grid;
+        grid-template-columns:300px minmax(0,1fr);min-height:450px;
+      }
+      .services-grid.is-filtered .service-card.flyboard-service-card:not(.is-hidden){
+        grid-column:1/-1;width:min(840px,100%);justify-self:center;
+      }
+      .service-card.poster-card.flyboard-service-card>img{
+        width:300px;height:450px!important;min-height:450px;aspect-ratio:2/3!important;
+      }
+      .service-card.poster-card.flyboard-service-card .service-content{
+        min-width:0;padding:2rem 2.5rem;
+      }
+      .service-card.poster-card.flyboard-service-card .service-content h3{
+        font-size:clamp(3rem,4.3vw,4.1rem);margin:.72rem 0 .65rem;
+      }
+      .service-card.poster-card.flyboard-service-card .service-content p{font-size:.92rem;line-height:1.5}
+      .flyboard-points{margin:.95rem 0 1rem}
+    }
+    @media (max-width:700px){
+      #serviceDialog{padding:6px}
+      .service-card.poster-card.flyboard-service-card{
+        grid-column:1/-1;width:100%;display:flex;flex-direction:column;min-height:0;
+      }
+      .service-card.poster-card.flyboard-service-card>img{
+        width:100%;height:auto!important;min-height:0;aspect-ratio:853/1280!important;
+      }
+      .service-card.poster-card.flyboard-service-card .service-content{padding:1.45rem 1.2rem 1.6rem}
+      .service-card.poster-card.flyboard-service-card .service-content h3{font-size:clamp(2.8rem,13vw,3.8rem)}
+    }
   </style>
 </head>
 <body>
