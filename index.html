@@ -1619,6 +1619,102 @@
       .service-card.poster-card.flyboard-service-card .service-content{padding:1.45rem 1.2rem 1.6rem}
       .service-card.poster-card.flyboard-service-card .service-content h3{font-size:clamp(2.8rem,13vw,3.8rem)}
     }
+
+    /* ===== Asistente de consultas: 100% local, sin backend ===== */
+    .chat-launcher{
+      position:fixed;right:22px;bottom:96px;z-index:74;min-height:54px;padding:.55rem .92rem .55rem .58rem;
+      border:1px solid rgba(255,255,255,.22);border-radius:999px;background:linear-gradient(135deg,var(--deep),#0b4a44);
+      color:#fff;display:flex;align-items:center;gap:.68rem;cursor:pointer;box-shadow:0 18px 42px -16px rgba(6,45,43,.82);
+      transition:transform .22s ease,box-shadow .22s ease,opacity .22s ease;
+    }
+    .chat-launcher:hover{transform:translateY(-3px);box-shadow:0 22px 48px -15px rgba(6,45,43,.92)}
+    .chat-launcher[aria-expanded="true"]{opacity:0;pointer-events:none;transform:translateY(8px)}
+    .chat-launcher-icon{
+      position:relative;width:40px;height:40px;flex:none;border-radius:50%;display:grid;place-items:center;
+      background:var(--orange);color:#fff;box-shadow:0 8px 22px -10px rgba(239,123,39,.95);
+    }
+    .chat-launcher-icon svg{width:21px;height:21px}
+    .chat-launcher-icon::after{
+      content:"";position:absolute;right:1px;bottom:1px;width:9px;height:9px;border:2px solid var(--deep);border-radius:50%;background:var(--lime)
+    }
+    .chat-launcher-copy{display:grid;text-align:left;line-height:1.08}
+    .chat-launcher-copy strong{font-family:var(--display);font-size:.86rem;letter-spacing:-.01em}
+    .chat-launcher-copy small{margin-top:.22rem;color:rgba(255,255,255,.68);font-size:.62rem;font-weight:600}
+
+    .chat-panel{
+      position:fixed;right:22px;bottom:96px;z-index:76;width:min(400px,calc(100vw - 32px));height:min(620px,calc(100dvh - 126px));
+      display:grid;grid-template-rows:auto minmax(0,1fr) auto;background:var(--paper);color:var(--ink);border:1px solid rgba(6,45,43,.14);
+      border-radius:25px;overflow:hidden;box-shadow:0 34px 90px -24px rgba(2,20,19,.7);transform-origin:bottom right;
+      opacity:0;visibility:hidden;pointer-events:none;transform:translateY(16px) scale(.96);transition:opacity .2s ease,transform .22s ease,visibility .22s;
+    }
+    .chat-panel.is-open{opacity:1;visibility:visible;pointer-events:auto;transform:none}
+    .chat-head{
+      min-height:76px;padding:.9rem 1rem;display:flex;align-items:center;gap:.75rem;color:#fff;
+      background:linear-gradient(128deg,var(--deep) 0%,#0b4a44 72%,#126b61 100%);border-bottom:3px solid var(--orange);
+    }
+    .chat-avatar{
+      width:45px;height:45px;flex:none;border-radius:15px;background:#02050a var(--brand-logo-image) center/contain no-repeat;
+      box-shadow:0 9px 24px -12px rgba(0,0,0,.8);
+    }
+    .chat-head-copy{min-width:0;display:grid;line-height:1.15}
+    .chat-head-copy strong{font-family:var(--display);font-size:1rem}
+    .chat-head-copy span{display:flex;align-items:center;gap:.38rem;margin-top:.27rem;color:rgba(255,255,255,.72);font-size:.66rem;font-weight:600}
+    .chat-head-copy span::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--lime);box-shadow:0 0 0 3px rgba(180,214,74,.16)}
+    .chat-close{
+      width:38px;height:38px;margin-left:auto;flex:none;border:1px solid rgba(255,255,255,.2);border-radius:50%;
+      display:grid;place-items:center;background:rgba(255,255,255,.1);color:#fff;font-size:1.2rem;cursor:pointer;transition:background .2s;
+    }
+    .chat-close:hover{background:rgba(255,255,255,.2)}
+    .chat-messages{
+      min-height:0;overflow-y:auto;overscroll-behavior:contain;padding:1rem;background:
+      radial-gradient(circle at 100% 0,rgba(180,214,74,.09),transparent 35%),var(--paper);scrollbar-width:thin;
+    }
+    .chat-row{display:flex;gap:.5rem;margin:.72rem 0;animation:chatIn .24s ease both}
+    .chat-row.user{justify-content:flex-end}
+    .chat-bubble{max-width:86%;padding:.78rem .9rem;border-radius:16px 16px 16px 5px;background:#f2ecdf;color:var(--ink);font-size:.84rem;line-height:1.48;box-shadow:0 8px 22px -19px rgba(6,45,43,.6);white-space:pre-line}
+    .chat-row.user .chat-bubble{border-radius:16px 16px 5px 16px;background:var(--deep);color:#fff}
+    .chat-options{display:flex;flex-wrap:wrap;gap:.42rem;margin:.25rem 0 .85rem;animation:chatIn .24s ease both}
+    .chat-option{
+      border:1px solid rgba(13,90,82,.26);border-radius:999px;padding:.5rem .7rem;background:#fff;color:var(--water);
+      font-size:.69rem;font-weight:800;line-height:1.15;cursor:pointer;transition:background .18s,color .18s,border-color .18s,transform .18s;
+    }
+    .chat-option:hover{background:var(--deep);border-color:var(--deep);color:#fff;transform:translateY(-1px)}
+    .chat-option.is-wa{background:var(--orange);border-color:var(--orange);color:#fff}
+    .chat-typing{display:inline-flex;align-items:center;gap:4px;min-width:54px}
+    .chat-typing i{width:7px;height:7px;border-radius:50%;background:var(--aqua);animation:chatDot 1s infinite ease-in-out}
+    .chat-typing i:nth-child(2){animation-delay:.14s}.chat-typing i:nth-child(3){animation-delay:.28s}
+    .chat-foot{padding:.78rem;border-top:1px solid var(--line);background:#fff}
+    .chat-form{display:grid;grid-template-columns:minmax(0,1fr) 44px;gap:.55rem;align-items:end}
+    .chat-input{
+      width:100%;min-height:44px;max-height:104px;padding:.72rem .85rem;border:1px solid rgba(16,33,30,.18);border-radius:15px;
+      resize:none;overflow-y:auto;background:var(--paper);color:var(--ink);font:500 .82rem/1.38 var(--body);outline:none;
+    }
+    .chat-input:focus{border-color:var(--aqua);box-shadow:0 0 0 3px rgba(25,160,146,.11)}
+    .chat-send{
+      width:44px;height:44px;border:0;border-radius:14px;display:grid;place-items:center;background:var(--orange);color:#fff;
+      cursor:pointer;box-shadow:0 11px 24px -12px rgba(239,123,39,.85);transition:transform .18s,background .18s;
+    }
+    .chat-send:hover{background:var(--orange-deep);transform:translateY(-2px)}
+    .chat-send svg{width:19px;height:19px}
+    .chat-privacy{margin-top:.52rem;text-align:center;color:#75807e;font-size:.59rem;line-height:1.35}
+    .chat-wa-link{color:#167b42;font-weight:800}
+    @keyframes chatIn{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:none}}
+    @keyframes chatDot{0%,60%,100%{transform:translateY(0);opacity:.42}30%{transform:translateY(-4px);opacity:1}}
+
+    @media(max-width:620px){
+      .chat-launcher{right:16px;bottom:82px;width:52px;height:52px;min-height:52px;padding:6px;border-radius:50%}
+      .chat-launcher-icon{width:38px;height:38px}
+      .chat-launcher-copy{display:none}
+      .chat-panel{right:8px;bottom:78px;width:calc(100vw - 16px);height:min(650px,calc(100dvh - 94px));border-radius:22px}
+      .chat-messages{padding:.85rem}
+      .chat-bubble{max-width:90%;font-size:.82rem}
+      .chat-option{font-size:.67rem;padding:.48rem .63rem}
+      .chat-foot{padding:.68rem}
+    }
+    @media(prefers-reduced-motion:reduce){
+      .chat-panel,.chat-launcher,.chat-row,.chat-options{transition:none;animation:none}
+      .chat-typing i{animation:none}
+    }
   </style>
 </head>
 <body>
@@ -2531,6 +2627,34 @@
     <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15l-1.3 4.8L7 20.5A10 10 0 1 0 12 2Zm0 18.2A8.2 8.2 0 0 1 7.8 19l-.3-.2-2.9.8.8-2.8-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.4-.7-1.7-.8-.2-.1-.4-.1-.5.1-.2.2-.6.8-.8 1-.1.1-.3.2-.5 0-.2-.1-1-.4-1.9-1.2-.7-.6-1.2-1.4-1.3-1.6-.1-.2 0-.4.1-.5l.4-.4c.1-.1.2-.3.2-.4.1-.1 0-.3 0-.4l-.8-1.9c-.2-.5-.4-.4-.5-.4h-.5c-.2 0-.4.1-.6.3-.2.2-.8.8-.8 1.9s.8 2.2 1 2.4c.1.1 1.7 2.6 4 3.6 1.6.7 2.2.7 3 .6.5-.1 1.4-.6 1.6-1.1.2-.6.2-1 .1-1.1 0-.1-.2-.2-.4-.3Z"/></svg>
   </a>
 
+  <button class="chat-launcher" id="chatLauncher" type="button" aria-expanded="false" aria-controls="chatPanel" aria-label="Abrir asistente de XEBAX">
+    <span class="chat-launcher-icon" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a4 4 0 0 1-4 4H8l-5 3V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4Z"/><path d="M8 9h8M8 13h5"/></svg>
+    </span>
+    <span class="chat-launcher-copy"><strong>¿Tienes preguntas?</strong><small>Asistente XEBAX · respuesta inmediata</small></span>
+  </button>
+
+  <aside class="chat-panel" id="chatPanel" role="dialog" aria-modal="false" aria-hidden="true" aria-labelledby="chatTitle">
+    <header class="chat-head">
+      <span class="chat-avatar" aria-hidden="true"></span>
+      <span class="chat-head-copy">
+        <strong id="chatTitle">Asistente XEBAX</strong>
+        <span>Respuestas automáticas disponibles</span>
+      </span>
+      <button class="chat-close" id="chatClose" type="button" aria-label="Cerrar asistente">×</button>
+    </header>
+    <div class="chat-messages" id="chatMessages" aria-live="polite" aria-relevant="additions"></div>
+    <footer class="chat-foot">
+      <form class="chat-form" id="chatForm">
+        <textarea class="chat-input" id="chatInput" rows="1" maxlength="260" autocomplete="off" enterkeyhint="send" placeholder="Escribe tu pregunta…" aria-label="Escribe tu pregunta"></textarea>
+        <button class="chat-send" type="submit" aria-label="Enviar pregunta">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>
+        </button>
+      </form>
+      <p class="chat-privacy">La conversación se procesa en este dispositivo y no se almacena. <a class="chat-wa-link" id="chatWhatsApp" href="https://wa.me/573006182215" target="_blank" rel="noopener">Continuar por WhatsApp</a></p>
+    </footer>
+  </aside>
+
   <aside class="aviso" id="aviso" role="note" aria-label="Aviso de privacidad" hidden>
     <p>
       <b>Sobre tus datos</b>
@@ -2923,6 +3047,700 @@
         features: ["3 fotografías reales de exterior e interior", "Espacio para compartir durante el recorrido", "Capacidad, disponibilidad y condiciones por confirmar"]
       }
     };
+
+    /*
+      Asistente XEBAX basado en reglas.
+      Toda la biblioteca y el procesamiento viven en este archivo: no usa APIs,
+      no envía datos a servidores y funciona directamente en GitHub Pages.
+    */
+    const CHAT_WHATSAPP_NUMBER = "573006182215";
+    const chatServiceLibrary = {
+      helicoptero: {
+        aliases: ["helicoptero", "vuelo panoramico", "vuelo en helicoptero", "sobrevuelo", "experiencia de aire"],
+        section: "#destacadas"
+      },
+      cuatrimotos: {
+        aliases: ["cuatrimoto", "cuatrimotos", "moto cuatro", "moto 4", "ruta en tierra", "ruta por bosque"],
+        section: "#destacadas"
+      },
+      paintball: {
+        aliases: ["paintball", "paint ball", "juego de pintura"],
+        section: "#destacadas"
+      },
+      jetcar: {
+        aliases: ["jetcar", "jet car", "carro en el agua", "carro anfibio", "lamborghini anfibio", "ferrari anfibio", "rolls royce anfibio"],
+        section: "#jetcar"
+      },
+      flyboard: {
+        aliases: ["flyboard", "fly board", "volar sobre el agua"],
+        section: "#nautico"
+      },
+      wakeboard: {
+        aliases: ["wakeboard", "wake board", "tabla sobre el agua"],
+        section: "#nautico"
+      },
+      jetski: {
+        aliases: ["jet ski", "jetski", "moto de agua", "moto acuatica", "moto nautica"],
+        section: "#nautico"
+      },
+      lancha: {
+        aliases: ["lancha", "lanchas", "paseo en lancha", "bote", "planchon", "planchones", "embarcacion"],
+        section: "#nautico"
+      },
+      diaDeSol: {
+        aliases: ["dia de sol", "piscina", "plan de descanso", "almuerzo y refrigerio"],
+        section: "#nautico"
+      },
+      hospedaje: {
+        aliases: ["hospedaje", "hospedajes", "hotel", "hoteles", "alojamiento", "alojamientos", "cabana", "cabanas", "donde dormir"],
+        section: "#hospedaje"
+      },
+      cabana12: {
+        aliases: ["cabana para 12", "cabana 12", "hasta 12 personas", "12 personas", "grupo de 12", "alojamiento para grupos"],
+        section: "#cabana12"
+      },
+      piedra: {
+        aliases: ["piedra del penol", "piedra del peñol", "la piedra", "penol", "peñol"],
+        section: "#destinos"
+      },
+      pueblo: {
+        aliases: ["pueblo de guatape", "pueblo", "zocalos", "calle de los paraguas", "parque principal"],
+        section: "#destinos"
+      },
+      embalse: {
+        aliases: ["embalse", "represa", "islas de guatape", "lago"],
+        section: "#destinos"
+      }
+    };
+
+    const chatIntentLibrary = [
+      {
+        id: "greeting",
+        phrases: ["hola", "buenas", "buenos dias", "buenas tardes", "buenas noches", "hey", "hola xebax"],
+        keywords: ["saludos"], threshold: 2
+      },
+      {
+        id: "thanks",
+        phrases: ["muchas gracias", "gracias", "muy amable", "perfecto gracias", "listo gracias"],
+        keywords: ["agradecido", "agradecida"], threshold: 2
+      },
+      {
+        id: "goodbye",
+        phrases: ["adios", "hasta luego", "nos vemos", "chao", "bye"],
+        keywords: ["despedida"], threshold: 2
+      },
+      {
+        id: "human",
+        phrases: ["hablar con una persona", "hablar con alguien", "hablar con un asesor", "asesor humano", "atencion humana", "contactar operador"],
+        keywords: ["asesor", "humano", "operador", "contacto", "whatsapp", "telefono", "llamar"], threshold: 2
+      },
+      {
+        id: "price",
+        phrases: ["cuanto cuesta", "cuanto vale", "que precio tiene", "cual es el precio", "consultar precio", "ver precios"],
+        keywords: ["precio", "precios", "tarifa", "tarifas", "valor", "costo", "costos", "promocion", "descuento"], threshold: 2
+      },
+      {
+        id: "availability",
+        phrases: ["hay disponibilidad", "tienen disponibilidad", "hay cupo", "tienen cupo", "esta disponible", "quiero saber si hay"],
+        keywords: ["disponibilidad", "disponible", "cupo", "cupos", "fecha", "fechas"], threshold: 2
+      },
+      {
+        id: "reservation",
+        phrases: ["quiero reservar", "como puedo reservar", "hacer una reserva", "quiero apartar", "separar un cupo"],
+        keywords: ["reservar", "reserva", "apartar", "separar", "agendar", "comprar"], threshold: 2
+      },
+      {
+        id: "tripDetails",
+        phrases: ["somos un grupo", "somos una pareja", "viajamos el", "vamos el", "para este fin de semana"],
+        keywords: ["somos", "viajamos", "llegamos", "adultos", "ninos", "niños", "personas", "huespedes", "huéspedes"], threshold: 4
+      },
+      {
+        id: "payment",
+        phrases: ["como se paga", "formas de pago", "metodos de pago", "hay que dar anticipo", "pago anticipado"],
+        keywords: ["pagar", "pago", "pagos", "anticipo", "abono", "transferencia", "tarjeta", "efectivo"], threshold: 2
+      },
+      {
+        id: "requirements",
+        phrases: ["que requisitos piden", "cuales son los requisitos", "edad minima", "pueden ir ninos", "pueden ir niños", "es seguro"],
+        keywords: ["requisito", "requisitos", "edad", "menor", "menores", "nino", "niño", "seguridad", "seguro", "chaleco", "proteccion"], threshold: 2
+      },
+      {
+        id: "duration",
+        phrases: ["cuanto dura", "que duracion tiene", "tiempo del recorrido", "cuanto tiempo"],
+        keywords: ["duracion", "dura", "minutos", "horas", "tiempo"], threshold: 2
+      },
+      {
+        id: "schedule",
+        phrases: ["a que hora", "cual es el horario", "horarios disponibles", "hora de salida"],
+        keywords: ["horario", "horarios", "hora", "abren", "cierran", "salida"], threshold: 2
+      },
+      {
+        id: "location",
+        phrases: ["donde estan", "donde queda", "como llego", "cual es la ubicacion", "en que lugar"],
+        keywords: ["ubicacion", "direccion", "mapa", "llegar", "donde"], threshold: 2
+      },
+      {
+        id: "includes",
+        phrases: ["que incluye", "que viene incluido", "que trae", "que ofrecen en", "incluye equipo"],
+        keywords: ["incluye", "incluido", "incluyen", "trae", "servicio"], threshold: 2
+      },
+      {
+        id: "photos",
+        phrases: ["quiero ver fotos", "tienen fotos", "ver la galeria", "quiero ver videos", "tienen videos"],
+        keywords: ["foto", "fotos", "fotografia", "fotografias", "video", "videos", "galeria", "imagenes"], threshold: 2
+      },
+      {
+        id: "recommendation",
+        phrases: ["que me recomiendan", "que me recomiendas", "cual es mejor", "ayudame a elegir", "no se cual elegir"],
+        keywords: ["recomendar", "recomiendan", "recomiendas", "elegir", "mejor"], threshold: 2
+      },
+      {
+        id: "lodgingRange",
+        phrases: ["hotel economico", "hospedaje economico", "hotel barato", "hotel de lujo", "hospedaje de lujo", "diferentes presupuestos"],
+        keywords: ["economico", "económico", "barato", "lujo", "presupuesto"], threshold: 2
+      },
+      {
+        id: "groups",
+        phrases: ["vamos en grupo", "para grupos", "familia grande", "grupo grande", "muchas personas"],
+        keywords: ["grupo", "grupos", "familia", "familias"], threshold: 2
+      },
+      {
+        id: "couples",
+        phrases: ["plan para pareja", "cabana para pareja", "cabaña para pareja", "viaje romantico", "somos dos"],
+        keywords: ["pareja", "parejas", "romantico", "romántico"], threshold: 2
+      },
+      {
+        id: "weather",
+        phrases: ["que pasa si llueve", "si esta lloviendo", "depende del clima", "mal clima"],
+        keywords: ["lluvia", "llueve", "clima", "tormenta", "lloviendo"], threshold: 2
+      },
+      {
+        id: "transport",
+        phrases: ["incluye transporte", "tienen transporte", "me recogen", "servicio de transporte"],
+        keywords: ["transporte", "recoger", "recogen", "traslado", "vehiculo"], threshold: 2
+      },
+      {
+        id: "cancellation",
+        phrases: ["puedo cancelar", "politica de cancelacion", "devolucion del dinero", "cambiar la fecha"],
+        keywords: ["cancelar", "cancelacion", "devolucion", "reembolso", "cambiar", "reprogramar"], threshold: 2
+      },
+      {
+        id: "offerings",
+        phrases: ["que experiencias tienen", "que actividades ofrecen", "que planes manejan", "que puedo hacer", "que ofrecen", "ver experiencias"],
+        keywords: ["experiencias", "actividades", "planes", "opciones", "aventuras"], threshold: 2
+      }
+    ];
+
+    const chatContext = {
+      lastService: "",
+      partySize: "",
+      userMessages: [],
+      started: false,
+      busy: false
+    };
+
+    function chatNormalize(value = "") {
+      return String(value)
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .replace(/[^a-z0-9\s]/g, " ")
+        .replace(/\s+/g, " ")
+        .trim();
+    }
+
+    function chatDistance(a, b) {
+      if (a === b) return 0;
+      if (!a.length) return b.length;
+      if (!b.length) return a.length;
+      const previous = Array.from({ length: b.length + 1 }, (_, index) => index);
+      for (let row = 1; row <= a.length; row++) {
+        let diagonal = previous[0];
+        previous[0] = row;
+        for (let column = 1; column <= b.length; column++) {
+          const above = previous[column];
+          previous[column] = Math.min(
+            previous[column] + 1,
+            previous[column - 1] + 1,
+            diagonal + (a[row - 1] === b[column - 1] ? 0 : 1)
+          );
+          diagonal = above;
+        }
+      }
+      return previous[b.length];
+    }
+
+    function chatWordMatches(word, target) {
+      if (word === target) return true;
+      if (word.length >= 4 && target.length >= 5 && (word.startsWith(target) || target.startsWith(word))) return true;
+      if (word.length < 4 || target.length < 4) return false;
+      const tolerance = Math.max(word.length, target.length) >= 8 ? 2 : 1;
+      return Math.abs(word.length - target.length) <= tolerance && chatDistance(word, target) <= tolerance;
+    }
+
+    function chatPhraseScore(query, phrase) {
+      const normalizedPhrase = chatNormalize(phrase);
+      if (!normalizedPhrase) return 0;
+      if (query === normalizedPhrase) return 12 + normalizedPhrase.split(" ").length;
+      if (query.includes(normalizedPhrase)) return 8 + normalizedPhrase.split(" ").length;
+      const queryWords = query.split(" ");
+      const phraseWords = normalizedPhrase.split(" ");
+      const matches = phraseWords.filter(target => queryWords.some(word => chatWordMatches(word, target))).length;
+      return matches === phraseWords.length ? 4 + matches : matches / phraseWords.length >= .75 ? 2 + matches : 0;
+    }
+
+    function findChatService(query) {
+      let result = null;
+      Object.entries(chatServiceLibrary).forEach(([key, item]) => {
+        item.aliases.forEach(alias => {
+          const normalizedAlias = chatNormalize(alias);
+          const allowFuzzy = normalizedAlias.includes(" ") || normalizedAlias.length >= 5;
+          const score = query.includes(normalizedAlias) || allowFuzzy ? chatPhraseScore(query, normalizedAlias) : 0;
+          if (!result || score > result.score) result = { key, score };
+        });
+      });
+      return result && result.score >= 4 ? result.key : "";
+    }
+
+    function findChatIntent(query) {
+      const queryWords = query.split(" ").filter(Boolean);
+      let result = null;
+      chatIntentLibrary.forEach((intent, intentIndex) => {
+        let score = 0;
+        intent.phrases.forEach(phrase => { score = Math.max(score, chatPhraseScore(query, phrase)); });
+        intent.keywords.forEach(keyword => {
+          const normalizedKeyword = chatNormalize(keyword);
+          if (normalizedKeyword.includes(" ")) {
+            if (query.includes(normalizedKeyword)) score += 3;
+            return;
+          }
+          if (queryWords.some(word => chatWordMatches(word, normalizedKeyword))) score += 2;
+        });
+        if (intent.id === "tripDetails" && /\b(?:somos|viajamos|llegamos)\s+(?:\w+\s+)?\d{1,2}\b/.test(query)) score += 6;
+        if (score >= intent.threshold && (!result || score > result.score || (score === result.score && intentIndex < result.index))) {
+          result = { id: intent.id, score, index: intentIndex };
+        }
+      });
+      return result?.id || "";
+    }
+
+    function chatPick(list, seed = "") {
+      const total = [...seed].reduce((sum, character) => sum + character.charCodeAt(0), 0);
+      return list[total % list.length];
+    }
+
+    function chatServiceName(serviceKey) {
+      return serviceData[serviceKey]?.title || "esta opción";
+    }
+
+    function chatServiceOptions(serviceKey) {
+      const item = chatServiceLibrary[serviceKey];
+      const title = chatServiceName(serviceKey);
+      return [
+        { label: "Consultar precio", query: `¿Cuál es el precio de ${title}?` },
+        { label: "Ver disponibilidad", query: `¿Hay disponibilidad para ${title}?` },
+        ...(serviceData[serviceKey] ? [{ label: "Ver fotos", service: serviceKey }] : []),
+        ...(item?.section ? [{ label: "Ver sección", section: item.section }] : []),
+        { label: "WhatsApp", whatsapp: true }
+      ];
+    }
+
+    function chatBuildAnswer(intent, serviceKey, rawMessage) {
+      const service = serviceData[serviceKey];
+      const serviceName = service?.title || "la opción que te interesa";
+      const commonWhatsApp = [{ label: "Enviar consulta por WhatsApp", whatsapp: true }];
+
+      if (intent === "greeting") {
+        return {
+          text: chatPick([
+            "¡Hola! Soy el asistente virtual de XEBAX. Puedo orientarte sobre experiencias, hospedaje, precios, disponibilidad y reservas.",
+            "¡Hola! Cuéntame qué quieres vivir en Guatapé y te ayudo a encontrar la información más útil."
+          ], rawMessage),
+          options: [
+            { label: "Ver experiencias", query: "¿Qué experiencias ofrecen?" },
+            { label: "Hospedaje", query: "¿Qué hospedajes manejan?" },
+            { label: "Cabaña para 12", query: "Quiero información de la cabaña para 12 personas" },
+            { label: "Consultar precios", query: "Quiero consultar precios" }
+          ]
+        };
+      }
+
+      if (intent === "thanks") {
+        return {
+          text: chatPick(["¡Con gusto! ¿Deseas consultar algo más?", "Con mucho gusto. Puedo ayudarte con otra experiencia o preparar tu consulta por WhatsApp."], rawMessage),
+          options: [{ label: "Otra experiencia", query: "¿Qué experiencias ofrecen?" }, ...commonWhatsApp]
+        };
+      }
+
+      if (intent === "goodbye") {
+        return { text: "¡Hasta pronto! Cuando quieras planear tu visita a Guatapé, aquí estaremos para orientarte.", options: commonWhatsApp };
+      }
+
+      if (intent === "human") {
+        return {
+          text: "Claro. Puedes continuar con un asesor por WhatsApp. Prepararé el mensaje con lo que hayas consultado para que no tengas que repetirlo.",
+          options: commonWhatsApp
+        };
+      }
+
+      if (intent === "price") {
+        return {
+          text: service
+            ? `La tarifa de ${serviceName} puede variar según la fecha, cantidad de personas, duración y disponibilidad. Para darte un valor correcto, indícame la fecha y cuántas personas viajarían.`
+            : "Manejamos opciones para distintos presupuestos. Los precios cambian según la experiencia, la fecha y la cantidad de personas. Dime qué actividad u hospedaje te interesa y para cuántas personas sería.",
+          options: service ? [{ label: "Indicar mis datos", query: "Quiero indicar fecha y número de personas" }, ...commonWhatsApp] : [
+            { label: "Hospedaje", query: "Precio de hospedaje" },
+            { label: "Helicóptero", query: "Precio del vuelo en helicóptero" },
+            { label: "Actividades de agua", query: "¿Qué actividades de agua ofrecen?" },
+            ...commonWhatsApp
+          ]
+        };
+      }
+
+      if (intent === "availability") {
+        return {
+          text: `La disponibilidad de ${serviceName} se confirma en tiempo real con el operador. Escríbeme la fecha, el número de personas y, si aplica, el horario aproximado que prefieres.`,
+          options: [{ label: "Enviar datos por WhatsApp", whatsapp: true }, { label: "Ver otras opciones", query: "¿Qué experiencias ofrecen?" }]
+        };
+      }
+
+      if (intent === "reservation") {
+        return {
+          text: `Para reservar ${serviceName}, necesitamos la fecha, cantidad de personas y tus datos de contacto. Puedes escribirlos aquí y el botón de WhatsApp llevará la consulta preparada para que un asesor confirme tarifa, cupo y condiciones.`,
+          options: commonWhatsApp
+        };
+      }
+
+      if (intent === "tripDetails") {
+        const sizeMatch = chatNormalize(rawMessage).match(/\b(\d{1,2})\s*(?:personas|viajeros|adultos|huespedes)?\b/);
+        if (sizeMatch) chatContext.partySize = sizeMatch[1];
+        return {
+          text: `Perfecto${chatContext.partySize ? `, registré que serían ${chatContext.partySize} personas` : ""}. También necesitamos la fecha y la experiencia o tipo de hospedaje que prefieren. Con esos datos un asesor puede confirmar la opción adecuada.`,
+          options: [{ label: "Elegir experiencia", query: "¿Qué experiencias ofrecen?" }, { label: "Ver hospedaje", query: "¿Qué hospedajes manejan?" }, ...commonWhatsApp]
+        };
+      }
+
+      if (intent === "payment") {
+        return {
+          text: "Los métodos de pago, anticipos y condiciones pueden variar según el operador o el hospedaje. Un asesor te confirmará el procedimiento exacto antes de realizar cualquier pago.",
+          options: commonWhatsApp
+        };
+      }
+
+      if (intent === "requirements") {
+        return {
+          text: service
+            ? `Los requisitos de ${serviceName} —como edad mínima, equipo, acompañamiento y condiciones de seguridad— se confirman directamente con el operador antes de reservar.`
+            : "La edad mínima, el equipo y las condiciones de seguridad dependen de cada actividad. Dime cuál te interesa y te muestro la información disponible; el operador confirma los requisitos finales.",
+          options: service ? chatServiceOptions(serviceKey) : [
+            { label: "Helicóptero", query: "Requisitos para helicóptero" },
+            { label: "Cuatrimotos", query: "Requisitos para cuatrimotos" },
+            { label: "Actividades de agua", query: "Requisitos para actividades de agua" },
+            ...commonWhatsApp
+          ]
+        };
+      }
+
+      if (intent === "duration" || intent === "schedule") {
+        return {
+          text: `${intent === "duration" ? "La duración" : "El horario"} de ${serviceName} depende de la ruta, modalidad y disponibilidad del operador. Se confirma junto con la fecha de la reserva para darte información exacta.`,
+          options: commonWhatsApp
+        };
+      }
+
+      if (intent === "location") {
+        return {
+          text: "Las experiencias y hospedajes están ubicados en Guatapé y El Peñol, Antioquia, Colombia. El punto exacto de encuentro cambia según la actividad y se confirma al reservar.",
+          options: [{ label: "Ver destinos", section: "#destinos" }, ...commonWhatsApp]
+        };
+      }
+
+      if (intent === "includes") {
+        return service
+          ? {
+              text: `${serviceName}: ${service.description}\n\nInformación destacada: ${service.features.slice(0, 3).join(" · ")}.`,
+              options: chatServiceOptions(serviceKey)
+            }
+          : {
+              text: "Lo incluido cambia según la experiencia. Indícame si te interesa aire, tierra, agua u hospedaje para darte la información correspondiente.",
+              options: [
+                { label: "Aire", query: "Experiencias de aire" },
+                { label: "Tierra", query: "Experiencias de tierra" },
+                { label: "Agua", query: "Experiencias de agua" },
+                { label: "Hospedaje", query: "Opciones de hospedaje" }
+              ]
+            };
+      }
+
+      if (intent === "photos") {
+        return {
+          text: service
+            ? `Puedes abrir la galería de ${serviceName} para ver su publicidad, fotografías reales${service.videos?.length ? " y videos" : ""}.`
+            : "La página incluye fotografías reales, publicidad y videos de varias experiencias. Puedes abrir cada tarjeta o visitar la galería general.",
+          options: service ? chatServiceOptions(serviceKey) : [{ label: "Abrir galería", section: "#galeria" }, { label: "Ver experiencias", section: "#experiencias" }]
+        };
+      }
+
+      if (intent === "recommendation") {
+        return {
+          text: "Te ayudo a elegir. ¿Prefieres adrenalina, una experiencia panorámica, actividades sobre el agua o un plan de descanso y hospedaje?",
+          options: [
+            { label: "Adrenalina", query: "Quiero una experiencia de adrenalina" },
+            { label: "Vista panorámica", query: "Quiero una experiencia panorámica en helicóptero" },
+            { label: "Sobre el agua", query: "¿Qué actividades de agua ofrecen?" },
+            { label: "Descanso", query: "Quiero hospedaje o Día de Sol" }
+          ]
+        };
+      }
+
+      if (intent === "lodgingRange") {
+        return {
+          text: "Manejamos hospedajes desde la línea económica hasta la línea de lujo: hoteles, cabañas para pareja, alojamientos para grupos y una cabaña destacada para hasta 12 personas. La recomendación se hace según tus fechas, número de viajeros y presupuesto.",
+          options: [
+            { label: "Cabaña para 12", query: "Quiero información de la cabaña para 12" },
+            { label: "Ver hospedajes", service: "hospedaje" },
+            { label: "Consultar disponibilidad", whatsapp: true }
+          ]
+        };
+      }
+
+      if (intent === "groups") {
+        return {
+          text: "Para grupos contamos con experiencias de tierra, aire y agua, además de hospedajes. La opción destacada es una cabaña para hasta 12 personas con cocina equipada, terraza, jacuzzi privado y vista a La Piedra y el embalse.",
+          options: [{ label: "Ver cabaña para 12", service: "cabana12" }, { label: "Consultar grupo", whatsapp: true }]
+        };
+      }
+
+      if (intent === "couples") {
+        return {
+          text: "También manejamos cabañas para pareja y hospedajes desde opciones económicas hasta alternativas de lujo. Podemos recomendarte según las fechas, el presupuesto y el tipo de ambiente que buscas.",
+          options: [{ label: "Ver hospedajes", service: "hospedaje" }, { label: "Consultar para dos", whatsapp: true }]
+        };
+      }
+
+      if (intent === "weather") {
+        return {
+          text: "Las actividades dependen de las condiciones del clima y de la decisión del operador. Antes de salir se confirma si la experiencia puede realizarse o si corresponde reprogramarla.",
+          options: commonWhatsApp
+        };
+      }
+
+      if (intent === "transport") {
+        return {
+          text: "El punto de encuentro y la disponibilidad de transporte o traslado dependen del plan seleccionado. Un asesor puede confirmarlo según tu ubicación y la experiencia elegida.",
+          options: commonWhatsApp
+        };
+      }
+
+      if (intent === "cancellation") {
+        return {
+          text: "Las políticas de cambio, cancelación y reembolso dependen del operador o alojamiento. Te recomendamos confirmarlas antes de hacer el pago de la reserva.",
+          options: commonWhatsApp
+        };
+      }
+
+      if (intent === "offerings") {
+        const normalizedMessage = chatNormalize(rawMessage);
+        if (/\b(?:agua|nautica|nautico|acuaticas|acuaticos)\b/.test(normalizedMessage)) {
+          return {
+            text: "Sobre el agua puedes elegir JetCar, Jet Ski, Flyboard, Wakeboard, paseos en lancha, planchones y Día de Sol. La disponibilidad y los requisitos se confirman según la fecha y el operador.",
+            options: [{ label: "Ver sección náutica", section: "#nautico" }, { label: "JetCar", service: "jetcar" }, { label: "Consultar", whatsapp: true }]
+          };
+        }
+        if (/\b(?:aire|panoramica|panoramico)\b/.test(normalizedMessage)) {
+          return {
+            text: "La experiencia de aire destacada es el vuelo panorámico en helicóptero sobre Guatapé, La Piedra, el embalse y otros puntos representativos de la región.",
+            options: chatServiceOptions("helicoptero")
+          };
+        }
+        if (/\b(?:tierra|terrestre|adrenalina)\b/.test(normalizedMessage)) {
+          return {
+            text: "En tierra puedes elegir rutas en cuatrimoto y Paintball. Si buscas aún más adrenalina, también puedes combinar el plan con JetCar, Jet Ski o Flyboard.",
+            options: [{ label: "Cuatrimotos", service: "cuatrimotos" }, { label: "Paintball", service: "paintball" }, { label: "Consultar", whatsapp: true }]
+          };
+        }
+        return {
+          text: "Puedes elegir vuelos en helicóptero, cuatrimotos, Paintball, JetCar, Jet Ski, Flyboard, Wakeboard, lanchas, planchones, Día de Sol y hospedajes para distintos presupuestos y tamaños de grupo.",
+          options: [
+            { label: "Aire y tierra", section: "#destacadas" },
+            { label: "Experiencias de agua", section: "#nautico" },
+            { label: "JetCar", service: "jetcar" },
+            { label: "Hospedaje", query: "¿Qué hospedajes manejan?" }
+          ]
+        };
+      }
+
+      if (service) {
+        return {
+          text: `${service.description}\n\nLo más importante: ${service.features.slice(0, 3).join(" · ")}.`,
+          options: chatServiceOptions(serviceKey)
+        };
+      }
+
+      return {
+        text: "No encontré una respuesta suficientemente segura para esa pregunta. Puedo orientarte sobre experiencias, hospedaje, precios, disponibilidad o reservas; también puedes enviarla directamente a un asesor por WhatsApp.",
+        options: [
+          { label: "Ver experiencias", query: "¿Qué experiencias ofrecen?" },
+          { label: "Hospedaje", query: "¿Qué hospedajes manejan?" },
+          { label: "Precios", query: "Quiero consultar precios" },
+          ...commonWhatsApp
+        ]
+      };
+    }
+
+    function chatWhatsAppUrl() {
+      const details = chatContext.userMessages.slice(-6).join(" | ");
+      const service = chatContext.lastService ? ` sobre ${chatServiceName(chatContext.lastService)}` : "";
+      const party = chatContext.partySize ? ` Somos ${chatContext.partySize} personas.` : "";
+      const message = details
+        ? `Hola XEBAX Adventure Connection, quiero continuar una consulta${service}.${party} En el asistente escribí: ${details}`
+        : "Hola XEBAX Adventure Connection, quiero información sobre sus experiencias en Guatapé";
+      return `https://wa.me/${CHAT_WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+    }
+
+    const chatPanel = $("#chatPanel");
+    const chatLauncher = $("#chatLauncher");
+    const chatClose = $("#chatClose");
+    const chatMessages = $("#chatMessages");
+    const chatForm = $("#chatForm");
+    const chatInput = $("#chatInput");
+    const chatWhatsApp = $("#chatWhatsApp");
+
+    function addChatMessage(text, type = "bot") {
+      const row = document.createElement("div");
+      row.className = `chat-row ${type}`;
+      const bubble = document.createElement("div");
+      bubble.className = "chat-bubble";
+      bubble.textContent = text;
+      row.appendChild(bubble);
+      chatMessages.appendChild(row);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+      return row;
+    }
+
+    function addChatOptions(options = []) {
+      if (!options.length) return;
+      const wrap = document.createElement("div");
+      wrap.className = "chat-options";
+      options.forEach(option => {
+        const control = document.createElement(option.whatsapp ? "a" : "button");
+        control.className = `chat-option${option.whatsapp ? " is-wa" : ""}`;
+        control.textContent = option.label;
+        if (option.whatsapp) {
+          control.href = chatWhatsAppUrl();
+          control.target = "_blank";
+          control.rel = "noopener";
+        } else {
+          control.type = "button";
+          control.addEventListener("click", () => {
+            if (option.query) respondToChat(option.query);
+            if (option.section) {
+              closeChatPanel();
+              window.setTimeout(() => document.querySelector(option.section)?.scrollIntoView({ behavior: "smooth", block: "start" }), 80);
+            }
+            if (option.service) {
+              closeChatPanel();
+              window.setTimeout(() => openService(option.service), 80);
+            }
+          });
+        }
+        wrap.appendChild(control);
+      });
+      chatMessages.appendChild(wrap);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    function showChatTyping() {
+      const row = document.createElement("div");
+      row.className = "chat-row";
+      row.innerHTML = '<div class="chat-bubble chat-typing" aria-label="El asistente está escribiendo"><i></i><i></i><i></i></div>';
+      chatMessages.appendChild(row);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+      return row;
+    }
+
+    function updateChatWhatsApp() {
+      chatWhatsApp.href = chatWhatsAppUrl();
+    }
+
+    function respondToChat(rawMessage) {
+      const cleanMessage = String(rawMessage || "").trim().slice(0, 260);
+      if (!cleanMessage || chatContext.busy) return;
+      chatContext.busy = true;
+      addChatMessage(cleanMessage, "user");
+      chatContext.userMessages.push(cleanMessage);
+      if (chatContext.userMessages.length > 12) chatContext.userMessages.shift();
+      chatInput.value = "";
+      chatInput.style.height = "auto";
+
+      const normalized = chatNormalize(cleanMessage);
+      const explicitService = findChatService(normalized);
+      if (explicitService) chatContext.lastService = explicitService;
+      const intent = findChatIntent(normalized);
+      const contextualIntents = new Set(["price", "availability", "reservation", "payment", "requirements", "duration", "schedule", "includes", "photos"]);
+      const serviceKey = explicitService || (contextualIntents.has(intent) ? chatContext.lastService : "");
+      const response = chatBuildAnswer(intent, serviceKey, cleanMessage);
+      updateChatWhatsApp();
+      const typing = showChatTyping();
+      const wait = Math.min(420, 180 + cleanMessage.length * 3);
+      window.setTimeout(() => {
+        typing.remove();
+        addChatMessage(response.text);
+        addChatOptions(response.options);
+        chatContext.busy = false;
+      }, wait);
+    }
+
+    function startChat() {
+      if (chatContext.started) return;
+      chatContext.started = true;
+      addChatMessage("¡Hola! Soy el asistente virtual de XEBAX. Puedes escribir tu pregunta con tus propias palabras; intentaré encontrar la respuesta más adecuada.");
+      addChatOptions([
+        { label: "Experiencias", query: "¿Qué experiencias ofrecen?" },
+        { label: "Hospedaje", query: "¿Qué hospedajes manejan?" },
+        { label: "Cabaña para 12", query: "Quiero información de la cabaña para 12" },
+        { label: "Precios", query: "Quiero consultar precios" },
+        { label: "Reservar", query: "Quiero hacer una reserva" }
+      ]);
+    }
+
+    function openChatPanel() {
+      startChat();
+      chatPanel.classList.add("is-open");
+      chatPanel.setAttribute("aria-hidden", "false");
+      chatLauncher.setAttribute("aria-expanded", "true");
+      window.setTimeout(() => chatInput.focus({ preventScroll: true }), 80);
+    }
+
+    function closeChatPanel() {
+      chatPanel.classList.remove("is-open");
+      chatPanel.setAttribute("aria-hidden", "true");
+      chatLauncher.setAttribute("aria-expanded", "false");
+      chatLauncher.focus({ preventScroll: true });
+    }
+
+    chatLauncher.addEventListener("click", openChatPanel);
+    chatClose.addEventListener("click", closeChatPanel);
+    chatForm.addEventListener("submit", event => {
+      event.preventDefault();
+      respondToChat(chatInput.value);
+    });
+    chatInput.addEventListener("input", () => {
+      chatInput.style.height = "auto";
+      chatInput.style.height = `${Math.min(chatInput.scrollHeight, 104)}px`;
+    });
+    chatInput.addEventListener("keydown", event => {
+      if (event.key === "Enter" && !event.shiftKey) {
+        event.preventDefault();
+        chatForm.requestSubmit();
+      }
+    });
+    document.addEventListener("keydown", event => {
+      if (event.key === "Escape" && chatPanel.classList.contains("is-open")) closeChatPanel();
+    });
+    document.addEventListener("click", event => {
+      if (event.target.closest("[data-service]") && chatPanel.classList.contains("is-open")) closeChatPanel();
+    });
 
     const mapData = {
       piedra: {
