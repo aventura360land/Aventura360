@@ -3337,11 +3337,10 @@
       const item = chatServiceLibrary[serviceKey];
       const title = chatServiceName(serviceKey);
       return [
-        { label: "Consultar precio", query: `¿Cuál es el precio de ${title}?` },
+        { label: "Precio por WhatsApp", whatsapp: true },
         { label: "Ver disponibilidad", query: `¿Hay disponibilidad para ${title}?` },
         ...(serviceData[serviceKey] ? [{ label: "Ver fotos", service: serviceKey }] : []),
-        ...(item?.section ? [{ label: "Ver sección", section: item.section }] : []),
-        { label: "WhatsApp", whatsapp: true }
+        ...(item?.section ? [{ label: "Ver sección", section: item.section }] : [])
       ];
     }
 
@@ -3352,15 +3351,13 @@
 
       if (intent === "greeting") {
         return {
-          text: chatPick([
-            "¡Hola! Soy el asistente virtual de XEBAX. Puedo orientarte sobre experiencias, hospedaje, precios, disponibilidad y reservas.",
-            "¡Hola! Cuéntame qué quieres vivir en Guatapé y te ayudo a encontrar la información más útil."
-          ], rawMessage),
+          text: "¡Hola! Soy el asistente virtual de XEBAX. Tenemos vuelos en helicóptero, cuatrimotos, Paintball, JetCar, Jet Ski, Flyboard, Wakeboard, paseos en lancha, plan Día de Sol y hospedajes desde opciones económicas hasta alternativas de lujo. ¿Sobre cuál deseas información?",
           options: [
-            { label: "Ver experiencias", query: "¿Qué experiencias ofrecen?" },
+            { label: "Aire y tierra", query: "¿Qué experiencias de aire y tierra ofrecen?" },
+            { label: "Actividades de agua", query: "¿Qué actividades de agua ofrecen?" },
             { label: "Hospedaje", query: "¿Qué hospedajes manejan?" },
             { label: "Cabaña para 12", query: "Quiero información de la cabaña para 12 personas" },
-            { label: "Consultar precios", query: "Quiero consultar precios" }
+            { label: "Precios por WhatsApp", whatsapp: true }
           ]
         };
       }
@@ -3386,14 +3383,9 @@
       if (intent === "price") {
         return {
           text: service
-            ? `La tarifa de ${serviceName} puede variar según la fecha, cantidad de personas, duración y disponibilidad. Para darte un valor correcto, indícame la fecha y cuántas personas viajarían.`
-            : "Manejamos opciones para distintos presupuestos. Los precios cambian según la experiencia, la fecha y la cantidad de personas. Dime qué actividad u hospedaje te interesa y para cuántas personas sería.",
-          options: service ? [{ label: "Indicar mis datos", query: "Quiero indicar fecha y número de personas" }, ...commonWhatsApp] : [
-            { label: "Hospedaje", query: "Precio de hospedaje" },
-            { label: "Helicóptero", query: "Precio del vuelo en helicóptero" },
-            { label: "Actividades de agua", query: "¿Qué actividades de agua ofrecen?" },
-            ...commonWhatsApp
-          ]
+            ? `Los precios de ${serviceName} se manejan exclusivamente por WhatsApp. Allí un asesor te dará la información correspondiente.`
+            : "Los precios de todas las experiencias y hospedajes se manejan exclusivamente por WhatsApp. Allí un asesor te dará la información correspondiente.",
+          options: [{ label: "Consultar precio por WhatsApp", whatsapp: true }]
         };
       }
 
@@ -3578,11 +3570,11 @@
       }
 
       return {
-        text: "No encontré una respuesta suficientemente segura para esa pregunta. Puedo orientarte sobre experiencias, hospedaje, precios, disponibilidad o reservas; también puedes enviarla directamente a un asesor por WhatsApp.",
+        text: "No encontré una respuesta suficientemente segura para esa pregunta. Puedo orientarte sobre actividades, hospedaje, disponibilidad o reservas. Los precios se consultan directamente por WhatsApp.",
         options: [
           { label: "Ver experiencias", query: "¿Qué experiencias ofrecen?" },
           { label: "Hospedaje", query: "¿Qué hospedajes manejan?" },
-          { label: "Precios", query: "Quiero consultar precios" },
+          { label: "Precios por WhatsApp", whatsapp: true },
           ...commonWhatsApp
         ]
       };
@@ -3694,12 +3686,13 @@
     function startChat() {
       if (chatContext.started) return;
       chatContext.started = true;
-      addChatMessage("¡Hola! Soy el asistente virtual de XEBAX. Puedes escribir tu pregunta con tus propias palabras; intentaré encontrar la respuesta más adecuada.");
+      addChatMessage("¡Hola! Soy el asistente virtual de XEBAX. Puedo ayudarte con helicóptero, cuatrimotos, Paintball, JetCar, Jet Ski, Flyboard, Wakeboard, lanchas, Día de Sol y opciones de hospedaje. Escribe tu pregunta con tus propias palabras.");
       addChatOptions([
-        { label: "Experiencias", query: "¿Qué experiencias ofrecen?" },
+        { label: "Aire y tierra", query: "¿Qué experiencias de aire y tierra ofrecen?" },
+        { label: "Actividades de agua", query: "¿Qué actividades de agua ofrecen?" },
         { label: "Hospedaje", query: "¿Qué hospedajes manejan?" },
         { label: "Cabaña para 12", query: "Quiero información de la cabaña para 12" },
-        { label: "Precios", query: "Quiero consultar precios" },
+        { label: "Precios por WhatsApp", whatsapp: true },
         { label: "Reservar", query: "Quiero hacer una reserva" }
       ]);
     }
