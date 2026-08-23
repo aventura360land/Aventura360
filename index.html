@@ -3337,7 +3337,7 @@
       const item = chatServiceLibrary[serviceKey];
       const title = chatServiceName(serviceKey);
       return [
-        { label: "Precio por WhatsApp", whatsapp: true },
+        { label: "Solicita nuestros precios por WhatsApp", whatsapp: true },
         { label: "Ver disponibilidad", query: `¿Hay disponibilidad para ${title}?` },
         ...(serviceData[serviceKey] ? [{ label: "Ver fotos", service: serviceKey }] : []),
         ...(item?.section ? [{ label: "Ver sección", section: item.section }] : [])
@@ -3357,7 +3357,7 @@
             { label: "Actividades de agua", query: "¿Qué actividades de agua ofrecen?" },
             { label: "Hospedaje", query: "¿Qué hospedajes manejan?" },
             { label: "Cabaña para 12", query: "Quiero información de la cabaña para 12 personas" },
-            { label: "Precios por WhatsApp", whatsapp: true }
+            { label: "Solicita nuestros precios por WhatsApp", whatsapp: true }
           ]
         };
       }
@@ -3385,7 +3385,7 @@
           text: service
             ? `Los precios de ${serviceName} se manejan exclusivamente por WhatsApp. Allí un asesor te dará la información correspondiente.`
             : "Los precios de todas las experiencias y hospedajes se manejan exclusivamente por WhatsApp. Allí un asesor te dará la información correspondiente.",
-          options: [{ label: "Consultar precio por WhatsApp", whatsapp: true }]
+          options: [{ label: "Solicita nuestros precios por WhatsApp", whatsapp: true }]
         };
       }
 
@@ -3574,7 +3574,7 @@
         options: [
           { label: "Ver experiencias", query: "¿Qué experiencias ofrecen?" },
           { label: "Hospedaje", query: "¿Qué hospedajes manejan?" },
-          { label: "Precios por WhatsApp", whatsapp: true },
+          { label: "Solicita nuestros precios por WhatsApp", whatsapp: true },
           ...commonWhatsApp
         ]
       };
@@ -3692,7 +3692,7 @@
         { label: "Actividades de agua", query: "¿Qué actividades de agua ofrecen?" },
         { label: "Hospedaje", query: "¿Qué hospedajes manejan?" },
         { label: "Cabaña para 12", query: "Quiero información de la cabaña para 12" },
-        { label: "Precios por WhatsApp", whatsapp: true },
+        { label: "Solicita nuestros precios por WhatsApp", whatsapp: true },
         { label: "Reservar", query: "Quiero hacer una reserva" }
       ]);
     }
