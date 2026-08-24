@@ -53,6 +53,7 @@
     main{display:flex;flex-direction:column}
     main>.hero{order:1}
     main>.cabana-feature{order:2}
+    main>.cabana-rio{order:2}
     main>.highlights{order:2}
     main>.marquee{order:3}
     main>.services-section{order:4}
@@ -1009,6 +1010,8 @@
     .highlight-card figcaption small{font-size:.86rem;color:rgba(255,255,255,.8);max-width:46ch}
 
     /* Flyboard: fila completa con el afiche encuadrado en horizontal */
+    .btn-linea{background:transparent;color:var(--deep);border:1.5px solid rgba(16,33,30,.3)}
+    .btn-linea:hover{background:rgba(16,33,30,.07);border-color:rgba(16,33,30,.45)}
     .service-card.poster-card.poster-banner{grid-column:span 12}
     .services-grid.is-filtered .service-card.poster-banner:not(.is-hidden){grid-column:span 6}
     .service-card.poster-card.poster-banner>img{aspect-ratio:2.4/1;object-fit:cover;object-position:50% 4%}
@@ -1814,7 +1817,7 @@
           </div>
 
           <div class="group-stay-copy">
-            <span class="kicker">Hospedaje destacado</span>
+            <span class="kicker">Cabaña de lujo</span>
             <h3 id="cabana12Title">Cabaña para hasta 12 personas.</h3>
             <p>Una opción amplia para familias y grupos, con espacios privados, zonas exteriores y una vista privilegiada de Guatapé.</p>
             <div class="group-stay-features" role="list" aria-label="Características de la cabaña">
@@ -1826,6 +1829,42 @@
             <div class="story-actions">
               <button class="btn btn-primary" type="button" data-service="cabana12">Ver 9 fotos y 2 videos</button>
               <a class="btn btn-wa" href="https://wa.me/573006182215?text=Hola%20XEBAX%20Adventure%20Connection%2C%20quiero%20consultar%20disponibilidad%20de%20la%20caba%C3%B1a%20para%2012%20personas" target="_blank" rel="noopener">Consultar disponibilidad</a>
+            </div>
+            <small class="stay-note">La distribución, tarifa y disponibilidad se confirman directamente según las fechas de la reserva.</small>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section cabana-feature cabana-rio" id="cabana-rio" aria-label="Cabaña campestre junto al río">
+      <div class="wrap group-stay-wrap">
+        <article class="group-stay-card reveal" aria-labelledby="cabanaRioTitle">
+          <div class="group-stay-media" aria-label="Vista previa de la cabaña; selecciona una imagen para abrir la galería">
+            <button class="group-stay-photo main" type="button" data-service="cabanaRio" aria-label="Abrir galería de la cabaña campestre: fachada rodeada de jardín y flores">
+              <img width="825" height="1100" src="img/cabana-rio-fachada.webp" srcset="img/cabana-rio-fachada-sm.webp 720w, img/cabana-rio-fachada.webp 825w" sizes="(max-width:900px) 33vw, 18vw" alt="fachada rodeada de jardín y flores" loading="lazy" decoding="async">
+              <span class="group-stay-photo-label">Junto al río</span>
+            </button>
+            <button class="group-stay-photo" type="button" data-service="cabanaRio" aria-label="Abrir galería de la cabaña campestre: kiosco con mesas para compartir">
+              <img width="825" height="1100" src="img/cabana-rio-kiosco.webp" srcset="img/cabana-rio-kiosco-sm.webp 720w, img/cabana-rio-kiosco.webp 825w" sizes="(max-width:900px) 33vw, 18vw" alt="kiosco con mesas para compartir" loading="lazy" decoding="async">
+            </button>
+            <button class="group-stay-photo" type="button" data-service="cabanaRio" aria-label="Abrir galería de la cabaña campestre: recorrido en kayak por el río">
+              <img width="825" height="1100" src="img/cabana-rio-kayak.webp" srcset="img/cabana-rio-kayak-sm.webp 720w, img/cabana-rio-kayak.webp 825w" sizes="(max-width:900px) 33vw, 18vw" alt="recorrido en kayak por el río" loading="lazy" decoding="async">
+            </button>
+          </div>
+
+          <div class="group-stay-copy">
+            <span class="kicker">Cabaña sencilla</span>
+            <h3 id="cabanaRioTitle">Cabaña campestre junto al río.</h3>
+            <p>Una casa completa entre jardines y guaduas, con acceso directo al río, kayaks, kiosco y zona de asador. Pensada para desconectarse en familia o en grupo.</p>
+            <div class="group-stay-features" role="list" aria-label="Características de la cabaña">
+              <span role="listitem">Acceso directo al río y kayaks</span>
+              <span role="listitem">Kiosco y zona de asador</span>
+              <span role="listitem">Cocina equipada</span>
+              <span role="listitem">Jardines y zonas verdes</span>
+            </div>
+            <div class="story-actions">
+              <button class="btn btn-primary" type="button" data-service="cabanaRio">Ver 20 fotos y 1 video</button>
+              <a class="btn btn-wa" href="https://wa.me/573006182215?text=Hola%20XEBAX%20Adventure%20Connection%2C%20quiero%20consultar%20disponibilidad%20de%20la%20caba%C3%B1a%20campestre%20junto%20al%20r%C3%ADo" target="_blank" rel="noopener">Consultar por WhatsApp</a>
             </div>
             <small class="stay-note">La distribución, tarifa y disponibilidad se confirman directamente según las fechas de la reserva.</small>
           </div>
@@ -1898,14 +1937,32 @@
             <img width="1280" height="640" src="img/poster-hospedaje.webp" srcset="img/poster-hospedaje-sm.webp 820w, img/poster-hospedaje.webp 1280w" sizes="(max-width:900px) 92vw, 46vw" alt="Publicidad de hoteles y cabañas en Guatapé" loading="lazy" decoding="async">
             <span class="service-number">01</span><span class="service-category">Hospedaje</span>
             <div class="service-content">
-              <h3>Hoteles y cabañas</h3>
-              <p>Manejamos hospedajes desde la línea económica hasta la línea de lujo.</p>
-              <button class="service-open" type="button" data-service="hospedaje">Ver publicidad y fotografías <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></button>
+              <h3>Cabañas y hoteles de lujo</h3>
+              <p>Jacuzzi privado, terrazas y vistas al embalse, para quienes buscan una estadía especial.</p>
+              <button class="service-open" type="button" data-service="hospedajeLujo">Ver publicidad y fotografías <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></button>
+            </div>
+          </article>
+          <article class="service-card poster-card poster-banner reveal" data-category="estadia">
+            <img width="1400" height="700" src="img/cabana-sencilla-portada.webp" srcset="img/cabana-sencilla-portada-sm.webp 820w, img/cabana-sencilla-portada.webp 1400w" sizes="92vw" alt="Cabaña campestre sencilla vista desde el aire" loading="lazy" decoding="async">
+            <span class="service-number">02</span><span class="service-category">Hospedaje</span>
+            <div class="service-content">
+              <h3>Cabañas sencillas y campestres</h3>
+              <p>Opciones económicas y cómodas, con zonas verdes, cocina equipada y espacios para compartir.</p>
+              <button class="service-open" type="button" data-service="hospedajeSencillo">Ver fotografías <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></button>
+            </div>
+          </article>
+          <article class="service-card poster-card service-wide reveal" data-category="aire">
+            <img width="1280" height="640" src="img/poster-helicoptero.webp" srcset="img/poster-helicoptero-sm.webp 820w, img/poster-helicoptero.webp 1280w" sizes="(max-width:900px) 92vw, 46vw" alt="Publicidad del vuelo en helicóptero sobre Guatapé" loading="lazy" decoding="async">
+            <span class="service-number">03</span><span class="service-category">Aire</span>
+            <div class="service-content">
+              <h3>Vuelo en helicóptero</h3>
+              <p>Sobrevuela la Piedra, el embalse y el proyecto del Cristo más grande del mundo desde una perspectiva única.</p>
+              <button class="service-open" type="button" data-service="helicoptero">Ver publicidad y fotografías <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></button>
             </div>
           </article>
           <article class="service-card poster-card poster-compact service-wide reveal" data-category="agua">
             <img width="1280" height="853" src="img/poster-jetski-nuevo.webp" srcset="img/poster-jetski-nuevo-sm.webp 820w, img/poster-jetski-nuevo.webp 1280w" sizes="(max-width:900px) 92vw, 46vw" alt="Publicidad de los paseos en Jet Ski" loading="lazy" decoding="async">
-            <span class="service-number">02</span><span class="service-category">Agua</span>
+            <span class="service-number">04</span><span class="service-category">Agua</span>
             <div class="service-content">
               <h3>Paseos en Jet Ski</h3>
               <p>Velocidad, paisaje y una experiencia acuática para recorrer el embalse de otra manera.</p>
@@ -1914,30 +1971,11 @@
           </article>
           <article class="service-card poster-card poster-compact service-wide reveal" data-category="agua">
             <img width="1280" height="853" src="img/poster-lancha-lujo.webp" srcset="img/poster-lancha-lujo-sm.webp 820w, img/poster-lancha-lujo.webp 1280w" sizes="(max-width:900px) 92vw, 46vw" alt="Publicidad de los paseos en lancha de lujo" loading="lazy" decoding="async">
-            <span class="service-number">03</span><span class="service-category">Agua</span>
+            <span class="service-number">05</span><span class="service-category">Agua</span>
             <div class="service-content">
               <h3>Paseos en lancha</h3>
               <p>Comparte el paisaje, la brisa y el recorrido por el embalse con familia o amigos.</p>
               <button class="service-open" type="button" data-service="lancha">Ver publicidad y fotografías <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></button>
-            </div>
-          </article>
-
-          <article class="service-card poster-card poster-banner reveal" data-category="agua">
-            <img width="1536" height="1024" src="img/poster-planchon.webp" srcset="img/poster-planchon-sm.webp 820w, img/poster-planchon.webp 1536w" sizes="92vw" alt="Publicidad del paseo en planchón por el embalse de Guatapé" loading="lazy" decoding="async">
-            <span class="service-number">04</span><span class="service-category">Agua</span>
-            <div class="service-content">
-              <h3>Paseo en Planchón</h3>
-              <p>Recorre el embalse en una embarcación amplia y techada, pensada para grupos y familias.</p>
-              <button class="service-open" type="button" data-service="planchon">Ver experiencia <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></button>
-            </div>
-          </article>
-          <article class="service-card poster-card service-wide reveal" data-category="aire">
-            <img width="1280" height="640" src="img/poster-helicoptero.webp" srcset="img/poster-helicoptero-sm.webp 820w, img/poster-helicoptero.webp 1280w" sizes="(max-width:900px) 92vw, 46vw" alt="Publicidad del vuelo en helicóptero sobre Guatapé" loading="lazy" decoding="async">
-            <span class="service-number">05</span><span class="service-category">Aire</span>
-            <div class="service-content">
-              <h3>Vuelo en helicóptero</h3>
-              <p>Sobrevuela la Piedra, el embalse y el proyecto del Cristo más grande del mundo desde una perspectiva única.</p>
-              <button class="service-open" type="button" data-service="helicoptero">Ver publicidad y fotografías <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></button>
             </div>
           </article>
           <article class="service-card poster-card poster-compact service-wide reveal" data-category="aire">
@@ -1949,9 +1987,18 @@
               <button class="service-open" type="button" data-service="parapente">Ver fotos y video <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></button>
             </div>
           </article>
+          <article class="service-card poster-card poster-banner reveal" data-category="agua">
+            <img width="1280" height="853" src="img/poster-planchon.webp" srcset="img/poster-planchon-sm.webp 820w, img/poster-planchon.webp 1280w" sizes="92vw" alt="Publicidad del paseo en planchón por el embalse de Guatapé" loading="lazy" decoding="async">
+            <span class="service-number">07</span><span class="service-category">Agua</span>
+            <div class="service-content">
+              <h3>Paseo en Planchón</h3>
+              <p>Recorre el embalse en una embarcación amplia y techada, pensada para grupos y familias.</p>
+              <button class="service-open" type="button" data-service="planchon">Ver experiencia <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></button>
+            </div>
+          </article>
           <article class="service-card poster-card service-wide reveal" data-category="tierra">
             <img width="1280" height="640" src="img/poster-cuatrimotos.webp" srcset="img/poster-cuatrimotos-sm.webp 820w, img/poster-cuatrimotos.webp 1280w" sizes="(max-width:900px) 92vw, 46vw" alt="Publicidad de los paseos en cuatrimoto" loading="lazy" decoding="async">
-            <span class="service-number">07</span><span class="service-category">Tierra</span>
+            <span class="service-number">08</span><span class="service-category">Tierra</span>
             <div class="service-content">
               <h3>Ruta en cuatrimoto</h3>
               <p>Caminos rurales, bosque, montaña y miradores conectados en una experiencia sobre ruedas.</p>
@@ -1960,7 +2007,7 @@
           </article>
           <article class="service-card poster-card service-wide reveal" data-category="tierra">
             <img width="1280" height="853" src="img/poster-paintball.webp" srcset="img/poster-paintball-sm.webp 820w, img/poster-paintball.webp 1280w" sizes="(max-width:900px) 92vw, 46vw" alt="Publicidad de la experiencia de Paintball" loading="lazy" decoding="async">
-            <span class="service-number">08</span><span class="service-category">Tierra</span>
+            <span class="service-number">09</span><span class="service-category">Tierra</span>
             <div class="service-content">
               <h3>Paintball</h3>
               <p>Una experiencia para compartir en grupo, consultar disponibilidad y conocer las condiciones del operador.</p>
@@ -1969,7 +2016,7 @@
           </article>
           <article class="service-card poster-card poster-banner jetcar-service-card reveal" data-category="agua">
             <img width="1280" height="1024" src="img/poster-jetcar.webp" srcset="img/poster-jetcar-sm.webp 820w, img/poster-jetcar.webp 1280w" sizes="92vw" alt="Publicidad de la experiencia JetCar en Guatapé" loading="lazy" decoding="async">
-            <span class="service-number">09</span><span class="service-category">Agua</span>
+            <span class="service-number">10</span><span class="service-category">Agua</span>
             <div class="service-content">
               <h3>JetCar Guatapé</h3>
               <p>Conduce un superdeportivo anfibio sobre el embalse, con La Piedra de fondo.</p>
@@ -1978,7 +2025,7 @@
           </article>
           <article class="service-card poster-card flyboard-service-card reveal" data-category="agua">
             <img width="853" height="1280" src="img/poster-flyboard.webp" srcset="img/poster-flyboard-sm.webp 820w, img/poster-flyboard.webp 853w" sizes="92vw" alt="Publicidad de la experiencia de Flyboard en Guatapé" loading="lazy" decoding="async">
-            <span class="service-number">10</span><span class="service-category">Agua</span>
+            <span class="service-number">11</span><span class="service-category">Agua</span>
             <div class="service-content">
               <span class="flyboard-kicker">Publicidad completa</span>
               <h3>Flyboard</h3>
@@ -1991,7 +2038,7 @@
           </article>
           <article class="service-card poster-card poster-compact service-wide reveal" data-category="agua">
             <img width="1280" height="732" src="img/poster-wakeboard.webp" srcset="img/poster-wakeboard-sm.webp 820w, img/poster-wakeboard.webp 1280w" sizes="(max-width:900px) 92vw, 46vw" alt="Publicidad de la experiencia de Wakeboard en Guatapé" loading="lazy" decoding="async">
-            <span class="service-number">11</span><span class="service-category">Agua</span>
+            <span class="service-number">12</span><span class="service-category">Agua</span>
             <div class="service-content">
               <h3>Wakeboard en Guatapé</h3>
               <p>Adrenalina sobre el agua con equipo profesional, instructores y el embalse como escenario.</p>
@@ -2000,7 +2047,7 @@
           </article>
           <article class="service-card poster-card poster-compact service-wide reveal" data-category="estadia">
             <img width="1280" height="853" src="img/poster-dia-de-sol.webp" srcset="img/poster-dia-de-sol-sm.webp 820w, img/poster-dia-de-sol.webp 1280w" sizes="(max-width:900px) 92vw, 46vw" alt="Publicidad del plan Día de Sol en Guatapé" loading="lazy" decoding="async">
-            <span class="service-number">12</span><span class="service-category">Plan de descanso</span>
+            <span class="service-number">13</span><span class="service-category">Plan de descanso</span>
             <div class="service-content">
               <h3>Día de Sol en Guatapé</h3>
               <p>Piscina, zonas verdes, descanso, almuerzo y refrigerio para disfrutar un día completo.</p>
@@ -2324,15 +2371,16 @@
           <h2>Hospedaje con vistas que también cuentan el viaje.</h2>
           <p>Manejamos hospedajes desde la línea económica hasta la línea de lujo, según tus fechas, grupo y presupuesto.</p>
           <div class="stay-points" role="group" aria-label="Aspectos del servicio de hospedaje">
-            <span>Cabañas para pareja</span>
-            <span>Línea económica</span>
-            <span>Línea de lujo</span>
+            <span>Línea de lujo: jacuzzi y vistas</span>
+            <span>Línea sencilla: cabañas campestres</span>
+            <span>Cabañas para pareja y para grupos</span>
             <span>Consulta según tus fechas</span>
             <span>Acompañamiento por WhatsApp</span>
           </div>
           <div class="story-actions">
             <a class="btn btn-wa" href="https://wa.me/573006182215?text=Hola%20XEBAX%20Adventure%20Connection%2C%20quiero%20consultar%20opciones%20de%20hospedaje%20en%20Guatap%C3%A9" target="_blank" rel="noopener">Consultar hospedaje</a>
-            <button class="btn btn-primary" type="button" data-service="hospedaje">Ver galería completa</button>
+            <button class="btn btn-primary" type="button" data-service="hospedajeLujo">Ver cabañas de lujo</button>
+            <button class="btn btn-linea" type="button" data-service="hospedajeSencillo">Ver cabañas sencillas</button>
           </div>
           <small class="stay-note">Fotografías reales de los alojamientos. La disponibilidad se confirma directamente durante la consulta.</small>
         </div>
@@ -2774,6 +2822,10 @@
     }, true);
 
     const hotelImages = numberedMedia("img", "hotel", 19);
+    // Las fotos numeradas se reparten entre las dos líneas de hospedaje
+    const hotelPorNumero = numero => `img/hotel-${String(numero).padStart(2, "0")}.webp`;
+    const hotelLujoNumerados = [1, 2, 3, 4, 5, 6, 7, 11, 13, 14, 15, 16, 17, 19].map(hotelPorNumero);
+    const hotelSencilloNumerados = [8, 9, 10, 12, 18].map(hotelPorNumero);
     const cabanaParejaImages = ["img/cabana-pareja-01.webp", "img/cabana-pareja-02.webp"];
     const latestHotelImages = [
       "img/hotel-nuevo-jacuzzi-vista.webp",
@@ -2835,6 +2887,90 @@
       "Jacuzzi privado con vista al embalse de Guatapé",
       "Cabaña colorida cerca de la Piedra del Peñol",
       "Cabaña tradicional durante el atardecer"
+    ];
+    const hospedajeLujoImages = [
+      ...latestHotelImages,
+      "img/montecielo-panoramica.webp",
+      ...cabanaParejaImages,
+      "img/hotel-principal-piscina.webp",
+      "img/hotel-aliado-06.webp",
+      "img/hotel-aliado-09.webp",
+      "img/hotel-aliado-04.webp",
+      "img/hotel-aliado-01.webp",
+      "img/hotel-aliado-03.webp",
+      "img/hotel-aliado-07.webp",
+      "img/hotel-aliado-08.webp",
+      "img/hotel-aliado-02.webp",
+      "img/hotel-aliado-05.webp",
+      "img/hotel-lujo-sala.webp",
+      "img/hotel-lujo-habitacion.webp",
+      "img/hotel-lujo-jacuzzi.webp",
+      ...hotelLujoNumerados
+    ];
+    const hospedajeLujoAlts = [
+      ...latestHotelAlts,
+      "Vista panorámica del complejo Montecielo en Guatapé",
+      "Cabaña para pareja con cama king y vista al paisaje",
+      "Cabaña para pareja con jacuzzi privado",
+      "Piscina exterior y alojamiento de lujo en Guatapé",
+      "Vista panorámica del nuevo alojamiento aliado en Guatapé",
+      "Piscina iluminada y exterior del alojamiento durante el atardecer",
+      "Habitación amplia con terraza y jacuzzi privado",
+      "Terraza privada con jacuzzi y vista a las montañas",
+      "Habitación con vista panorámica y acceso a la terraza",
+      "Jacuzzi privado con vista al paisaje de Guatapé",
+      "Estudio equipado con sala, cocina y habitación",
+      "Cocina equipada con barra y comedor",
+      "Cocina y comedor del nuevo alojamiento aliado",
+      "Sala moderna con ventanales y vista panorámica",
+      "Habitación moderna con terraza y vista al paisaje",
+      "Jacuzzi privado con vista al embalse de Guatapé",
+      ...hotelLujoNumerados.map((_, i) => `Alojamiento de lujo en Guatapé, fotografía ${i + 1}`)
+    ];
+
+    const cabanaRioImages = [
+      "img/cabana-rio-fachada.webp",
+      "img/cabana-rio-exterior.webp",
+      "img/cabana-rio-jardin.webp",
+      "img/cabana-rio-corredor.webp",
+      "img/cabana-rio-kiosco.webp",
+      "img/cabana-rio-kiosco-2.webp",
+      "img/cabana-rio-asador.webp",
+      "img/cabana-rio-cocina.webp",
+      "img/cabana-rio-nevera.webp",
+      "img/cabana-rio-bano-01.webp",
+      "img/cabana-rio-bano-02.webp",
+      "img/cabana-rio-ducha.webp",
+      "img/cabana-rio-kayak.webp",
+      "img/cabana-rio-kayak-2.webp",
+      "img/cabana-rio-hamaca.webp",
+      "img/cabana-rio-kayaks.webp",
+      "img/cabana-rio-quebrada.webp",
+      "img/cabana-rio-pergola.webp",
+      "img/cabana-rio-guadua.webp",
+      "img/cabana-rio-parqueo.webp"
+    ];
+    const cabanaRioAlts = [
+      "Fachada de la cabaña rodeada de jardín y flores",
+      "Exterior de la cabaña con kayak sobre el prado",
+      "Jardín florecido frente a la cabaña",
+      "Corredor cubierto con mesa y sillas",
+      "Kiosco con mesas para compartir",
+      "Kiosco de madera entre la vegetación",
+      "Zona de asador para preparar la comida",
+      "Cocina equipada con neveras y mesa",
+      "Nevera disponible para los huéspedes",
+      "Baño con lavamanos y ducha",
+      "Segundo baño de la cabaña",
+      "Ducha con dispensadores de jabón",
+      "Recorrido en kayak por el río",
+      "Kayak sobre el agua junto a la orilla",
+      "Hamaca a la orilla del río",
+      "Kayaks disponibles en la zona verde",
+      "Zona verde junto a la quebrada",
+      "Pérgola rodeada de vegetación",
+      "Sendero entre guaduas y jardín",
+      "Zona verde con espacio para parquear"
     ];
     const cabana12Images = [
       "img/cabana12-habitacion-vista.webp",
@@ -2938,6 +3074,25 @@
         alts: ["Vista aérea del embalse", "La Piedra y el embalse desde el aire", "Guatapé junto al agua"],
         features: ["Panorámica de agua e islas", "Vistas conectadas con La Piedra y el pueblo", "Información del recorrido por WhatsApp"]
       },
+      hospedajeLujo: {
+        category: "Línea de lujo",
+        title: "Cabañas y hoteles de lujo",
+        description: "Alojamientos con jacuzzi privado, terrazas, vistas al embalse y acabados modernos, incluidos complejos como Montecielo y cabañas para pareja. Te ayudamos a elegir según tus fechas, el número de viajeros y el presupuesto.",
+        images: [...hospedajeLujoImages, "img/poster-hospedaje.webp"],
+        alts: [...hospedajeLujoAlts, "Publicidad de hoteles y cabañas en Guatapé"],
+        features: ["Jacuzzi privado y terrazas", "Vistas al embalse y a La Piedra", "Cabañas para pareja y para grupos", "Disponibilidad confirmada por WhatsApp"]
+      },
+      hospedajeSencillo: {
+        category: "Línea económica",
+        title: "Cabañas sencillas y campestres",
+        description: "Opciones cómodas y económicas: cabañas tradicionales, habitaciones sencillas y casas campestres con zonas verdes. Ideales para quienes prefieren invertir en las experiencias y tener un buen sitio donde descansar.",
+        images: [...cabanaRioImages, "img/hotel-cabana-dia.webp", "img/hotel-cabana-atardecer.webp", ...hotelSencilloNumerados],
+        alts: [...cabanaRioAlts, "Cabaña colorida cerca de la Piedra del Peñol", "Cabaña tradicional durante el atardecer", ...hotelSencilloNumerados.map((_, i) => `Alojamiento sencillo en Guatapé, fotografía ${i + 1}`)],
+        features: ["Cabañas tradicionales y campestres", "Zonas verdes, kiosco y asador", "Cocina equipada", "Tarifas más económicas"],
+        videos: [
+          { src: "video/cabana-rio-recorrido.mp4", poster: "img/cabana-rio-video.webp", label: "Recorrido por la cabaña campestre" }
+        ]
+      },
       hospedaje: {
         category: "Opciones de estadía",
         title: "Hoteles y cabañas en Guatapé",
@@ -2945,6 +3100,17 @@
         images: [...newHotelImages, "img/poster-hospedaje.webp", ...hotelImages],
         alts: [...newHotelAlts, "Publicidad de hoteles y cabañas en Guatapé", ...hotelImages.map((_, index) => `Fotografía real del hospedaje ${index + 1}`)],
         features: ["Opciones económicas, intermedias y de lujo", "Cabañas para pareja, grupos, hoteles y complejos", "Disponibilidad y características confirmadas por WhatsApp"]
+      },
+      cabanaRio: {
+        category: "Alojamiento campestre",
+        title: "Cabaña campestre junto al río",
+        description: "Una casa completa entre jardines y guaduas, con acceso directo al río, kayaks, kiosco, zona de asador y cocina equipada. Una opción tranquila para familias o grupos que quieren desconectarse. La capacidad, la tarifa y la disponibilidad se confirman según las fechas.",
+        images: cabanaRioImages,
+        alts: cabanaRioAlts,
+        features: ["Acceso directo al río y kayaks", "Kiosco y zona de asador", "Cocina equipada", "Jardines y zonas verdes"],
+        videos: [
+          { src: "video/cabana-rio-recorrido.mp4", poster: "img/cabana-rio-video.webp", label: "Recorrido por la cabaña" }
+        ]
       },
       cabana12: {
         category: "Alojamiento para grupos",
@@ -3093,6 +3259,18 @@
       hospedaje: {
         aliases: ["hospedaje", "hospedajes", "hotel", "hoteles", "alojamiento", "alojamientos", "cabana", "cabanas", "donde dormir"],
         section: "#hospedaje"
+      },
+      hospedajeLujo: {
+        aliases: ["cabanas de lujo", "hotel de lujo", "hoteles de lujo", "lujo", "jacuzzi", "montecielo"],
+        section: "#hospedaje"
+      },
+      hospedajeSencillo: {
+        aliases: ["cabanas sencillas", "cabana sencilla", "economico", "economica", "barato", "campestre"],
+        section: "#hospedaje"
+      },
+      cabanaRio: {
+        aliases: ["cabana junto al rio", "cabana campestre", "cabana rio", "rio", "kayak", "asador", "finca"],
+        section: "#cabana-rio"
       },
       cabana12: {
         aliases: ["cabana para 12", "cabana 12", "hasta 12 personas", "12 personas", "grupo de 12", "alojamiento para grupos"],

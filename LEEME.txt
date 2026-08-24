@@ -1,28 +1,28 @@
-XEBAX ADVENTURE CONNECTION - Seccion JetCar
-===========================================
-Se copia sobre la carpeta del sitio respetando la estructura y se sobrescribe.
+XEBAX ADVENTURE CONNECTION - Hospedaje separado en dos lineas
+=============================================================
+Se copia sobre la carpeta del sitio, sobrescribiendo.
 
-QUE TRAE
-  index.html            seccion JetCar nueva + tarjeta 08 en Experiencias +
-                        entrada "JetCar" en el menu + galeria + cinta de texto
-  privacidad.html
-  terminos.html         los dos numeros de WhatsApp
-  legal.css
-  img/  (24 archivos)   afiche JetCar, 7 fotos y 2 caratulas de video
-                        .webp version completa | -sm movil | -th miniatura
-  video/ (2 archivos)   jetcar-recorrido.mp4 (39s) y jetcar-velocidad.mp4 (19s)
-                        recomprimidos, cargan solo al darle play
+1. HOSPEDAJE DIVIDIDO
+   01 Cabanas y hoteles de lujo    -> 39 fotos (jacuzzi, terrazas, Montecielo,
+                                      hotel nuevo, cabanas para pareja)
+   02 Cabanas sencillas y campestres -> 27 fotos + 1 video (cabana junto al rio,
+                                      cabanas tradicionales, habitaciones sencillas)
+   La seccion Hospedaje tiene ahora dos botones, uno por linea.
+   Las dos cabanas destacadas quedaron rotuladas:
+     "Cabana de lujo" (la de 12 personas) y "Cabana sencilla" (la del rio).
 
-DONDE QUEDA CADA FOTO
-  poster-jetcar             afiche: mosaico de la seccion, tarjeta 08, visor
-  jetcar-duo-embalse        Ferrari y Lamborghini juntos: tarjeta ancha + galeria
-  jetcar-rolls-royce        Rolls negro con interior naranja en marcha: mosaico
-  jetcar-piedra             frente a La Piedra: mosaico
-  jetcar-lamborghini-verde  Lambo verde de atras: bloque narrativo
-  jetcar-rolls-negro        Rolls negro detenido: bloque narrativo
-  jetcar-rolls-blanco       Rolls blanco al atardecer: bloque narrativo
-  jetcar-ferrari-roja       Ferrari roja en marcha: bloque narrativo
-  Las 8 estan en el visor que abre "Ver fotografias".
+2. CABANA CAMPESTRE JUNTO AL RIO
+   Seccion propia debajo de la cabana para 12 personas, con 20 fotos y 1 video.
 
-DESPUES DE SUBIR
-  Ctrl+F5 para limpiar cache.
+3. AFICHE DEL PLANCHON reemplazado.
+
+4. ORDEN DE EXPERIENCIAS
+   01 Cabanas de lujo      08 Ruta en cuatrimoto
+   02 Cabanas sencillas    09 Paintball
+   03 Vuelo en helicoptero 10 JetCar
+   04 Jet Ski              11 Flyboard
+   05 Lancha               12 Wakeboard
+   06 Parapente            13 Dia de Sol
+   07 Planchon
+
+DESPUES DE SUBIR: Ctrl+F5
