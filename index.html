@@ -57,9 +57,9 @@
     main>.marquee{order:3}
     main>.services-section{order:4}
     main>.story-showcase{order:5}
-    main>.jetcar-section{order:6}
-    main>.stay-section{order:7}
-    main>.nautical-section{order:8}
+    main>.nautical-section{order:6}
+    main>.jetcar-section{order:7}
+    main>.stay-section{order:8}
     main>.journey{order:9}
     main>.reel{order:10}
     main>.destinations{order:11}
@@ -252,11 +252,11 @@
     .service-card:hover{transform:translateY(-7px)}
     .service-card img{position:absolute;inset:0;height:100%;object-fit:cover;object-position:center;transition:transform .7s cubic-bezier(.2,.8,.2,1)}
     .service-card:not(.featured) img{height:100%;object-fit:cover;object-position:center}
-    .service-card:nth-child(2) img{object-position:52% 56%}
-    .service-card:nth-child(3) img{object-position:50% 46%}
-    .service-card:nth-child(4) img{object-position:50% 58%}
-    .service-card:nth-child(5) img{object-position:50% 48%}
-    .service-card:nth-child(6) img{object-position:54% 54%}
+    .service-card:nth-child(2) img{object-position:54% 54%}
+    .service-card:nth-child(4) img{object-position:52% 56%}
+    .service-card:nth-child(5) img{object-position:50% 46%}
+    .service-card:nth-child(6) img{object-position:50% 58%}
+    .service-card:nth-child(8) img{object-position:50% 48%}
     .service-card:not(.featured)::after{
       background:linear-gradient(180deg,rgba(6,45,43,0) 18%,rgba(6,45,43,.4) 48%,rgba(6,45,43,.98) 77%);
     }
@@ -1903,77 +1903,69 @@
               <button class="service-open" type="button" data-service="hospedaje">Ver publicidad y fotografías <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></button>
             </div>
           </article>
-
-          <article class="service-card poster-card service-wide reveal" data-category="aire">
-            <img width="1280" height="640" src="img/poster-helicoptero.webp" srcset="img/poster-helicoptero-sm.webp 820w, img/poster-helicoptero.webp 1280w" sizes="(max-width:900px) 92vw, 46vw" alt="Publicidad del vuelo en helicóptero sobre Guatapé" loading="lazy" decoding="async">
-            <span class="service-number">02</span><span class="service-category">Aire</span>
-            <div class="service-content">
-              <h3>Vuelo en helicóptero</h3>
-              <p>Sobrevuela la Piedra, el embalse y el proyecto del Cristo más grande del mundo desde una perspectiva única.</p>
-              <button class="service-open" type="button" data-service="helicoptero">Ver publicidad y fotografías <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></button>
-            </div>
-          </article>
-
-          <article class="service-card poster-card poster-compact service-wide reveal" data-category="aire">
-            <img width="1536" height="1024" src="img/poster-parapente.webp" srcset="img/poster-parapente-sm.webp 820w, img/poster-parapente.webp 1536w" sizes="(max-width:900px) 92vw, 46vw" alt="Publicidad de la experiencia de parapente sobre Guatapé" loading="lazy" decoding="async">
-            <span class="service-number">03</span><span class="service-category">Aire</span>
-            <div class="service-content">
-              <h3>Parapente en Guatapé</h3>
-              <p>Vuela sobre el embalse en modalidad tándem y contempla sus islas desde una perspectiva única.</p>
-              <button class="service-open" type="button" data-service="parapente">Ver fotos y video <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></button>
-            </div>
-          </article>
-
-          <article class="service-card poster-card service-wide reveal" data-category="tierra">
-            <img width="1280" height="640" src="img/poster-cuatrimotos.webp" srcset="img/poster-cuatrimotos-sm.webp 820w, img/poster-cuatrimotos.webp 1280w" sizes="(max-width:900px) 92vw, 46vw" alt="Publicidad de los paseos en cuatrimoto" loading="lazy" decoding="async">
-            <span class="service-number">04</span><span class="service-category">Tierra</span>
-            <div class="service-content">
-              <h3>Ruta en cuatrimoto</h3>
-              <p>Caminos rurales, bosque, montaña y miradores conectados en una experiencia sobre ruedas.</p>
-              <button class="service-open" type="button" data-service="cuatrimotos">Ver publicidad y fotografías <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></button>
-            </div>
-          </article>
-
-          <article class="service-card poster-card poster-banner jetcar-service-card reveal" data-category="agua">
-            <img width="1280" height="1024" src="img/poster-jetcar.webp" srcset="img/poster-jetcar-sm.webp 820w, img/poster-jetcar.webp 1280w" sizes="92vw" alt="Publicidad de la experiencia JetCar en Guatapé" loading="lazy" decoding="async">
-            <span class="service-number">05</span><span class="service-category">Agua</span>
-            <div class="service-content">
-              <h3>JetCar Guatapé</h3>
-              <p>Conduce un superdeportivo anfibio sobre el embalse, con La Piedra de fondo.</p>
-              <button class="service-open" type="button" data-service="jetcar">Ver experiencia <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></button>
-            </div>
-          </article>
-
-          <article class="service-card poster-card poster-compact reveal" data-category="agua">
+          <article class="service-card poster-card poster-compact service-wide reveal" data-category="agua">
             <img width="1280" height="853" src="img/poster-jetski-nuevo.webp" srcset="img/poster-jetski-nuevo-sm.webp 820w, img/poster-jetski-nuevo.webp 1280w" sizes="(max-width:900px) 92vw, 46vw" alt="Publicidad de los paseos en Jet Ski" loading="lazy" decoding="async">
-            <span class="service-number">06</span><span class="service-category">Agua</span>
+            <span class="service-number">02</span><span class="service-category">Agua</span>
             <div class="service-content">
               <h3>Paseos en Jet Ski</h3>
               <p>Velocidad, paisaje y una experiencia acuática para recorrer el embalse de otra manera.</p>
               <button class="service-open" type="button" data-service="jetski">Ver publicidad y fotografías <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></button>
             </div>
           </article>
-
-          <article class="service-card poster-card poster-compact reveal" data-category="agua">
+          <article class="service-card poster-card poster-compact service-wide reveal" data-category="agua">
             <img width="1280" height="853" src="img/poster-lancha-lujo.webp" srcset="img/poster-lancha-lujo-sm.webp 820w, img/poster-lancha-lujo.webp 1280w" sizes="(max-width:900px) 92vw, 46vw" alt="Publicidad de los paseos en lancha de lujo" loading="lazy" decoding="async">
-            <span class="service-number">07</span><span class="service-category">Agua</span>
+            <span class="service-number">03</span><span class="service-category">Agua</span>
             <div class="service-content">
               <h3>Paseos en lancha</h3>
               <p>Comparte el paisaje, la brisa y el recorrido por el embalse con familia o amigos.</p>
               <button class="service-open" type="button" data-service="lancha">Ver publicidad y fotografías <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></button>
             </div>
           </article>
-
-          <article class="service-card poster-card reveal" data-category="tierra">
+          <article class="service-card poster-card service-wide reveal" data-category="aire">
+            <img width="1280" height="640" src="img/poster-helicoptero.webp" srcset="img/poster-helicoptero-sm.webp 820w, img/poster-helicoptero.webp 1280w" sizes="(max-width:900px) 92vw, 46vw" alt="Publicidad del vuelo en helicóptero sobre Guatapé" loading="lazy" decoding="async">
+            <span class="service-number">04</span><span class="service-category">Aire</span>
+            <div class="service-content">
+              <h3>Vuelo en helicóptero</h3>
+              <p>Sobrevuela la Piedra, el embalse y el proyecto del Cristo más grande del mundo desde una perspectiva única.</p>
+              <button class="service-open" type="button" data-service="helicoptero">Ver publicidad y fotografías <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></button>
+            </div>
+          </article>
+          <article class="service-card poster-card poster-compact service-wide reveal" data-category="aire">
+            <img width="1536" height="1024" src="img/poster-parapente.webp" srcset="img/poster-parapente-sm.webp 820w, img/poster-parapente.webp 1536w" sizes="(max-width:900px) 92vw, 46vw" alt="Publicidad de la experiencia de parapente sobre Guatapé" loading="lazy" decoding="async">
+            <span class="service-number">05</span><span class="service-category">Aire</span>
+            <div class="service-content">
+              <h3>Parapente en Guatapé</h3>
+              <p>Vuela sobre el embalse en modalidad tándem y contempla sus islas desde una perspectiva única.</p>
+              <button class="service-open" type="button" data-service="parapente">Ver fotos y video <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></button>
+            </div>
+          </article>
+          <article class="service-card poster-card service-wide reveal" data-category="tierra">
+            <img width="1280" height="640" src="img/poster-cuatrimotos.webp" srcset="img/poster-cuatrimotos-sm.webp 820w, img/poster-cuatrimotos.webp 1280w" sizes="(max-width:900px) 92vw, 46vw" alt="Publicidad de los paseos en cuatrimoto" loading="lazy" decoding="async">
+            <span class="service-number">06</span><span class="service-category">Tierra</span>
+            <div class="service-content">
+              <h3>Ruta en cuatrimoto</h3>
+              <p>Caminos rurales, bosque, montaña y miradores conectados en una experiencia sobre ruedas.</p>
+              <button class="service-open" type="button" data-service="cuatrimotos">Ver publicidad y fotografías <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></button>
+            </div>
+          </article>
+          <article class="service-card poster-card service-wide reveal" data-category="tierra">
             <img width="1280" height="853" src="img/poster-paintball.webp" srcset="img/poster-paintball-sm.webp 820w, img/poster-paintball.webp 1280w" sizes="(max-width:900px) 92vw, 46vw" alt="Publicidad de la experiencia de Paintball" loading="lazy" decoding="async">
-            <span class="service-number">08</span><span class="service-category">Tierra</span>
+            <span class="service-number">07</span><span class="service-category">Tierra</span>
             <div class="service-content">
               <h3>Paintball</h3>
               <p>Una experiencia para compartir en grupo, consultar disponibilidad y conocer las condiciones del operador.</p>
               <button class="service-open" type="button" data-service="paintball">Ver experiencia <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></button>
             </div>
           </article>
-
+          <article class="service-card poster-card poster-banner jetcar-service-card reveal" data-category="agua">
+            <img width="1280" height="1024" src="img/poster-jetcar.webp" srcset="img/poster-jetcar-sm.webp 820w, img/poster-jetcar.webp 1280w" sizes="92vw" alt="Publicidad de la experiencia JetCar en Guatapé" loading="lazy" decoding="async">
+            <span class="service-number">08</span><span class="service-category">Agua</span>
+            <div class="service-content">
+              <h3>JetCar Guatapé</h3>
+              <p>Conduce un superdeportivo anfibio sobre el embalse, con La Piedra de fondo.</p>
+              <button class="service-open" type="button" data-service="jetcar">Ver experiencia <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></button>
+            </div>
+          </article>
           <article class="service-card poster-card flyboard-service-card reveal" data-category="agua">
             <img width="853" height="1280" src="img/poster-flyboard.webp" srcset="img/poster-flyboard-sm.webp 820w, img/poster-flyboard.webp 853w" sizes="92vw" alt="Publicidad de la experiencia de Flyboard en Guatapé" loading="lazy" decoding="async">
             <span class="service-number">09</span><span class="service-category">Agua</span>
@@ -1987,7 +1979,6 @@
               <button class="service-open" type="button" data-service="flyboard">Ver experiencia <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></button>
             </div>
           </article>
-
           <article class="service-card poster-card poster-compact service-wide reveal" data-category="agua">
             <img width="1280" height="732" src="img/poster-wakeboard.webp" srcset="img/poster-wakeboard-sm.webp 820w, img/poster-wakeboard.webp 1280w" sizes="(max-width:900px) 92vw, 46vw" alt="Publicidad de la experiencia de Wakeboard en Guatapé" loading="lazy" decoding="async">
             <span class="service-number">10</span><span class="service-category">Agua</span>
@@ -1997,7 +1988,6 @@
               <button class="service-open" type="button" data-service="wakeboard">Ver experiencia <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></button>
             </div>
           </article>
-
           <article class="service-card poster-card poster-compact service-wide reveal" data-category="estadia">
             <img width="1280" height="853" src="img/poster-dia-de-sol.webp" srcset="img/poster-dia-de-sol-sm.webp 820w, img/poster-dia-de-sol.webp 1280w" sizes="(max-width:900px) 92vw, 46vw" alt="Publicidad del plan Día de Sol en Guatapé" loading="lazy" decoding="async">
             <span class="service-number">11</span><span class="service-category">Plan de descanso</span>
