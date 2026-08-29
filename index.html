@@ -5,11 +5,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>XEBAX Adventure Connection · Vive la aventura al máximo</title>
-  <meta name="description" content="Experiencias y hospedajes en Guatapé y El Peñol: cabaña destacada para 12 personas, vuelos panorámicos, cuatrimotos, JetCar y actividades náuticas. Consulta por WhatsApp.">
+  <meta name="description" content="Experiencias y hospedajes en Guatapé y El Peñol: cabaña disponible para parejas o grupos de hasta 20 personas, vuelos panorámicos, cuatrimotos, JetCar y actividades náuticas. Consulta por WhatsApp.">
   <meta name="theme-color" content="#08312f">
   <link rel="icon" href="img/logo-xebax-mark.webp" type="image/webp">
   <meta property="og:title" content="XEBAX Adventure Connection · Vive la aventura al máximo">
-  <meta property="og:description" content="Conoce la cabaña destacada para 12 personas y las experiencias de aire, tierra y agua disponibles en Guatapé y El Peñol.">
+  <meta property="og:description" content="Conoce la cabaña disponible para parejas o grupos de hasta 20 personas y las experiencias de aire, tierra y agua en Guatapé y El Peñol.">
   <meta property="og:type" content="website">
   <meta property="og:image" content="img/logo-xebax.webp">
   <link rel="preload" as="image" href="img/hero-vive-el-cielo.webp" imagesrcset="img/hero-vive-el-cielo-sm.webp 820w, img/hero-vive-el-cielo.webp 1536w" imagesizes="(max-width:1060px) calc(100vw - 48px), 56vw" type="image/webp" fetchpriority="high">
@@ -53,7 +53,6 @@
     main{display:flex;flex-direction:column}
     main>.hero{order:1}
     main>.cabana-feature{order:2}
-    main>.cabana-rio{order:2}
     main>.highlights{order:2}
     main>.marquee{order:3}
     main>.services-section{order:4}
@@ -1718,6 +1717,51 @@
       .chat-panel,.chat-launcher,.chat-row,.chat-options{transition:none;animation:none}
       .chat-typing i{animation:none}
     }
+
+    /* Cabaña solicitada por la clienta: visible desde el primer bloque. */
+    .hero-cabana-link{
+      grid-template-columns:128px minmax(0,1fr) auto;width:min(100%,620px);
+      padding:.62rem .78rem .62rem .62rem;gap:.9rem;
+    }
+    .hero-cabana-thumb{width:128px;aspect-ratio:16/10;border-radius:14px}
+    .hero-cabana-thumb img{object-fit:cover}
+    .hero-cabana-link strong{font-size:1.08rem}
+    .hero-cabana-link small{font-size:.75rem}
+
+    .cabana-feature .group-stay-media{
+      min-height:570px;grid-template-columns:minmax(0,1.65fr) minmax(155px,.72fr);
+      grid-template-rows:repeat(2,minmax(0,1fr));align-items:stretch;align-content:stretch;
+    }
+    .cabana-feature .group-stay-photo.main{
+      grid-column:1;grid-row:1/3;aspect-ratio:auto;border-radius:20px 48px 20px 20px;
+    }
+    .cabana-feature .group-stay-photo:not(.main){grid-column:2;aspect-ratio:auto}
+    .cabana-feature .group-stay-photo img{object-fit:cover;transform:none!important}
+    .cabana-feature .group-stay-features span:last-child{grid-column:1/-1}
+    .cabana-reminder::after{content:"20"}
+    .cabana-reminder-gallery span{aspect-ratio:4/3}
+    .cabana-reminder-gallery img{object-fit:cover}
+
+    @media(max-width:1060px){
+      .cabana-feature .group-stay-media{
+        min-height:520px;grid-template-columns:minmax(0,1.7fr) minmax(150px,.7fr);
+        grid-template-rows:repeat(2,minmax(0,1fr));
+      }
+    }
+    @media(max-width:620px){
+      .hero-cabana-link{grid-template-columns:78px minmax(0,1fr) auto;gap:.62rem;padding:.52rem}
+      .hero-cabana-thumb{width:78px}
+      .hero-cabana-link strong{font-size:.88rem}
+      .hero-cabana-link small{font-size:.64rem}
+      .hero-cabana-arrow{width:30px;height:30px}
+      .cabana-feature .group-stay-copy h3{font-size:clamp(2.1rem,10.5vw,2.75rem)}
+      .cabana-feature .group-stay-features span:last-child{grid-column:auto}
+      .cabana-feature .group-stay-media{display:flex;min-height:0}
+      .cabana-feature .group-stay-photo.main,
+      .cabana-feature .group-stay-photo:not(.main){
+        flex:0 0 86%;min-width:86%;height:auto;aspect-ratio:4/3;border-radius:18px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -1779,13 +1823,13 @@
               Consultar por WhatsApp
             </a>
           </div>
-          <a class="hero-cabana-link" href="#cabana12" aria-label="Ir a la cabaña destacada para 12 personas">
+          <a class="hero-cabana-link" href="#cabana20" aria-label="Ir a la cabaña disponible para parejas o grupos de hasta 20 personas">
             <span class="hero-cabana-thumb" aria-hidden="true">
-              <img width="200" height="150" src="img/cabana12-terraza-jacuzzi-th.webp" alt="" decoding="async">
+              <img width="360" height="245" src="img/cabana-alquiler-0038-th.webp" alt="" fetchpriority="high" decoding="async">
             </span>
             <span>
-              <strong>Cabaña destacada para 12 personas</strong>
-              <small>Jacuzzi, cocina, terraza y vista a La Piedra · Ver fotos y videos</small>
+              <strong>🏡✨ ¡Cabaña disponible para alquilar!</strong>
+              <small>Para parejas o grupos de hasta 20 personas · Jacuzzi y cocina equipada</small>
             </span>
             <span class="hero-cabana-arrow" aria-hidden="true">→</span>
           </a>
@@ -1797,76 +1841,43 @@
           </figure>
         </div>
       </div>
-      <a class="scroll-cue" href="#cabana12">Conoce la cabaña destacada</a>
+      <a class="scroll-cue" href="#cabana20">Conoce la cabaña disponible</a>
     </section>
 
-    <section class="section cabana-feature" id="cabana12" aria-label="Cabaña destacada para grupos de hasta 12 personas">
+    <section class="section cabana-feature" id="cabana20" aria-label="Cabaña disponible para parejas o grupos de hasta 20 personas">
       <div class="wrap group-stay-wrap">
-        <article class="group-stay-card reveal" aria-labelledby="cabana12Title">
+        <article class="group-stay-card reveal" aria-labelledby="cabana20Title">
           <div class="group-stay-media" aria-label="Vista previa de la cabaña; selecciona una imagen para abrir la galería">
-            <button class="group-stay-photo main" type="button" data-service="cabana12" aria-label="Abrir galería de la habitación con vista a La Piedra y el embalse">
-              <img width="1179" height="1339" src="img/cabana12-habitacion-vista.webp" srcset="img/cabana12-habitacion-vista-sm.webp 720w, img/cabana12-habitacion-vista.webp 1179w" sizes="(max-width:900px) 92vw, 40vw" alt="Habitación de la cabaña con vista a La Piedra y el embalse" loading="lazy" decoding="async">
-              <span class="group-stay-photo-label">Vista a La Piedra</span>
+            <button class="group-stay-photo main" type="button" data-service="cabana20" aria-label="Abrir la galería de fotografías de la cabaña">
+              <img width="1400" height="954" src="img/cabana-alquiler-0038.webp" srcset="img/cabana-alquiler-0038-sm.webp 820w, img/cabana-alquiler-0038.webp 1400w" sizes="(max-width:1060px) 92vw, 48vw" alt="Fachada principal de la cabaña disponible para alquilar" loading="eager" fetchpriority="high" decoding="async">
+              <span class="group-stay-photo-label">Foto principal</span>
             </button>
-            <button class="group-stay-photo" type="button" data-service="cabana12" aria-label="Abrir galería del jacuzzi privado de la cabaña">
-              <img width="1179" height="1317" src="img/cabana12-jacuzzi-noche.webp" srcset="img/cabana12-jacuzzi-noche-sm.webp 720w, img/cabana12-jacuzzi-noche.webp 1179w" sizes="(max-width:900px) 92vw, 40vw" alt="Jacuzzi privado de la cabaña durante la noche" loading="lazy" decoding="async">
+            <button class="group-stay-photo" type="button" data-service="cabana20" aria-label="Abrir la galería desde la fotografía del jacuzzi">
+              <img width="1400" height="933" src="img/cabana-alquiler-0041.webp" sizes="(max-width:1060px) 45vw, 20vw" alt="Jacuzzi amplio de la cabaña" loading="lazy" decoding="async">
+              <span class="group-stay-photo-label">Jacuzzi amplio</span>
             </button>
-            <button class="group-stay-photo" type="button" data-service="cabana12" aria-label="Abrir galería de los espacios interiores y la terraza">
-              <img width="1179" height="1344" src="img/cabana12-interior-terraza.webp" srcset="img/cabana12-interior-terraza-sm.webp 720w, img/cabana12-interior-terraza.webp 1179w" sizes="(max-width:900px) 92vw, 40vw" alt="Interior de la cabaña conectado con la terraza" loading="lazy" decoding="async">
+            <button class="group-stay-photo" type="button" data-service="cabana20" aria-label="Abrir la galería desde la fotografía de una habitación">
+              <img width="1280" height="1280" src="img/cabana-alquiler-0047.webp" sizes="(max-width:1060px) 45vw, 20vw" alt="Habitación de la cabaña con cama doble" loading="lazy" decoding="async">
+              <span class="group-stay-photo-label">Habitaciones</span>
             </button>
           </div>
 
           <div class="group-stay-copy">
-            <span class="kicker">Cabaña de lujo</span>
-            <h3 id="cabana12Title">Cabaña para hasta 12 personas.</h3>
-            <p>Una opción amplia para familias y grupos, con espacios privados, zonas exteriores y una vista privilegiada de Guatapé.</p>
+            <span class="kicker">Hospedaje destacado</span>
+            <h3 id="cabana20Title">🏡✨ ¡Cabaña disponible para alquilar! ✨🏡</h3>
+            <p>Disfruta de una escapada perfecta en pareja o comparte momentos inolvidables con familiares y amigos. 💖</p>
             <div class="group-stay-features" role="list" aria-label="Características de la cabaña">
-              <span role="listitem">Capacidad: hasta 12 personas</span>
-              <span role="listitem">Jacuzzi privado</span>
-              <span role="listitem">Vista a La Piedra y el embalse</span>
-              <span role="listitem">Cocina equipada y terraza</span>
+              <span role="listitem">👫 Ideal para parejas o grupos de hasta 20 personas</span>
+              <span role="listitem">🗓️ Disponible entre semana y fines de semana</span>
+              <span role="listitem">🛁 Jacuzzi amplio para relajarte y disfrutar</span>
+              <span role="listitem">🍳 Cocina equipada para preparar tus comidas</span>
+              <span role="listitem">🌿 Un espacio ideal para descansar, celebrar y desconectarte de la rutina.</span>
             </div>
             <div class="story-actions">
-              <button class="btn btn-primary" type="button" data-service="cabana12">Ver 9 fotos y 2 videos</button>
-              <a class="btn btn-wa" href="https://wa.me/573006182215?text=Hola%20XEBAX%20Adventure%20Connection%2C%20quiero%20consultar%20disponibilidad%20de%20la%20caba%C3%B1a%20para%2012%20personas" target="_blank" rel="noopener">Consultar disponibilidad</a>
+              <button class="btn btn-primary" type="button" data-service="cabana20">Ver las 29 fotos</button>
+              <a class="btn btn-wa" href="https://wa.me/573006182215?text=Hola%20XEBAX%20Adventure%20Connection%2C%20quiero%20reservar%20la%20caba%C3%B1a%20para%20pareja%20o%20grupo%20de%20hasta%2020%20personas" target="_blank" rel="noopener">Reservar por WhatsApp</a>
             </div>
-            <small class="stay-note">La distribución, tarifa y disponibilidad se confirman directamente según las fechas de la reserva.</small>
-          </div>
-        </article>
-      </div>
-    </section>
-
-    <section class="section cabana-feature cabana-rio" id="cabana-rio" aria-label="Cabaña campestre junto al río">
-      <div class="wrap group-stay-wrap">
-        <article class="group-stay-card reveal" aria-labelledby="cabanaRioTitle">
-          <div class="group-stay-media" aria-label="Vista previa de la cabaña; selecciona una imagen para abrir la galería">
-            <button class="group-stay-photo main" type="button" data-service="cabanaRio" aria-label="Abrir galería de la cabaña campestre: fachada rodeada de jardín y flores">
-              <img width="825" height="1100" src="img/cabana-rio-fachada.webp" srcset="img/cabana-rio-fachada-sm.webp 720w, img/cabana-rio-fachada.webp 825w" sizes="(max-width:900px) 33vw, 18vw" alt="fachada rodeada de jardín y flores" loading="lazy" decoding="async">
-              <span class="group-stay-photo-label">Junto al río</span>
-            </button>
-            <button class="group-stay-photo" type="button" data-service="cabanaRio" aria-label="Abrir galería de la cabaña campestre: kiosco con mesas para compartir">
-              <img width="825" height="1100" src="img/cabana-rio-kiosco.webp" srcset="img/cabana-rio-kiosco-sm.webp 720w, img/cabana-rio-kiosco.webp 825w" sizes="(max-width:900px) 33vw, 18vw" alt="kiosco con mesas para compartir" loading="lazy" decoding="async">
-            </button>
-            <button class="group-stay-photo" type="button" data-service="cabanaRio" aria-label="Abrir galería de la cabaña campestre: recorrido en kayak por el río">
-              <img width="825" height="1100" src="img/cabana-rio-kayak.webp" srcset="img/cabana-rio-kayak-sm.webp 720w, img/cabana-rio-kayak.webp 825w" sizes="(max-width:900px) 33vw, 18vw" alt="recorrido en kayak por el río" loading="lazy" decoding="async">
-            </button>
-          </div>
-
-          <div class="group-stay-copy">
-            <span class="kicker">Cabaña sencilla</span>
-            <h3 id="cabanaRioTitle">Cabaña campestre junto al río.</h3>
-            <p>Una casa completa entre jardines y guaduas, con acceso directo al río, kayaks, kiosco y zona de asador. Pensada para desconectarse en familia o en grupo.</p>
-            <div class="group-stay-features" role="list" aria-label="Características de la cabaña">
-              <span role="listitem">Acceso directo al río y kayaks</span>
-              <span role="listitem">Kiosco y zona de asador</span>
-              <span role="listitem">Cocina equipada</span>
-              <span role="listitem">Jardines y zonas verdes</span>
-            </div>
-            <div class="story-actions">
-              <button class="btn btn-primary" type="button" data-service="cabanaRio">Ver 20 fotos y 1 video</button>
-              <a class="btn btn-wa" href="https://wa.me/573006182215?text=Hola%20XEBAX%20Adventure%20Connection%2C%20quiero%20consultar%20disponibilidad%20de%20la%20caba%C3%B1a%20campestre%20junto%20al%20r%C3%ADo" target="_blank" rel="noopener">Consultar por WhatsApp</a>
-            </div>
-            <small class="stay-note">La distribución, tarifa y disponibilidad se confirman directamente según las fechas de la reserva.</small>
+            <small class="stay-note">🌆 Reserva tu fecha y vive una experiencia inolvidable.</small>
           </div>
         </article>
       </div>
@@ -2055,23 +2066,23 @@
             </div>
           </article>
         </div>
-        <aside class="cabana-reminder reveal" aria-label="Recordatorio de la cabaña para 12 personas">
+        <aside class="cabana-reminder reveal" aria-label="Recordatorio de la cabaña disponible para hasta 20 personas">
           <div class="cabana-reminder-gallery" aria-hidden="true">
-            <span><img width="1179" height="1339" src="img/cabana12-habitacion-vista.webp" srcset="img/cabana12-habitacion-vista-sm.webp 720w, img/cabana12-habitacion-vista.webp 1179w" sizes="(max-width:900px) 92vw, 40vw" alt="" loading="lazy" decoding="async"></span>
-            <span><img width="1179" height="1317" src="img/cabana12-jacuzzi-noche.webp" srcset="img/cabana12-jacuzzi-noche-sm.webp 720w, img/cabana12-jacuzzi-noche.webp 1179w" sizes="(max-width:900px) 92vw, 40vw" alt="" loading="lazy" decoding="async"></span>
-            <span><img width="1179" height="1264" src="img/cabana12-cocina-vista.webp" srcset="img/cabana12-cocina-vista-sm.webp 720w, img/cabana12-cocina-vista.webp 1179w" sizes="(max-width:900px) 92vw, 40vw" alt="" loading="lazy" decoding="async"></span>
+            <span><img width="1400" height="954" src="img/cabana-alquiler-0038.webp" alt="" loading="lazy" decoding="async"></span>
+            <span><img width="1400" height="933" src="img/cabana-alquiler-0041.webp" alt="" loading="lazy" decoding="async"></span>
+            <span><img width="1400" height="933" src="img/cabana-alquiler-0030.webp" alt="" loading="lazy" decoding="async"></span>
           </div>
           <div class="cabana-reminder-copy">
-            <span>Opción destacada para grupos</span>
-            <h3>Cabaña para hasta 12 personas</h3>
-            <p>Hospédense juntos con jacuzzi privado, cocina equipada, terraza y vista a La Piedra y el embalse.</p>
+            <span>Disponible para alquilar</span>
+            <h3>Para parejas o grupos de hasta 20 personas</h3>
+            <p>Un espacio para descansar, celebrar y compartir, con jacuzzi amplio, cocina equipada y zonas sociales.</p>
             <div class="cabana-reminder-points" aria-label="Beneficios principales">
-              <b>Hasta 12 huéspedes</b><b>Jacuzzi privado</b><b>Vista panorámica</b>
+              <b>Hasta 20 personas</b><b>Jacuzzi amplio</b><b>Entre semana y fines de semana</b>
             </div>
           </div>
           <div class="cabana-reminder-actions">
-            <button class="btn btn-primary" type="button" data-service="cabana12">Ver 9 fotos y 2 videos</button>
-            <a class="btn btn-wa" href="https://wa.me/573006182215?text=Hola%20XEBAX%20Adventure%20Connection%2C%20quiero%20consultar%20disponibilidad%20de%20la%20caba%C3%B1a%20para%2012%20personas" target="_blank" rel="noopener">Consultar disponibilidad</a>
+            <button class="btn btn-primary" type="button" data-service="cabana20">Ver las 29 fotos</button>
+            <a class="btn btn-wa" href="https://wa.me/573006182215?text=Hola%20XEBAX%20Adventure%20Connection%2C%20quiero%20reservar%20la%20caba%C3%B1a%20para%20pareja%20o%20grupo%20de%20hasta%2020%20personas" target="_blank" rel="noopener">Reservar por WhatsApp</a>
           </div>
         </aside>
       </div>
@@ -2928,71 +2939,67 @@
       ...hotelLujoNumerados.map((_, i) => `Alojamiento de lujo en Guatapé, fotografía ${i + 1}`)
     ];
 
-    const cabanaRioImages = [
-      "img/cabana-rio-fachada.webp",
-      "img/cabana-rio-exterior.webp",
-      "img/cabana-rio-jardin.webp",
-      "img/cabana-rio-corredor.webp",
-      "img/cabana-rio-kiosco.webp",
-      "img/cabana-rio-kiosco-2.webp",
-      "img/cabana-rio-asador.webp",
-      "img/cabana-rio-cocina.webp",
-      "img/cabana-rio-nevera.webp",
-      "img/cabana-rio-bano-01.webp",
-      "img/cabana-rio-bano-02.webp",
-      "img/cabana-rio-ducha.webp",
-      "img/cabana-rio-kayak.webp",
-      "img/cabana-rio-kayak-2.webp",
-      "img/cabana-rio-hamaca.webp",
-      "img/cabana-rio-kayaks.webp",
-      "img/cabana-rio-quebrada.webp",
-      "img/cabana-rio-pergola.webp",
-      "img/cabana-rio-guadua.webp",
-      "img/cabana-rio-parqueo.webp"
+    const cabana20Images = [
+      "img/cabana-alquiler-0038.webp",
+      "img/cabana-alquiler-0039.webp",
+      "img/cabana-alquiler-0040.webp",
+      "img/cabana-alquiler-0041.webp",
+      "img/cabana-alquiler-0043.webp",
+      "img/cabana-alquiler-0044.webp",
+      "img/cabana-alquiler-0037.webp",
+      "img/cabana-alquiler-0020.webp",
+      "img/cabana-alquiler-0042.webp",
+      "img/cabana-alquiler-0045.webp",
+      "img/cabana-alquiler-0029.webp",
+      "img/cabana-alquiler-0030.webp",
+      "img/cabana-alquiler-0033.webp",
+      "img/cabana-alquiler-0034.webp",
+      "img/cabana-alquiler-0046.webp",
+      "img/cabana-alquiler-0047.webp",
+      "img/cabana-alquiler-0027.webp",
+      "img/cabana-alquiler-0028.webp",
+      "img/cabana-alquiler-0018.webp",
+      "img/cabana-alquiler-0023.webp",
+      "img/cabana-alquiler-0031.webp",
+      "img/cabana-alquiler-0032.webp",
+      "img/cabana-alquiler-0021.webp",
+      "img/cabana-alquiler-0022.webp",
+      "img/cabana-alquiler-0026.webp",
+      "img/cabana-alquiler-0035.webp",
+      "img/cabana-alquiler-0036.webp",
+      "img/cabana-alquiler-0024.webp",
+      "img/cabana-alquiler-0025.webp"
     ];
-    const cabanaRioAlts = [
-      "Fachada de la cabaña rodeada de jardín y flores",
-      "Exterior de la cabaña con kayak sobre el prado",
-      "Jardín florecido frente a la cabaña",
-      "Corredor cubierto con mesa y sillas",
-      "Kiosco con mesas para compartir",
-      "Kiosco de madera entre la vegetación",
-      "Zona de asador para preparar la comida",
-      "Cocina equipada con neveras y mesa",
-      "Nevera disponible para los huéspedes",
-      "Baño con lavamanos y ducha",
-      "Segundo baño de la cabaña",
-      "Ducha con dispensadores de jabón",
-      "Recorrido en kayak por el río",
-      "Kayak sobre el agua junto a la orilla",
-      "Hamaca a la orilla del río",
-      "Kayaks disponibles en la zona verde",
-      "Zona verde junto a la quebrada",
-      "Pérgola rodeada de vegetación",
-      "Sendero entre guaduas y jardín",
-      "Zona verde con espacio para parquear"
-    ];
-    const cabana12Images = [
-      "img/cabana12-habitacion-vista.webp",
-      "img/cabana12-jacuzzi-noche.webp",
-      "img/cabana12-interior-terraza.webp",
-      "img/cabana12-cocina-vista.webp",
-      "img/cabana12-terraza-jacuzzi.webp",
-      "img/cabana12-terraza-noche.webp",
-      "img/cabana12-habitacion-jacuzzi.webp",
-      "img/cabana12-bano-01.webp",
-      "img/cabana12-bano-02.webp"
-    ];
-    const cabana12Alts = [
-      "Habitación con vista a La Piedra y el embalse",
-      "Jacuzzi privado iluminado durante la noche",
-      "Interior de la cabaña conectado con la terraza",
-      "Cocina equipada con vista al paisaje",
-      "Terraza exterior con jacuzzi privado",
-      "Terraza de madera iluminada durante el atardecer",
-      "Habitación con cocineta y acceso al jacuzzi",
-      "Baño moderno con ducha de vidrio",
-      "Segundo baño con ducha y acabados contemporáneos"
+    const cabana20Alts = [
+      "Fachada principal de la cabaña",
+      "Zona social exterior con barra",
+      "Terraza amoblada junto al jacuzzi",
+      "Jacuzzi amplio de la cabaña",
+      "Jacuzzi y terraza cubiertos",
+      "Zona social cubierta con iluminación cálida",
+      "Zona de asador equipada",
+      "Patio y fachada de la cabaña",
+      "Corredor exterior cubierto",
+      "Vista del paisaje y el embalse desde la cabaña",
+      "Comedor conectado con la cocina",
+      "Cocina completamente equipada",
+      "Sala con mobiliario para compartir",
+      "Sala y comedor de la cabaña",
+      "Habitación con cama doble",
+      "Habitación con cama doble y cortina azul",
+      "Habitación amplia con cama doble",
+      "Segunda habitación con cama doble",
+      "Habitación con camarote de madera",
+      "Camarote en una habitación de la cabaña",
+      "Habitación con cama tipo camarote",
+      "Habitación con varios camarotes",
+      "Espacio de almacenamiento para huéspedes",
+      "Baño completo con ducha",
+      "Segundo baño completo",
+      "Ducha independiente con puertas de vidrio",
+      "Lavamanos y espejo del baño",
+      "Lavadora disponible en la cabaña",
+      "Zona de lavado equipada"
     ];
     const jetskiImages = numberedMedia("img", "jetski", 7);
     const jetskiSimpleImages = numberedMedia("img", "jetski-simple", 2);
@@ -3086,12 +3093,9 @@
         category: "Línea económica",
         title: "Cabañas sencillas y campestres",
         description: "Opciones cómodas y económicas: cabañas tradicionales, habitaciones sencillas y casas campestres con zonas verdes. Ideales para quienes prefieren invertir en las experiencias y tener un buen sitio donde descansar.",
-        images: [...cabanaRioImages, "img/hotel-cabana-dia.webp", "img/hotel-cabana-atardecer.webp", ...hotelSencilloNumerados],
-        alts: [...cabanaRioAlts, "Cabaña colorida cerca de la Piedra del Peñol", "Cabaña tradicional durante el atardecer", ...hotelSencilloNumerados.map((_, i) => `Alojamiento sencillo en Guatapé, fotografía ${i + 1}`)],
-        features: ["Cabañas tradicionales y campestres", "Zonas verdes, kiosco y asador", "Cocina equipada", "Tarifas más económicas"],
-        videos: [
-          { src: "video/cabana-rio-recorrido.mp4", poster: "img/cabana-rio-video.webp", label: "Recorrido por la cabaña campestre" }
-        ]
+        images: ["img/hotel-cabana-dia.webp", "img/hotel-cabana-atardecer.webp", ...hotelSencilloNumerados],
+        alts: ["Cabaña colorida cerca de la Piedra del Peñol", "Cabaña tradicional durante el atardecer", ...hotelSencilloNumerados.map((_, i) => `Alojamiento sencillo en Guatapé, fotografía ${i + 1}`)],
+        features: ["Cabañas tradicionales y campestres", "Zonas verdes y espacios para compartir", "Opciones con cocina equipada", "Alternativas económicas"]
       },
       hospedaje: {
         category: "Opciones de estadía",
@@ -3101,28 +3105,13 @@
         alts: [...newHotelAlts, "Publicidad de hoteles y cabañas en Guatapé", ...hotelImages.map((_, index) => `Fotografía real del hospedaje ${index + 1}`)],
         features: ["Opciones económicas, intermedias y de lujo", "Cabañas para pareja, grupos, hoteles y complejos", "Disponibilidad y características confirmadas por WhatsApp"]
       },
-      cabanaRio: {
-        category: "Alojamiento campestre",
-        title: "Cabaña campestre junto al río",
-        description: "Una casa completa entre jardines y guaduas, con acceso directo al río, kayaks, kiosco, zona de asador y cocina equipada. Una opción tranquila para familias o grupos que quieren desconectarse. La capacidad, la tarifa y la disponibilidad se confirman según las fechas.",
-        images: cabanaRioImages,
-        alts: cabanaRioAlts,
-        features: ["Acceso directo al río y kayaks", "Kiosco y zona de asador", "Cocina equipada", "Jardines y zonas verdes"],
-        videos: [
-          { src: "video/cabana-rio-recorrido.mp4", poster: "img/cabana-rio-video.webp", label: "Recorrido por la cabaña" }
-        ]
-      },
-      cabana12: {
+      cabana20: {
         category: "Alojamiento para grupos",
-        title: "Cabaña para hasta 12 personas",
-        description: "Una alternativa amplia para familias y grupos, con habitaciones, cocina, terraza, jacuzzi privado y vistas de La Piedra y el embalse. La distribución y las condiciones se confirman según las fechas de la reserva.",
-        images: cabana12Images,
-        alts: cabana12Alts,
-        features: ["Capacidad máxima de 12 personas", "Jacuzzi privado y terraza", "Cocina equipada", "Vista a La Piedra y el embalse"],
-        videos: [
-          { src: "video/cabana12-recorrido-01.mp4", poster: "img/cabana12-terraza-jacuzzi.webp", label: "Recorrido por la cabaña", portrait: true },
-          { src: "video/cabana12-recorrido-02.mp4", poster: "img/cabana12-interior-terraza.webp", label: "Habitaciones y zonas comunes", portrait: true }
-        ]
+        title: "Cabaña disponible para hasta 20 personas",
+        description: "Disfruta de una escapada perfecta en pareja o comparte momentos inolvidables con familiares y amigos. Disponible entre semana y fines de semana.",
+        images: cabana20Images,
+        alts: cabana20Alts,
+        features: ["Ideal para parejas o grupos de hasta 20 personas", "Jacuzzi amplio para relajarse", "Cocina equipada", "Espacios para descansar, celebrar y compartir"]
       },
       jetcar: {
         category: "Experiencia náutica exclusiva",
@@ -3268,13 +3257,9 @@
         aliases: ["cabanas sencillas", "cabana sencilla", "economico", "economica", "barato", "campestre"],
         section: "#hospedaje"
       },
-      cabanaRio: {
-        aliases: ["cabana junto al rio", "cabana campestre", "cabana rio", "rio", "kayak", "asador", "finca"],
-        section: "#cabana-rio"
-      },
-      cabana12: {
-        aliases: ["cabana para 12", "cabana 12", "hasta 12 personas", "12 personas", "grupo de 12", "alojamiento para grupos"],
-        section: "#cabana12"
+      cabana20: {
+        aliases: ["cabana para 20", "cabana 20", "hasta 20 personas", "20 personas", "grupo de 20", "cabana disponible", "alojamiento para grupos"],
+        section: "#cabana20"
       },
       piedra: {
         aliases: ["piedra del penol", "piedra del peñol", "la piedra", "penol", "peñol"],
@@ -3533,7 +3518,7 @@
             { label: "Aire y tierra", query: "¿Qué experiencias de aire y tierra ofrecen?" },
             { label: "Actividades de agua", query: "¿Qué actividades de agua ofrecen?" },
             { label: "Hospedaje", query: "¿Qué hospedajes manejan?" },
-            { label: "Cabaña para 12", query: "Quiero información de la cabaña para 12 personas" },
+            { label: "Cabaña hasta 20", query: "Quiero información de la cabaña para hasta 20 personas" },
             { label: "Solicita nuestros precios por WhatsApp", whatsapp: true }
           ]
         };
@@ -3664,9 +3649,9 @@
 
       if (intent === "lodgingRange") {
         return {
-          text: "Manejamos hospedajes desde la línea económica hasta la línea de lujo: hoteles, cabañas para pareja, alojamientos para grupos y una cabaña destacada para hasta 12 personas. La recomendación se hace según tus fechas, número de viajeros y presupuesto.",
+          text: "Manejamos hospedajes desde la línea económica hasta la línea de lujo: hoteles, cabañas para pareja, alojamientos para grupos y una cabaña disponible para hasta 20 personas. La recomendación se hace según tus fechas, número de viajeros y presupuesto.",
           options: [
-            { label: "Cabaña para 12", query: "Quiero información de la cabaña para 12" },
+            { label: "Cabaña hasta 20", query: "Quiero información de la cabaña para hasta 20 personas" },
             { label: "Ver hospedajes", service: "hospedaje" },
             { label: "Consultar disponibilidad", whatsapp: true }
           ]
@@ -3675,8 +3660,8 @@
 
       if (intent === "groups") {
         return {
-          text: "Para grupos contamos con experiencias de tierra, aire y agua, además de hospedajes. La opción destacada es una cabaña para hasta 12 personas con cocina equipada, terraza, jacuzzi privado y vista a La Piedra y el embalse.",
-          options: [{ label: "Ver cabaña para 12", service: "cabana12" }, { label: "Consultar grupo", whatsapp: true }]
+          text: "Para grupos contamos con experiencias de tierra, aire y agua, además de hospedajes. La opción destacada es una cabaña para hasta 20 personas con cocina equipada, jacuzzi amplio y espacios para descansar, celebrar y compartir.",
+          options: [{ label: "Ver cabaña hasta 20", service: "cabana20" }, { label: "Consultar grupo", whatsapp: true }]
         };
       }
 
