@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <meta name="referrer" content="no-referrer">
+  <title>Recuperar acceso · Xebax</title>
+  <link rel="icon" href="../img/logo-xebax-mark.webp">
+  <link rel="stylesheet" href="./resenas.css">
+  <script type="module" src="./recuperar.js"></script>
+</head>
+<body class="xr-admin"><main class="xr">
+  <a class="xr-back" href="./admin.html">Volver al panel</a>
+  <h1>Recuperar acceso</h1>
+  <form class="xr-panel" id="request-form" hidden>
+    <label for="username">Nombre de usuario</label>
+    <input id="username" name="username" type="text" required autocomplete="username" autocapitalize="none" spellcheck="false">
+    <p>Te enviaremos un enlace al correo de tu cuenta. Ábrelo en este mismo navegador y dispositivo.</p>
+    <button>Enviar enlace</button>
+  </form>
+  <form class="xr-panel" id="new-form" hidden>
+    <label for="password">Nueva contraseña</label>
+    <input type="password" id="password" required minlength="8" autocomplete="new-password">
+    <label for="confirm">Repite la contraseña</label>
+    <input type="password" id="confirm" required minlength="8" autocomplete="new-password">
+    <button>Guardar contraseña</button>
+  </form>
+  <p id="message" role="status" aria-live="polite"></p>
+  <p id="done" hidden><a href="./admin.html">Iniciar sesión</a></p>
+</main></body></html>

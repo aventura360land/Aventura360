@@ -1,28 +1,32 @@
-XEBAX ADVENTURE CONNECTION - Hospedaje separado en dos lineas
-=============================================================
-Se copia sobre la carpeta del sitio, sobrescribiendo.
+XEBAX ADVENTURE CONNECTION
+Guía del panel de contenidos
 
-1. HOSPEDAJE DIVIDIDO
-   01 Cabanas y hoteles de lujo    -> 39 fotos (jacuzzi, terrazas, Montecielo,
-                                      hotel nuevo, cabanas para pareja)
-   02 Cabanas sencillas y campestres -> 27 fotos + 1 video (cabana junto al rio,
-                                      cabanas tradicionales, habitaciones sencillas)
-   La seccion Hospedaje tiene ahora dos botones, uno por linea.
-   Las dos cabanas destacadas quedaron rotuladas:
-     "Cabana de lujo" (la de 12 personas) y "Cabana sencilla" (la del rio).
+ENTREGA Y PRIMER ACCESO
+1. Descomprime el ZIP. Publica el contenido de la carpeta Aventura360 en la raíz que utiliza tu despliegue de GitHub Pages. index.html y CNAME deben quedar en esa raíz, con admin, cms, resenas, img y video a su lado. Conserva el flujo de despliegue existente. El sitio utiliza archivos estáticos.
+2. Una vez termine el despliegue, abre https://xebaxadventure.online/admin/ y usa aventura360land. Para elegir o recuperar la contraseña, pulsa «Crear o recuperar mi contraseña», escribe el usuario y abre el mensaje recibido en el correo de Outlook del negocio, en el mismo navegador y dispositivo. El equipo debe comprobar la recepción durante el primer acceso.
+3. La cuenta de Xebax, la base del CMS y el espacio para subir medios ya están configurados en el proyecto de Supabase de aventura360land. Las ediciones habituales se hacen desde el panel.
 
-2. CABANA CAMPESTRE JUNTO AL RIO
-   Seccion propia debajo de la cabana para 12 personas, con 20 fotos y 1 video.
+CAMBIAR LA PÁGINA QUE YA EXISTE
+• Abre Vista previa y marca «Elegir contenido para editar». Toca un título, una foto o un botón para ir al campo de su sección. Vuelve a abrir Vista previa para revisar tus cambios.
+• En Página de inicio, Privacidad o Términos y condiciones puedes elegir una sección o buscar una frase. El formulario incluye textos, títulos, enlaces, descripciones de imágenes y metadatos. Algunas frases contienen varios campos porque tienen palabras destacadas.
+• En «Orden y visibilidad de las secciones» usa Subir, Bajar y la casilla de visibilidad. Las colecciones como el menú, los servicios y la galería permiten añadir desde un modelo, duplicar, reordenar y quitar elementos.
+• Para cambiar una foto o video abre «Elegir imagen» o «Elegir video». Escoge un archivo del sitio, sube uno nuevo o pega una URL. La foto de miniatura y la imagen ampliada de la galería tienen campos independientes. Describe las imágenes en el campo de texto alternativo.
+• Fichas de servicios edita los detalles que aparecen al pulsar una actividad, incluidas sus fotos, videos, características, precio y reserva. Al crear una ficha, vincúlala desde una tarjeta de Página de inicio mediante «Ficha de servicio vinculada».
+• Puntos del mapa, Asistente de la web y Contacto y mensajes controlan los marcadores, las respuestas del chat y el contacto principal. En WhatsApp escribe el número con indicativo internacional y solo dígitos. Los datos de contacto escritos en el pie o en un aviso legal se editan en su sección.
+• Apariencia permite cambiar la paleta, las tipografías y las miniaturas decorativas. En Identidad y metadatos de cada página puedes editar su título, descripción, icono y logotipo.
 
-3. AFICHE DEL PLANCHON reemplazado.
+AÑADIR PAQUETES Y PÁGINAS
+• Abre Secciones y paquetes → Añadir sección. Escribe su título y elige en qué página y después de qué sección aparecerá. Puedes incorporarla al menú.
+• En Tipo de bloque elige Paquete turístico y pulsa Añadir bloque. Completa nombre, descripción, precio, duración, qué incluye, foto y enlace de reserva. Puedes incluir varios paquetes y reordenarlos.
+• En Páginas nuevas puedes crear una página con dirección propia, título, descripción y bloques de texto, listas, imágenes, video, galería, botones y paquetes. La dirección se construye como pagina.html?p=nombre-de-la-pagina. Cambiarla después de compartirla modifica el enlace. Los bloques de texto admiten negritas, cursivas y enlaces.
+• En Biblioteca de medios se pueden consultar y subir archivos. Usa «Reemplazar en todo el sitio» para cambiar las referencias al mismo recurso de una sola vez en el borrador. Una subida genera una URL pública. Al quitar una foto de una sección, su archivo sigue disponible para otras páginas y para recuperar versiones anteriores. Formatos admitidos: JPEG, PNG, WebP, AVIF, GIF, MP4 y WebM. Tamaño máximo configurado por archivo: 50 MiB, sujeto al espacio disponible del proyecto.
 
-4. ORDEN DE EXPERIENCIAS
-   01 Cabanas de lujo      08 Ruta en cuatrimoto
-   02 Cabanas sencillas    09 Paintball
-   03 Vuelo en helicoptero 10 JetCar
-   04 Jet Ski              11 Flyboard
-   05 Lancha               12 Wakeboard
-   06 Parapente            13 Dia de Sol
-   07 Planchon
+GUARDAR Y PUBLICAR
+• Guardar borrador guarda en la nube. Vista previa muestra el trabajo en curso, incluso antes de guardarlo. Publicar hace visible la versión completa a los visitantes cuando abren o actualizan la web.
+• En Historial puedes recuperar una publicación anterior como borrador. Revísala y pulsa Publicar para hacerla visible. Si dos personas editan al mismo tiempo, el panel detecta versiones distintas para evitar sobrescribir cambios en silencio.
+• En Reseñas puedes publicar u ocultar opiniones. Los visitantes escriben sus propias reseñas desde la landing.
 
-DESPUES DE SUBIR: Ctrl+F5
+PARA QUIEN MANTIENE EL SITIO
+• En una instalación nueva, ejecuta primero resenas/instalar.sql. Crea la cuenta de Supabase Auth y vincula su UID al perfil como indica resenas/ACTIVAR.md. Ejecuta después cms/instalar.sql. Configura resenas/config.js con los valores públicos del proyecto y registra la URL de recuperación en Supabase Auth. El SQL del CMS vincula la cuenta de este proyecto por UID, usuario y correo confirmado. Para otra cuenta, adapta esos datos en el paso de asignación de editor.
+• Este sitio carga el contenido publicado desde Supabase al abrir cada página. GitHub Pages sirve el HTML inicial del ZIP. Los robots de redes sociales que leen exclusivamente ese HTML pueden seguir mostrando los metadatos incluidos en el ZIP.
+• Para probar en una computadora con Python, abre una terminal en Aventura360 y ejecuta python -m http.server 8080 (en Windows también puedes usar py -m http.server 8080). Abre http://localhost:8080/. El panel se conecta al proyecto configurado. Para recuperar la contraseña de producción usa el dominio público autorizado.

@@ -1,0 +1,2487 @@
+{
+  "whatsapp": "573006182215",
+  "servicios": {
+    "helicoptero": {
+      "titulo": "Vuelo en helicóptero",
+      "categoria": "Experiencia de aire",
+      "descripcion": "Sobrevuela el proyecto del Cristo más grande del mundo y contempla desde el aire la Piedra del Peñol, la zona de embalses, fincas reconocidas y la réplica del Viejo Peñol.",
+      "precio": "",
+      "fotos": [
+        {
+          "src": "img/poster-helicoptero.webp",
+          "alt": "Publicidad del vuelo sobre Guatapé"
+        },
+        {
+          "src": "img/cristo-proyecto.webp",
+          "alt": "Proyecto del Cristo más grande del mundo, visible durante el sobrevuelo"
+        },
+        {
+          "src": "img/helicoptero-cliente-01.webp",
+          "alt": "Cliente disfrutando el vuelo sobre el embalse"
+        },
+        {
+          "src": "img/helicoptero-cliente-02.webp",
+          "alt": "Pasajera fotografiando Guatapé desde el helicóptero"
+        },
+        {
+          "src": "img/helicoptero-cliente-03.webp",
+          "alt": "Cliente preparada para iniciar la experiencia"
+        },
+        {
+          "src": "img/helicoptero-cliente-04.webp",
+          "alt": "Clientes disfrutando el paisaje desde la cabina"
+        },
+        {
+          "src": "img/helicoptero-piedra.webp",
+          "alt": "Helicóptero sobre La Piedra"
+        },
+        {
+          "src": "img/helicoptero-vista.webp",
+          "alt": "Vista del embalse desde la cabina"
+        },
+        {
+          "src": "img/helicoptero-cabina.webp",
+          "alt": "Experiencia dentro del helicóptero"
+        }
+      ],
+      "caracteristicas": [
+        "Proyecto del Cristo más grande del mundo",
+        "Piedra, embalse, fincas y réplica del Viejo Peñol",
+        "Atención personalizada y reserva por WhatsApp"
+      ],
+      "videos": [
+        {
+          "src": "video/helicoptero-vuelo.mp4",
+          "poster": "img/helicoptero-vista.webp",
+          "label": "Vuelo panorámico",
+          "portrait": false
+        },
+        {
+          "src": "video/helicoptero-experiencia.mp4",
+          "poster": "img/helicoptero-cabina.webp",
+          "label": "La experiencia",
+          "portrait": false
+        }
+      ],
+      "botonReserva": "Consultar esta experiencia por WhatsApp",
+      "mensajeReserva": "Hola XEBAX Adventure Connection, quiero información sobre {servicio} en Guatapé",
+      "alias": [
+        "helicoptero",
+        "vuelo panoramico",
+        "vuelo en helicoptero",
+        "sobrevuelo",
+        "experiencia de aire"
+      ],
+      "seccion": "#destacadas"
+    },
+    "parapente": {
+      "titulo": "Parapente en Guatapé",
+      "categoria": "Experiencia de aire",
+      "descripcion": "Vive un vuelo panorámico en parapente sobre el embalse de Guatapé y contempla sus islas, montañas y paisajes desde el aire. La actividad se realiza en modalidad tándem; la disponibilidad, duración y requisitos dependen del clima y se confirman directamente con el operador.",
+      "precio": "",
+      "fotos": [
+        {
+          "src": "img/poster-parapente.webp",
+          "alt": "Publicidad de la experiencia de parapente en Guatapé"
+        },
+        {
+          "src": "img/parapente-vuelo-pareja.webp",
+          "alt": "Pareja disfrutando un vuelo tándem en parapente sobre el embalse"
+        },
+        {
+          "src": "img/parapente-vista-aerea.webp",
+          "alt": "Vista aérea de un vuelo en parapente sobre las islas de Guatapé"
+        }
+      ],
+      "caracteristicas": [
+        "Vuelo panorámico en modalidad tándem",
+        "Vista aérea del embalse y sus islas",
+        "Clima, requisitos y disponibilidad confirmados por WhatsApp"
+      ],
+      "videos": [
+        {
+          "src": "video/parapente-vuelo.mp4",
+          "poster": "img/parapente-vuelo-pareja.webp",
+          "label": "Vuelo en parapente sobre Guatapé",
+          "portrait": true
+        }
+      ],
+      "botonReserva": "Consultar esta experiencia por WhatsApp",
+      "mensajeReserva": "Hola XEBAX Adventure Connection, quiero información sobre {servicio} en Guatapé",
+      "alias": [
+        "parapente",
+        "paragliding",
+        "vuelo en parapente",
+        "volar en parapente",
+        "vuelo tandem",
+        "vuelo tándem"
+      ],
+      "seccion": "#experiencias"
+    },
+    "cuatrimotos": {
+      "titulo": "Ruta en cuatrimoto",
+      "categoria": "Experiencia de tierra",
+      "descripcion": "Recorre caminos entre árboles, montaña y agua. La galería reúne el trayecto en grupo, los pasos por terreno rural y distintos momentos frente al paisaje.",
+      "precio": "",
+      "fotos": [
+        {
+          "src": "img/poster-cuatrimotos.webp",
+          "alt": "Publicidad de los paseos en cuatrimoto"
+        },
+        {
+          "src": "img/cuatrimoto-grupo.webp",
+          "alt": "Grupo en cuatrimotos"
+        },
+        {
+          "src": "img/cuatrimoto-bosque.webp",
+          "alt": "Ruta de cuatrimotos entre árboles"
+        },
+        {
+          "src": "img/cuatrimoto-puente.webp",
+          "alt": "Cuatrimoto sobre un puente"
+        },
+        {
+          "src": "img/cuatrimoto-celebracion.webp",
+          "alt": "Visitante celebrando en una cuatrimoto"
+        },
+        {
+          "src": "img/cuatrimoto-companeros.webp",
+          "alt": "Compañeros durante el recorrido"
+        },
+        {
+          "src": "img/cuatrimoto-salida.webp",
+          "alt": "Salida en cuatrimoto"
+        },
+        {
+          "src": "img/cuatrimoto-camino.webp",
+          "alt": "Cuatrimoto en un camino rural"
+        },
+        {
+          "src": "img/cuatrimoto-ruta.webp",
+          "alt": "Recorrido por la ruta"
+        },
+        {
+          "src": "img/cuatrimoto-lago.webp",
+          "alt": "Cuatrimoto junto al lago"
+        },
+        {
+          "src": "img/cuatrimoto-charco.webp",
+          "alt": "Cuatrimoto atravesando un camino con agua"
+        },
+        {
+          "src": "img/cuatrimoto-paisaje.webp",
+          "alt": "Cuatrimoto frente al paisaje"
+        }
+      ],
+      "caracteristicas": [
+        "Recorrido por caminos rurales",
+        "Momentos individuales y en grupo",
+        "Consulta y reserva directamente por WhatsApp"
+      ],
+      "videos": [
+        {
+          "src": "video/cuatrimoto-ruta.mp4",
+          "poster": "img/cuatrimoto-paisaje.webp",
+          "label": "Camino y paisaje",
+          "portrait": false
+        },
+        {
+          "src": "video/cuatrimoto-bosque.mp4",
+          "poster": "img/cuatrimoto-bosque.webp",
+          "label": "Ruta entre árboles",
+          "portrait": false
+        }
+      ],
+      "botonReserva": "Consultar esta experiencia por WhatsApp",
+      "mensajeReserva": "Hola XEBAX Adventure Connection, quiero información sobre {servicio} en Guatapé",
+      "alias": [
+        "cuatrimoto",
+        "cuatrimotos",
+        "moto cuatro",
+        "moto 4",
+        "ruta en tierra",
+        "ruta por bosque"
+      ],
+      "seccion": "#destacadas"
+    },
+    "paintball": {
+      "titulo": "Paintball",
+      "categoria": "Experiencia de tierra",
+      "descripcion": "Una actividad para compartir en grupo y vivir una experiencia diferente en Guatapé. La disponibilidad, edad mínima, equipo de protección y condiciones se confirman directamente con el operador.",
+      "precio": "",
+      "fotos": [
+        {
+          "src": "img/poster-paintball.webp",
+          "alt": "Publicidad de la experiencia de Paintball de XEBAX Adventure Connection"
+        }
+      ],
+      "caracteristicas": [
+        "Actividad pensada para grupos",
+        "Equipo y condiciones definidos por el operador",
+        "Consulta de disponibilidad y requisitos por WhatsApp"
+      ],
+      "videos": [],
+      "botonReserva": "Consultar esta experiencia por WhatsApp",
+      "mensajeReserva": "Hola XEBAX Adventure Connection, quiero información sobre {servicio} en Guatapé",
+      "alias": [
+        "paintball",
+        "paint ball",
+        "juego de pintura"
+      ],
+      "seccion": "#destacadas"
+    },
+    "piedra": {
+      "titulo": "La Piedra del Peñol",
+      "categoria": "Destino destacado",
+      "descripcion": "Una presencia monumental que domina el paisaje y se convierte en uno de los puntos visuales más reconocibles de la región.",
+      "precio": "",
+      "fotos": [
+        {
+          "src": "img/piedra-letrero.webp",
+          "alt": "Letrero frente a La Piedra"
+        },
+        {
+          "src": "img/piedra-base.webp",
+          "alt": "Vista de La Piedra desde su base"
+        },
+        {
+          "src": "img/piedra-mirador.webp",
+          "alt": "Punto fotográfico frente a La Piedra"
+        }
+      ],
+      "caracteristicas": [
+        "Uno de los símbolos principales del destino",
+        "Diferentes puntos para observarla",
+        "Información del recorrido por WhatsApp"
+      ],
+      "videos": [],
+      "botonReserva": "Consultar esta experiencia por WhatsApp",
+      "mensajeReserva": "Hola XEBAX Adventure Connection, quiero información sobre {servicio} en Guatapé",
+      "alias": [
+        "piedra del penol",
+        "piedra del peñol",
+        "la piedra",
+        "penol",
+        "peñol"
+      ],
+      "seccion": "#destinos"
+    },
+    "pueblo": {
+      "titulo": "Pueblo de Guatapé",
+      "categoria": "Destino destacado",
+      "descripcion": "Fachadas, zócalos, plazas y calles llenas de color crean un recorrido donde cada espacio tiene una composición diferente.",
+      "precio": "",
+      "fotos": [
+        {
+          "src": "img/pueblo-plaza.webp",
+          "alt": "Plaza colorida de Guatapé"
+        },
+        {
+          "src": "img/pueblo-calle.webp",
+          "alt": "Calle de los paraguas"
+        },
+        {
+          "src": "img/pueblo-letras.webp",
+          "alt": "Letras de Guatapé junto al agua"
+        }
+      ],
+      "caracteristicas": [
+        "Calles y fachadas llenas de color",
+        "Espacios reconocibles para recorrer y fotografiar",
+        "Información del recorrido por WhatsApp"
+      ],
+      "videos": [],
+      "botonReserva": "Consultar esta experiencia por WhatsApp",
+      "mensajeReserva": "Hola XEBAX Adventure Connection, quiero información sobre {servicio} en Guatapé",
+      "alias": [
+        "pueblo de guatape",
+        "pueblo",
+        "zocalos",
+        "calle de los paraguas",
+        "parque principal"
+      ],
+      "seccion": "#destinos"
+    },
+    "embalse": {
+      "titulo": "Embalse de Guatapé",
+      "categoria": "Destino destacado",
+      "descripcion": "El agua, las islas y el relieve forman un paisaje que cambia según el punto desde donde se observa, especialmente desde el aire.",
+      "precio": "",
+      "fotos": [
+        {
+          "src": "img/helicoptero-vista.webp",
+          "alt": "Vista aérea del embalse"
+        },
+        {
+          "src": "img/helicoptero-piedra.webp",
+          "alt": "La Piedra y el embalse desde el aire"
+        },
+        {
+          "src": "img/pueblo-letras.webp",
+          "alt": "Guatapé junto al agua"
+        }
+      ],
+      "caracteristicas": [
+        "Panorámica de agua e islas",
+        "Vistas conectadas con La Piedra y el pueblo",
+        "Información del recorrido por WhatsApp"
+      ],
+      "videos": [],
+      "botonReserva": "Consultar esta experiencia por WhatsApp",
+      "mensajeReserva": "Hola XEBAX Adventure Connection, quiero información sobre {servicio} en Guatapé",
+      "alias": [
+        "embalse",
+        "represa",
+        "islas de guatape",
+        "lago"
+      ],
+      "seccion": "#destinos"
+    },
+    "hospedajeLujo": {
+      "titulo": "Cabañas y hoteles de lujo",
+      "categoria": "Línea de lujo",
+      "descripcion": "Alojamientos con jacuzzi privado, terrazas, vistas al embalse y acabados modernos, incluidos complejos como Montecielo y cabañas para pareja. Te ayudamos a elegir según tus fechas, el número de viajeros y el presupuesto.",
+      "precio": "",
+      "fotos": [
+        {
+          "src": "img/hotel-nuevo-jacuzzi-vista.webp",
+          "alt": "Jacuzzi privado en una terraza con vista al embalse"
+        },
+        {
+          "src": "img/hotel-nuevo-habitacion-balcon.webp",
+          "alt": "Habitación moderna con balcón y vista al embalse"
+        },
+        {
+          "src": "img/hotel-nuevo-terraza-social.webp",
+          "alt": "Terraza social de madera con mobiliario y luces cálidas"
+        },
+        {
+          "src": "img/hotel-nuevo-bano.webp",
+          "alt": "Baño moderno con ducha de vidrio y espejo iluminado"
+        },
+        {
+          "src": "img/hotel-nuevo-exterior.webp",
+          "alt": "Exterior del alojamiento construido sobre la montaña"
+        },
+        {
+          "src": "img/hotel-nuevo-cocineta.webp",
+          "alt": "Cocineta equipada dentro de la habitación"
+        },
+        {
+          "src": "img/hotel-nuevo-restaurante.webp",
+          "alt": "Restaurante del hospedaje con vegetación y mobiliario moderno"
+        },
+        {
+          "src": "img/hotel-nuevo-habitacion.webp",
+          "alt": "Habitación moderna con cama doble y acabados contemporáneos"
+        },
+        {
+          "src": "img/montecielo-panoramica.webp",
+          "alt": "Vista panorámica del complejo Montecielo en Guatapé"
+        },
+        {
+          "src": "img/cabana-pareja-01.webp",
+          "alt": "Cabaña para pareja con cama king y vista al paisaje"
+        },
+        {
+          "src": "img/cabana-pareja-02.webp",
+          "alt": "Cabaña para pareja con jacuzzi privado"
+        },
+        {
+          "src": "img/hotel-principal-piscina.webp",
+          "alt": "Piscina exterior y alojamiento de lujo en Guatapé"
+        },
+        {
+          "src": "img/hotel-aliado-06.webp",
+          "alt": "Vista panorámica del nuevo alojamiento aliado en Guatapé"
+        },
+        {
+          "src": "img/hotel-aliado-09.webp",
+          "alt": "Piscina iluminada y exterior del alojamiento durante el atardecer"
+        },
+        {
+          "src": "img/hotel-aliado-04.webp",
+          "alt": "Habitación amplia con terraza y jacuzzi privado"
+        },
+        {
+          "src": "img/hotel-aliado-01.webp",
+          "alt": "Terraza privada con jacuzzi y vista a las montañas"
+        },
+        {
+          "src": "img/hotel-aliado-03.webp",
+          "alt": "Habitación con vista panorámica y acceso a la terraza"
+        },
+        {
+          "src": "img/hotel-aliado-07.webp",
+          "alt": "Jacuzzi privado con vista al paisaje de Guatapé"
+        },
+        {
+          "src": "img/hotel-aliado-08.webp",
+          "alt": "Estudio equipado con sala, cocina y habitación"
+        },
+        {
+          "src": "img/hotel-aliado-02.webp",
+          "alt": "Cocina equipada con barra y comedor"
+        },
+        {
+          "src": "img/hotel-aliado-05.webp",
+          "alt": "Cocina y comedor del nuevo alojamiento aliado"
+        },
+        {
+          "src": "img/hotel-lujo-sala.webp",
+          "alt": "Sala moderna con ventanales y vista panorámica"
+        },
+        {
+          "src": "img/hotel-lujo-habitacion.webp",
+          "alt": "Habitación moderna con terraza y vista al paisaje"
+        },
+        {
+          "src": "img/hotel-lujo-jacuzzi.webp",
+          "alt": "Jacuzzi privado con vista al embalse de Guatapé"
+        },
+        {
+          "src": "img/hotel-01.webp",
+          "alt": "Alojamiento de lujo en Guatapé, fotografía 1"
+        },
+        {
+          "src": "img/hotel-02.webp",
+          "alt": "Alojamiento de lujo en Guatapé, fotografía 2"
+        },
+        {
+          "src": "img/hotel-03.webp",
+          "alt": "Alojamiento de lujo en Guatapé, fotografía 3"
+        },
+        {
+          "src": "img/hotel-04.webp",
+          "alt": "Alojamiento de lujo en Guatapé, fotografía 4"
+        },
+        {
+          "src": "img/hotel-05.webp",
+          "alt": "Alojamiento de lujo en Guatapé, fotografía 5"
+        },
+        {
+          "src": "img/hotel-06.webp",
+          "alt": "Alojamiento de lujo en Guatapé, fotografía 6"
+        },
+        {
+          "src": "img/hotel-07.webp",
+          "alt": "Alojamiento de lujo en Guatapé, fotografía 7"
+        },
+        {
+          "src": "img/hotel-11.webp",
+          "alt": "Alojamiento de lujo en Guatapé, fotografía 8"
+        },
+        {
+          "src": "img/hotel-13.webp",
+          "alt": "Alojamiento de lujo en Guatapé, fotografía 9"
+        },
+        {
+          "src": "img/hotel-14.webp",
+          "alt": "Alojamiento de lujo en Guatapé, fotografía 10"
+        },
+        {
+          "src": "img/hotel-15.webp",
+          "alt": "Alojamiento de lujo en Guatapé, fotografía 11"
+        },
+        {
+          "src": "img/hotel-16.webp",
+          "alt": "Alojamiento de lujo en Guatapé, fotografía 12"
+        },
+        {
+          "src": "img/hotel-17.webp",
+          "alt": "Alojamiento de lujo en Guatapé, fotografía 13"
+        },
+        {
+          "src": "img/hotel-19.webp",
+          "alt": "Alojamiento de lujo en Guatapé, fotografía 14"
+        },
+        {
+          "src": "img/poster-hospedaje.webp",
+          "alt": "Publicidad de hoteles y cabañas en Guatapé"
+        }
+      ],
+      "caracteristicas": [
+        "Jacuzzi privado y terrazas",
+        "Vistas al embalse y a La Piedra",
+        "Cabañas para pareja y para grupos",
+        "Disponibilidad confirmada por WhatsApp"
+      ],
+      "videos": [],
+      "botonReserva": "Consultar esta experiencia por WhatsApp",
+      "mensajeReserva": "Hola XEBAX Adventure Connection, quiero información sobre {servicio} en Guatapé",
+      "alias": [
+        "cabanas de lujo",
+        "hotel de lujo",
+        "hoteles de lujo",
+        "lujo",
+        "jacuzzi",
+        "montecielo"
+      ],
+      "seccion": "#hospedaje"
+    },
+    "hospedaje": {
+      "titulo": "Hoteles y cabañas en Guatapé",
+      "categoria": "Opciones de estadía",
+      "descripcion": "Manejamos hospedajes desde la línea económica hasta la línea de lujo. Te ayudamos a consultar la opción más adecuada según tus fechas, el número de viajeros y tu presupuesto.",
+      "precio": "",
+      "fotos": [
+        {
+          "src": "img/hotel-nuevo-jacuzzi-vista.webp",
+          "alt": "Jacuzzi privado en una terraza con vista al embalse"
+        },
+        {
+          "src": "img/hotel-nuevo-habitacion-balcon.webp",
+          "alt": "Habitación moderna con balcón y vista al embalse"
+        },
+        {
+          "src": "img/hotel-nuevo-terraza-social.webp",
+          "alt": "Terraza social de madera con mobiliario y luces cálidas"
+        },
+        {
+          "src": "img/hotel-nuevo-bano.webp",
+          "alt": "Baño moderno con ducha de vidrio y espejo iluminado"
+        },
+        {
+          "src": "img/hotel-nuevo-exterior.webp",
+          "alt": "Exterior del alojamiento construido sobre la montaña"
+        },
+        {
+          "src": "img/hotel-nuevo-cocineta.webp",
+          "alt": "Cocineta equipada dentro de la habitación"
+        },
+        {
+          "src": "img/hotel-nuevo-restaurante.webp",
+          "alt": "Restaurante del hospedaje con vegetación y mobiliario moderno"
+        },
+        {
+          "src": "img/hotel-nuevo-habitacion.webp",
+          "alt": "Habitación moderna con cama doble y acabados contemporáneos"
+        },
+        {
+          "src": "img/montecielo-panoramica.webp",
+          "alt": "Vista panorámica del complejo Montecielo en Guatapé"
+        },
+        {
+          "src": "img/cabana-pareja-01.webp",
+          "alt": "Cabaña para pareja con cama king y vista al paisaje"
+        },
+        {
+          "src": "img/cabana-pareja-02.webp",
+          "alt": "Cabaña para pareja con jacuzzi privado"
+        },
+        {
+          "src": "img/hotel-principal-piscina.webp",
+          "alt": "Piscina exterior y alojamiento de lujo en Guatapé"
+        },
+        {
+          "src": "img/hotel-aliado-06.webp",
+          "alt": "Vista panorámica del nuevo alojamiento aliado en Guatapé"
+        },
+        {
+          "src": "img/hotel-aliado-09.webp",
+          "alt": "Piscina iluminada y exterior del alojamiento durante el atardecer"
+        },
+        {
+          "src": "img/hotel-aliado-04.webp",
+          "alt": "Habitación amplia con terraza y jacuzzi privado"
+        },
+        {
+          "src": "img/hotel-aliado-01.webp",
+          "alt": "Terraza privada con jacuzzi y vista a las montañas"
+        },
+        {
+          "src": "img/hotel-aliado-03.webp",
+          "alt": "Habitación con vista panorámica y acceso a la terraza"
+        },
+        {
+          "src": "img/hotel-aliado-07.webp",
+          "alt": "Jacuzzi privado con vista al paisaje de Guatapé"
+        },
+        {
+          "src": "img/hotel-aliado-08.webp",
+          "alt": "Estudio equipado con sala, cocina y habitación"
+        },
+        {
+          "src": "img/hotel-aliado-02.webp",
+          "alt": "Cocina equipada con barra y comedor"
+        },
+        {
+          "src": "img/hotel-aliado-05.webp",
+          "alt": "Cocina y comedor del nuevo alojamiento aliado"
+        },
+        {
+          "src": "img/hotel-lujo-sala.webp",
+          "alt": "Sala moderna con ventanales y vista panorámica"
+        },
+        {
+          "src": "img/hotel-lujo-habitacion.webp",
+          "alt": "Habitación moderna con terraza y vista al paisaje"
+        },
+        {
+          "src": "img/hotel-lujo-jacuzzi.webp",
+          "alt": "Jacuzzi privado con vista al embalse de Guatapé"
+        },
+        {
+          "src": "img/hotel-cabana-dia.webp",
+          "alt": "Cabaña colorida cerca de la Piedra del Peñol"
+        },
+        {
+          "src": "img/hotel-cabana-atardecer.webp",
+          "alt": "Cabaña tradicional durante el atardecer"
+        },
+        {
+          "src": "img/poster-hospedaje.webp",
+          "alt": "Publicidad de hoteles y cabañas en Guatapé"
+        },
+        {
+          "src": "img/hotel-01.webp",
+          "alt": "Fotografía real del hospedaje 1"
+        },
+        {
+          "src": "img/hotel-02.webp",
+          "alt": "Fotografía real del hospedaje 2"
+        },
+        {
+          "src": "img/hotel-03.webp",
+          "alt": "Fotografía real del hospedaje 3"
+        },
+        {
+          "src": "img/hotel-04.webp",
+          "alt": "Fotografía real del hospedaje 4"
+        },
+        {
+          "src": "img/hotel-05.webp",
+          "alt": "Fotografía real del hospedaje 5"
+        },
+        {
+          "src": "img/hotel-06.webp",
+          "alt": "Fotografía real del hospedaje 6"
+        },
+        {
+          "src": "img/hotel-07.webp",
+          "alt": "Fotografía real del hospedaje 7"
+        },
+        {
+          "src": "img/hotel-08.webp",
+          "alt": "Fotografía real del hospedaje 8"
+        },
+        {
+          "src": "img/hotel-09.webp",
+          "alt": "Fotografía real del hospedaje 9"
+        },
+        {
+          "src": "img/hotel-10.webp",
+          "alt": "Fotografía real del hospedaje 10"
+        },
+        {
+          "src": "img/hotel-11.webp",
+          "alt": "Fotografía real del hospedaje 11"
+        },
+        {
+          "src": "img/hotel-12.webp",
+          "alt": "Fotografía real del hospedaje 12"
+        },
+        {
+          "src": "img/hotel-13.webp",
+          "alt": "Fotografía real del hospedaje 13"
+        },
+        {
+          "src": "img/hotel-14.webp",
+          "alt": "Fotografía real del hospedaje 14"
+        },
+        {
+          "src": "img/hotel-15.webp",
+          "alt": "Fotografía real del hospedaje 15"
+        },
+        {
+          "src": "img/hotel-16.webp",
+          "alt": "Fotografía real del hospedaje 16"
+        },
+        {
+          "src": "img/hotel-17.webp",
+          "alt": "Fotografía real del hospedaje 17"
+        },
+        {
+          "src": "img/hotel-18.webp",
+          "alt": "Fotografía real del hospedaje 18"
+        },
+        {
+          "src": "img/hotel-19.webp",
+          "alt": "Fotografía real del hospedaje 19"
+        }
+      ],
+      "caracteristicas": [
+        "Opciones económicas, intermedias y de lujo",
+        "Cabañas para pareja, grupos, hoteles y complejos",
+        "Disponibilidad y características confirmadas por WhatsApp"
+      ],
+      "videos": [],
+      "botonReserva": "Consultar disponibilidad del hospedaje",
+      "mensajeReserva": "Hola XEBAX Adventure Connection, quiero información sobre {servicio} en Guatapé",
+      "alias": [
+        "hospedaje",
+        "hospedajes",
+        "hotel",
+        "hoteles",
+        "alojamiento",
+        "alojamientos",
+        "cabana",
+        "cabanas",
+        "donde dormir"
+      ],
+      "seccion": "#hospedaje"
+    },
+    "cabana20": {
+      "titulo": "Cabaña disponible para hasta 20 personas",
+      "categoria": "Alojamiento para grupos",
+      "descripcion": "Disfruta de una escapada perfecta en pareja o comparte momentos inolvidables con familiares y amigos. Disponible entre semana y fines de semana.",
+      "precio": "",
+      "fotos": [
+        {
+          "src": "img/cabana-alquiler-0038.webp",
+          "alt": "Fachada principal de la cabaña"
+        },
+        {
+          "src": "img/cabana-alquiler-0039.webp",
+          "alt": "Zona social exterior con barra"
+        },
+        {
+          "src": "img/cabana-alquiler-0040.webp",
+          "alt": "Terraza amoblada junto al jacuzzi"
+        },
+        {
+          "src": "img/cabana-alquiler-0041.webp",
+          "alt": "Jacuzzi amplio de la cabaña"
+        },
+        {
+          "src": "img/cabana-alquiler-0043.webp",
+          "alt": "Jacuzzi y terraza cubiertos"
+        },
+        {
+          "src": "img/cabana-alquiler-0044.webp",
+          "alt": "Zona social cubierta con iluminación cálida"
+        },
+        {
+          "src": "img/cabana-alquiler-0037.webp",
+          "alt": "Zona de asador equipada"
+        },
+        {
+          "src": "img/cabana-alquiler-0020.webp",
+          "alt": "Patio y fachada de la cabaña"
+        },
+        {
+          "src": "img/cabana-alquiler-0042.webp",
+          "alt": "Corredor exterior cubierto"
+        },
+        {
+          "src": "img/cabana-alquiler-0045.webp",
+          "alt": "Vista del paisaje y el embalse desde la cabaña"
+        },
+        {
+          "src": "img/cabana-alquiler-0029.webp",
+          "alt": "Comedor conectado con la cocina"
+        },
+        {
+          "src": "img/cabana-alquiler-0030.webp",
+          "alt": "Cocina completamente equipada"
+        },
+        {
+          "src": "img/cabana-alquiler-0033.webp",
+          "alt": "Sala con mobiliario para compartir"
+        },
+        {
+          "src": "img/cabana-alquiler-0034.webp",
+          "alt": "Sala y comedor de la cabaña"
+        },
+        {
+          "src": "img/cabana-alquiler-0046.webp",
+          "alt": "Habitación con cama doble"
+        },
+        {
+          "src": "img/cabana-alquiler-0047.webp",
+          "alt": "Habitación con cama doble y cortina azul"
+        },
+        {
+          "src": "img/cabana-alquiler-0027.webp",
+          "alt": "Habitación amplia con cama doble"
+        },
+        {
+          "src": "img/cabana-alquiler-0028.webp",
+          "alt": "Segunda habitación con cama doble"
+        },
+        {
+          "src": "img/cabana-alquiler-0018.webp",
+          "alt": "Habitación con camarote de madera"
+        },
+        {
+          "src": "img/cabana-alquiler-0023.webp",
+          "alt": "Camarote en una habitación de la cabaña"
+        },
+        {
+          "src": "img/cabana-alquiler-0031.webp",
+          "alt": "Habitación con cama tipo camarote"
+        },
+        {
+          "src": "img/cabana-alquiler-0032.webp",
+          "alt": "Habitación con varios camarotes"
+        },
+        {
+          "src": "img/cabana-alquiler-0021.webp",
+          "alt": "Espacio de almacenamiento para huéspedes"
+        },
+        {
+          "src": "img/cabana-alquiler-0022.webp",
+          "alt": "Baño completo con ducha"
+        },
+        {
+          "src": "img/cabana-alquiler-0026.webp",
+          "alt": "Segundo baño completo"
+        },
+        {
+          "src": "img/cabana-alquiler-0035.webp",
+          "alt": "Ducha independiente con puertas de vidrio"
+        },
+        {
+          "src": "img/cabana-alquiler-0036.webp",
+          "alt": "Lavamanos y espejo del baño"
+        },
+        {
+          "src": "img/cabana-alquiler-0024.webp",
+          "alt": "Lavadora disponible en la cabaña"
+        },
+        {
+          "src": "img/cabana-alquiler-0025.webp",
+          "alt": "Zona de lavado equipada"
+        }
+      ],
+      "caracteristicas": [
+        "Ideal para parejas o grupos de hasta 20 personas",
+        "Jacuzzi amplio para relajarse",
+        "Cocina equipada",
+        "Espacios para descansar, celebrar y compartir"
+      ],
+      "videos": [],
+      "botonReserva": "Consultar disponibilidad de la cabaña",
+      "mensajeReserva": "Hola XEBAX Adventure Connection, quiero información sobre {servicio} en Guatapé",
+      "alias": [
+        "cabana para 20",
+        "cabana 20",
+        "hasta 20 personas",
+        "20 personas",
+        "grupo de 20",
+        "cabana disponible",
+        "alojamiento para grupos"
+      ],
+      "seccion": "#cabana20"
+    },
+    "cabana12": {
+      "titulo": "Cabaña para hasta 12 personas",
+      "categoria": "Alojamiento para grupos",
+      "descripcion": "Una alternativa amplia para familias y grupos, con habitaciones, cocina, terraza, jacuzzi privado y vistas de La Piedra y el embalse. La distribución y las condiciones se confirman según las fechas de la reserva.",
+      "precio": "",
+      "fotos": [
+        {
+          "src": "img/cabana12-habitacion-vista.webp",
+          "alt": "Habitación con vista a La Piedra y el embalse"
+        },
+        {
+          "src": "img/cabana12-jacuzzi-noche.webp",
+          "alt": "Jacuzzi privado iluminado durante la noche"
+        },
+        {
+          "src": "img/cabana12-interior-terraza.webp",
+          "alt": "Interior de la cabaña conectado con la terraza"
+        },
+        {
+          "src": "img/cabana12-cocina-vista.webp",
+          "alt": "Cocina equipada con vista al paisaje"
+        },
+        {
+          "src": "img/cabana12-terraza-jacuzzi.webp",
+          "alt": "Terraza exterior con jacuzzi privado"
+        },
+        {
+          "src": "img/cabana12-terraza-noche.webp",
+          "alt": "Terraza de madera iluminada durante el atardecer"
+        },
+        {
+          "src": "img/cabana12-habitacion-jacuzzi.webp",
+          "alt": "Habitación con cocineta y acceso al jacuzzi"
+        },
+        {
+          "src": "img/cabana12-bano-01.webp",
+          "alt": "Baño moderno con ducha de vidrio"
+        },
+        {
+          "src": "img/cabana12-bano-02.webp",
+          "alt": "Segundo baño con ducha y acabados contemporáneos"
+        }
+      ],
+      "caracteristicas": [
+        "Capacidad máxima de 12 personas",
+        "Jacuzzi privado y terraza",
+        "Cocina equipada",
+        "Vista a La Piedra y el embalse"
+      ],
+      "videos": [
+        {
+          "src": "video/cabana12-recorrido-01.mp4",
+          "poster": "img/cabana12-terraza-jacuzzi.webp",
+          "label": "Recorrido por la cabaña",
+          "portrait": true
+        },
+        {
+          "src": "video/cabana12-recorrido-02.mp4",
+          "poster": "img/cabana12-interior-terraza.webp",
+          "label": "Habitaciones y zonas comunes",
+          "portrait": true
+        }
+      ],
+      "botonReserva": "Consultar disponibilidad de la cabaña",
+      "mensajeReserva": "Hola XEBAX Adventure Connection, quiero información sobre {servicio} en Guatapé",
+      "alias": [
+        "cabana para 12",
+        "cabana 12",
+        "hasta 12 personas",
+        "12 personas",
+        "grupo de 12",
+        "cabana con vista a la piedra"
+      ],
+      "seccion": "#cabana12"
+    },
+    "jetcar": {
+      "titulo": "JetCar Guatapé",
+      "categoria": "Experiencia náutica exclusiva",
+      "descripcion": "Superdeportivos anfibios que recorren el embalse de Guatapé. Se conducen sobre el agua con acompañamiento del operador, chaleco y una explicación previa. Los modelos disponibles y la duración del recorrido se confirman al momento de reservar.",
+      "precio": "",
+      "fotos": [
+        {
+          "src": "img/poster-jetcar.webp",
+          "alt": "Publicidad de la experiencia JetCar en Guatapé"
+        },
+        {
+          "src": "img/jetcar-duo-embalse.webp",
+          "alt": "Ferrari y Lamborghini anfibios navegando juntos"
+        },
+        {
+          "src": "img/jetcar-lamborghini-verde.webp",
+          "alt": "Lamborghini anfibio verde visto desde atrás"
+        },
+        {
+          "src": "img/jetcar-piedra.webp",
+          "alt": "JetCars con La Piedra del Peñol al fondo"
+        },
+        {
+          "src": "img/jetcar-rolls-royce.webp",
+          "alt": "Rolls-Royce anfibio negro con interior naranja en marcha"
+        },
+        {
+          "src": "img/jetcar-rolls-negro.webp",
+          "alt": "Rolls-Royce anfibio negro detenido sobre el agua"
+        },
+        {
+          "src": "img/jetcar-rolls-blanco.webp",
+          "alt": "Rolls-Royce anfibio blanco al atardecer"
+        },
+        {
+          "src": "img/jetcar-ferrari-roja.webp",
+          "alt": "Ferrari anfibio rojo en movimiento"
+        }
+      ],
+      "caracteristicas": [
+        "Modelos Lamborghini, Ferrari y Rolls-Royce",
+        "Acompañamiento y chaleco durante todo el recorrido",
+        "Disponibilidad y duración confirmadas por WhatsApp"
+      ],
+      "videos": [],
+      "botonReserva": "Consultar esta experiencia por WhatsApp",
+      "mensajeReserva": "Hola XEBAX Adventure Connection, quiero información sobre {servicio} en Guatapé",
+      "alias": [
+        "jetcar",
+        "jet car",
+        "carro en el agua",
+        "carro anfibio",
+        "lamborghini anfibio",
+        "ferrari anfibio",
+        "rolls royce anfibio"
+      ],
+      "seccion": "#jetcar"
+    },
+    "flyboard": {
+      "titulo": "Flyboard en Guatapé",
+      "categoria": "Experiencia náutica",
+      "descripcion": "Vuela sobre el agua impulsado por la moto acuática y vive una experiencia de pura adrenalina en el embalse. El equipo, la duración y las condiciones de seguridad se confirman directamente con el operador.",
+      "precio": "",
+      "fotos": [
+        {
+          "src": "img/poster-flyboard.webp",
+          "alt": "Publicidad de la experiencia de Flyboard en Guatapé"
+        }
+      ],
+      "caracteristicas": [
+        "Equipo profesional y acompañamiento",
+        "Apto para principiantes con instrucción previa",
+        "Disponibilidad y requisitos confirmados por WhatsApp"
+      ],
+      "videos": [],
+      "botonReserva": "Consultar requisitos y disponibilidad",
+      "mensajeReserva": "Hola XEBAX Adventure Connection, quiero información sobre {servicio} en Guatapé",
+      "alias": [
+        "flyboard",
+        "fly board",
+        "volar sobre el agua"
+      ],
+      "seccion": "#nautico"
+    },
+    "wakeboard": {
+      "titulo": "Wakeboard en Guatapé",
+      "categoria": "Experiencia náutica",
+      "descripcion": "Deslízate sobre el agua y vive una experiencia de adrenalina en el embalse de Guatapé, con acompañamiento y condiciones de seguridad confirmadas directamente con el operador.",
+      "precio": "",
+      "fotos": [
+        {
+          "src": "img/poster-wakeboard.webp",
+          "alt": "Publicidad de la experiencia de Wakeboard en Guatapé"
+        }
+      ],
+      "caracteristicas": [
+        "Equipo profesional",
+        "Acompañamiento de instructores",
+        "Disponibilidad y requisitos de seguridad confirmados con el operador"
+      ],
+      "videos": [],
+      "botonReserva": "Consultar requisitos y disponibilidad",
+      "mensajeReserva": "Hola XEBAX Adventure Connection, quiero información sobre {servicio} en Guatapé",
+      "alias": [
+        "wakeboard",
+        "wake board",
+        "tabla sobre el agua"
+      ],
+      "seccion": "#nautico"
+    },
+    "diaDeSol": {
+      "titulo": "Día de Sol en Guatapé",
+      "categoria": "Plan de descanso",
+      "descripcion": "Un plan para relajarte y disfrutar del paisaje con piscina, zonas verdes, almuerzo y refrigerio. La disponibilidad y las condiciones se confirman directamente por WhatsApp.",
+      "precio": "",
+      "fotos": [
+        {
+          "src": "img/poster-dia-de-sol.webp",
+          "alt": "Publicidad del plan Día de Sol en Guatapé"
+        }
+      ],
+      "caracteristicas": [
+        "Piscina y zonas verdes",
+        "Almuerzo y refrigerio",
+        "Disponibilidad y condiciones confirmadas por WhatsApp"
+      ],
+      "videos": [],
+      "botonReserva": "Consultar esta experiencia por WhatsApp",
+      "mensajeReserva": "Hola XEBAX Adventure Connection, quiero información sobre {servicio} en Guatapé",
+      "alias": [
+        "dia de sol",
+        "piscina",
+        "plan de descanso",
+        "almuerzo y refrigerio"
+      ],
+      "seccion": "#nautico"
+    },
+    "jetski": {
+      "titulo": "Jet Ski",
+      "categoria": "Experiencia náutica",
+      "descripcion": "Explora en una sola galería las opciones de Jet Ski y Jet Ski sencillo, con la Piedra del Peñol y el paisaje de Guatapé como parte del recorrido.",
+      "precio": "",
+      "fotos": [
+        {
+          "src": "img/poster-jetski-nuevo.webp",
+          "alt": "Publicidad de los paseos en Jet Ski"
+        },
+        {
+          "src": "img/jetski-01.webp",
+          "alt": "Fotografía real de la experiencia en Jet Ski 1"
+        },
+        {
+          "src": "img/jetski-02.webp",
+          "alt": "Fotografía real de la experiencia en Jet Ski 2"
+        },
+        {
+          "src": "img/jetski-03.webp",
+          "alt": "Fotografía real de la experiencia en Jet Ski 3"
+        },
+        {
+          "src": "img/jetski-04.webp",
+          "alt": "Fotografía real de la experiencia en Jet Ski 4"
+        },
+        {
+          "src": "img/jetski-05.webp",
+          "alt": "Fotografía real de la experiencia en Jet Ski 5"
+        },
+        {
+          "src": "img/jetski-06.webp",
+          "alt": "Fotografía real de la experiencia en Jet Ski 6"
+        },
+        {
+          "src": "img/jetski-07.webp",
+          "alt": "Fotografía real de la experiencia en Jet Ski 7"
+        },
+        {
+          "src": "img/jetski-simple-01.webp",
+          "alt": "Fotografía real del Jet Ski sencillo 1"
+        },
+        {
+          "src": "img/jetski-simple-02.webp",
+          "alt": "Fotografía real del Jet Ski sencillo 2"
+        }
+      ],
+      "caracteristicas": [
+        "Jet Ski y Jet Ski sencillo reunidos en una sola experiencia",
+        "9 fotografías reales",
+        "Disponibilidad y requisitos de seguridad confirmados con el operador"
+      ],
+      "videos": [],
+      "botonReserva": "Consultar requisitos y disponibilidad",
+      "mensajeReserva": "Hola XEBAX Adventure Connection, quiero información sobre {servicio} en Guatapé",
+      "alias": [
+        "jet ski",
+        "jetski",
+        "moto de agua",
+        "moto acuatica",
+        "moto nautica"
+      ],
+      "seccion": "#nautico"
+    },
+    "jetskiSencillo": {
+      "titulo": "Jet Ski sencillo",
+      "categoria": "Experiencia náutica",
+      "descripcion": "Una opción individual para disfrutar el paisaje del embalse. Consulta previamente disponibilidad, recorrido y condiciones de participación.",
+      "precio": "",
+      "fotos": [
+        {
+          "src": "img/poster-jetski-nuevo.webp",
+          "alt": "Publicidad de los paseos en Jet Ski"
+        },
+        {
+          "src": "img/jetski-01.webp",
+          "alt": "Fotografía real del Jet Ski sencillo 1"
+        },
+        {
+          "src": "img/jetski-02.webp",
+          "alt": "Fotografía real del Jet Ski sencillo 2"
+        },
+        {
+          "src": "img/jetski-03.webp",
+          "alt": "Fotografía real del Jet Ski sencillo 3"
+        },
+        {
+          "src": "img/jetski-04.webp",
+          "alt": "Fotografía real del Jet Ski sencillo 4"
+        },
+        {
+          "src": "img/jetski-06.webp",
+          "alt": "Fotografía real del Jet Ski sencillo 5"
+        }
+      ],
+      "caracteristicas": [
+        "5 fotografías reales",
+        "Condiciones confirmadas directamente con el operador",
+        "Participación sujeta a edad mínima y requisitos de seguridad"
+      ],
+      "videos": [],
+      "botonReserva": "Consultar requisitos y disponibilidad",
+      "mensajeReserva": "Hola XEBAX Adventure Connection, quiero información sobre {servicio} en Guatapé",
+      "alias": [],
+      "seccion": ""
+    },
+    "lancha": {
+      "titulo": "Paseos en lancha",
+      "categoria": "Experiencia náutica",
+      "descripcion": "Conoce en un solo lugar las lanchas para grupos de hasta siete o cinco personas y los planchones disponibles para recorrer el embalse.",
+      "precio": "",
+      "fotos": [
+        {
+          "src": "img/poster-lancha-lujo.webp",
+          "alt": "Publicidad de los paseos en lancha de lujo"
+        },
+        {
+          "src": "img/lancha7-01.webp",
+          "alt": "Fotografía real de la lancha para hasta siete personas 1"
+        },
+        {
+          "src": "img/lancha7-02.webp",
+          "alt": "Fotografía real de la lancha para hasta siete personas 2"
+        },
+        {
+          "src": "img/lancha5-01.webp",
+          "alt": "Fotografía real de la lancha para hasta cinco personas 1"
+        },
+        {
+          "src": "img/lancha5-02.webp",
+          "alt": "Fotografía real de la lancha para hasta cinco personas 2"
+        },
+        {
+          "src": "img/lancha5-03.webp",
+          "alt": "Fotografía real de la lancha para hasta cinco personas 3"
+        },
+        {
+          "src": "img/planchon-01.webp",
+          "alt": "Fotografía real del planchón 1"
+        },
+        {
+          "src": "img/planchon-02.webp",
+          "alt": "Fotografía real del planchón 2"
+        },
+        {
+          "src": "img/planchon-03.webp",
+          "alt": "Fotografía real del planchón 3"
+        }
+      ],
+      "caracteristicas": [
+        "Lancha hasta 7 personas, lancha hasta 5 personas y planchones",
+        "8 fotografías reales y video de la embarcación",
+        "Recorrido, capacidad y disponibilidad confirmados por WhatsApp"
+      ],
+      "videos": [
+        {
+          "src": "video/lancha-5-video.mp4",
+          "poster": "img/lancha5-03.webp",
+          "label": "Lancha para hasta 5 personas",
+          "portrait": false
+        }
+      ],
+      "botonReserva": "Consultar requisitos y disponibilidad",
+      "mensajeReserva": "Hola XEBAX Adventure Connection, quiero información sobre {servicio} en Guatapé",
+      "alias": [
+        "lancha",
+        "lanchas",
+        "paseo en lancha",
+        "bote",
+        "planchon",
+        "planchones",
+        "embarcacion"
+      ],
+      "seccion": "#nautico"
+    },
+    "lancha7": {
+      "titulo": "Lancha para hasta 7 personas",
+      "categoria": "Experiencia náutica",
+      "descripcion": "Una embarcación de mayor capacidad para compartir el recorrido por el embalse. Consulta disponibilidad y condiciones para tu grupo.",
+      "precio": "",
+      "fotos": [
+        {
+          "src": "img/poster-lancha-lujo.webp",
+          "alt": "Publicidad de los paseos en lancha de lujo"
+        },
+        {
+          "src": "img/lancha7-01.webp",
+          "alt": "Fotografía real de la lancha para hasta siete personas 1"
+        },
+        {
+          "src": "img/lancha7-02.webp",
+          "alt": "Fotografía real de la lancha para hasta siete personas 2"
+        }
+      ],
+      "caracteristicas": [
+        "Capacidad máxima informada: 7 personas",
+        "2 fotografías reales de sus espacios",
+        "Recorrido y condiciones por confirmar"
+      ],
+      "videos": [],
+      "botonReserva": "Consultar requisitos y disponibilidad",
+      "mensajeReserva": "Hola XEBAX Adventure Connection, quiero información sobre {servicio} en Guatapé",
+      "alias": [],
+      "seccion": ""
+    },
+    "lancha5": {
+      "titulo": "Lancha para hasta 5 personas",
+      "categoria": "Experiencia náutica",
+      "descripcion": "Una alternativa compacta para grupos pequeños, con fotografías reales y un video que permite conocer mejor la embarcación.",
+      "precio": "",
+      "fotos": [
+        {
+          "src": "img/poster-lancha-lujo.webp",
+          "alt": "Publicidad de los paseos en lancha de lujo"
+        },
+        {
+          "src": "img/lancha5-01.webp",
+          "alt": "Fotografía real de la lancha para hasta cinco personas 1"
+        },
+        {
+          "src": "img/lancha5-02.webp",
+          "alt": "Fotografía real de la lancha para hasta cinco personas 2"
+        },
+        {
+          "src": "img/lancha5-03.webp",
+          "alt": "Fotografía real de la lancha para hasta cinco personas 3"
+        }
+      ],
+      "caracteristicas": [
+        "Capacidad máxima informada: 5 personas",
+        "3 fotografías reales y video de la embarcación",
+        "Recorrido y condiciones por confirmar"
+      ],
+      "videos": [],
+      "botonReserva": "Consultar requisitos y disponibilidad",
+      "mensajeReserva": "Hola XEBAX Adventure Connection, quiero información sobre {servicio} en Guatapé",
+      "alias": [],
+      "seccion": ""
+    },
+    "planchon": {
+      "titulo": "Planchones",
+      "categoria": "Experiencia náutica",
+      "descripcion": "Una embarcación amplia para compartir y observar el paisaje del embalse con más espacio durante el recorrido.",
+      "precio": "",
+      "fotos": [
+        {
+          "src": "img/poster-planchon.webp",
+          "alt": "Publicidad del paseo en planchón por el embalse"
+        },
+        {
+          "src": "img/planchon-01.webp",
+          "alt": "Fotografía real del planchón 1"
+        },
+        {
+          "src": "img/planchon-02.webp",
+          "alt": "Fotografía real del planchón 2"
+        },
+        {
+          "src": "img/planchon-03.webp",
+          "alt": "Fotografía real del planchón 3"
+        }
+      ],
+      "caracteristicas": [
+        "3 fotografías reales de exterior e interior",
+        "Espacio para compartir durante el recorrido",
+        "Capacidad, disponibilidad y condiciones por confirmar"
+      ],
+      "videos": [],
+      "botonReserva": "Consultar requisitos y disponibilidad",
+      "mensajeReserva": "Hola XEBAX Adventure Connection, quiero información sobre {servicio} en Guatapé",
+      "alias": [],
+      "seccion": ""
+    }
+  },
+  "mapa": {
+    "piedra": {
+      "etiqueta": "Punto 01 · Piedra del Peñol",
+      "titulo": "Piedra del Peñol",
+      "descripcion": "Una presencia monumental que domina el paisaje y ofrece una de las vistas más reconocidas de Colombia.",
+      "imagen": "img/piedra-base.webp",
+      "alt": "Piedra del Peñol",
+      "posicionX": 17,
+      "posicionY": 59
+    },
+    "embalse": {
+      "etiqueta": "Punto 02 · Naturaleza en movimiento",
+      "titulo": "Embalse de Guatapé",
+      "descripcion": "Un entramado de agua e islas que cambia de forma con cada recorrido y define la identidad visual del destino.",
+      "imagen": "img/helicoptero-vista.webp",
+      "alt": "Embalse de Guatapé",
+      "posicionX": 49,
+      "posicionY": 35
+    },
+    "pueblo": {
+      "etiqueta": "Punto 03 · Color en cada calle",
+      "titulo": "Pueblo de Guatapé",
+      "descripcion": "Fachadas, zócalos y espacios llenos de color convierten cada calle en una composición diferente.",
+      "imagen": "img/pueblo-calle.webp",
+      "alt": "Calle colorida de Guatapé",
+      "posicionX": 76,
+      "posicionY": 59
+    }
+  },
+  "asistente": {
+    "bienvenida": {
+      "texto": "¡Hola! Soy el asistente virtual de XEBAX. Puedo ayudarte con helicóptero, parapente, cuatrimotos, Paintball, JetCar, Jet Ski, Flyboard, Wakeboard, lanchas, Día de Sol y opciones de hospedaje. Escribe tu pregunta con tus propias palabras.",
+      "opciones": [
+        {
+          "etiqueta": "Aire y tierra",
+          "accion": "pregunta",
+          "valor": "¿Qué experiencias de aire y tierra ofrecen?"
+        },
+        {
+          "etiqueta": "Actividades de agua",
+          "accion": "pregunta",
+          "valor": "¿Qué actividades de agua ofrecen?"
+        },
+        {
+          "etiqueta": "Hospedaje",
+          "accion": "pregunta",
+          "valor": "¿Qué hospedajes manejan?"
+        },
+        {
+          "etiqueta": "Cabaña para 12",
+          "accion": "pregunta",
+          "valor": "Quiero información de la cabaña para 12"
+        },
+        {
+          "etiqueta": "Solicita nuestros precios por WhatsApp",
+          "accion": "whatsapp",
+          "valor": ""
+        },
+        {
+          "etiqueta": "Reservar",
+          "accion": "pregunta",
+          "valor": "Quiero hacer una reserva"
+        }
+      ]
+    },
+    "respuestas": {
+      "saludo": {
+        "texto": "¡Hola! Soy el asistente virtual de XEBAX. Tenemos vuelos en helicóptero, parapente, cuatrimotos, Paintball, JetCar, Jet Ski, Flyboard, Wakeboard, paseos en lancha, plan Día de Sol y hospedajes desde opciones económicas hasta alternativas de lujo. ¿Sobre cuál deseas información?",
+        "opciones": [
+          {
+            "etiqueta": "Aire y tierra",
+            "accion": "pregunta",
+            "valor": "¿Qué experiencias de aire y tierra ofrecen?"
+          },
+          {
+            "etiqueta": "Actividades de agua",
+            "accion": "pregunta",
+            "valor": "¿Qué actividades de agua ofrecen?"
+          },
+          {
+            "etiqueta": "Hospedaje",
+            "accion": "pregunta",
+            "valor": "¿Qué hospedajes manejan?"
+          },
+          {
+            "etiqueta": "Cabaña hasta 20",
+            "accion": "pregunta",
+            "valor": "Quiero información de la cabaña para hasta 20 personas"
+          },
+          {
+            "etiqueta": "Cabaña hasta 12",
+            "accion": "pregunta",
+            "valor": "Quiero información de la cabaña para hasta 12 personas"
+          },
+          {
+            "etiqueta": "Solicita nuestros precios por WhatsApp",
+            "accion": "whatsapp",
+            "valor": ""
+          }
+        ]
+      },
+      "agradecimiento": {
+        "texto": "¡Con gusto! ¿Deseas consultar algo más?",
+        "opciones": [
+          {
+            "etiqueta": "Otra experiencia",
+            "accion": "pregunta",
+            "valor": "¿Qué experiencias ofrecen?"
+          },
+          {
+            "etiqueta": "Enviar consulta por WhatsApp",
+            "accion": "whatsapp",
+            "valor": ""
+          }
+        ]
+      },
+      "despedida": {
+        "texto": "¡Hasta pronto! Cuando quieras planear tu visita a Guatapé, aquí estaremos para orientarte.",
+        "opciones": [
+          {
+            "etiqueta": "Enviar consulta por WhatsApp",
+            "accion": "whatsapp",
+            "valor": ""
+          }
+        ]
+      },
+      "asesor": {
+        "texto": "Claro. Puedes continuar con un asesor por WhatsApp. Prepararé el mensaje con lo que hayas consultado para que no tengas que repetirlo.",
+        "opciones": [
+          {
+            "etiqueta": "Enviar consulta por WhatsApp",
+            "accion": "whatsapp",
+            "valor": ""
+          }
+        ]
+      },
+      "precios": {
+        "texto": "Los precios de todas las experiencias y hospedajes se manejan exclusivamente por WhatsApp. Allí un asesor te dará la información correspondiente.",
+        "opciones": [
+          {
+            "etiqueta": "Solicita nuestros precios por WhatsApp",
+            "accion": "whatsapp",
+            "valor": ""
+          }
+        ]
+      },
+      "disponibilidad": {
+        "texto": "La disponibilidad de {servicio} se confirma en tiempo real con el operador. Escríbeme la fecha, el número de personas y, si aplica, el horario aproximado que prefieres.",
+        "opciones": [
+          {
+            "etiqueta": "Enviar datos por WhatsApp",
+            "accion": "whatsapp",
+            "valor": ""
+          },
+          {
+            "etiqueta": "Ver otras opciones",
+            "accion": "pregunta",
+            "valor": "¿Qué experiencias ofrecen?"
+          }
+        ]
+      },
+      "reservas": {
+        "texto": "Para reservar {servicio}, necesitamos la fecha, cantidad de personas y tus datos de contacto. Puedes escribirlos aquí y el botón de WhatsApp llevará la consulta preparada para que un asesor confirme tarifa, cupo y condiciones.",
+        "opciones": [
+          {
+            "etiqueta": "Enviar consulta por WhatsApp",
+            "accion": "whatsapp",
+            "valor": ""
+          }
+        ]
+      },
+      "datosViaje": {
+        "texto": "Perfecto. También necesitamos la fecha y la experiencia o tipo de hospedaje que prefieren. Con esos datos un asesor puede confirmar la opción adecuada.",
+        "opciones": [
+          {
+            "etiqueta": "Elegir experiencia",
+            "accion": "pregunta",
+            "valor": "¿Qué experiencias ofrecen?"
+          },
+          {
+            "etiqueta": "Ver hospedaje",
+            "accion": "pregunta",
+            "valor": "¿Qué hospedajes manejan?"
+          },
+          {
+            "etiqueta": "Enviar consulta por WhatsApp",
+            "accion": "whatsapp",
+            "valor": ""
+          }
+        ]
+      },
+      "pagos": {
+        "texto": "Los métodos de pago, anticipos y condiciones pueden variar según el operador o el hospedaje. Un asesor te confirmará el procedimiento exacto antes de realizar cualquier pago.",
+        "opciones": [
+          {
+            "etiqueta": "Enviar consulta por WhatsApp",
+            "accion": "whatsapp",
+            "valor": ""
+          }
+        ]
+      },
+      "requisitos": {
+        "texto": "La edad mínima, el equipo y las condiciones de seguridad dependen de cada actividad. Dime cuál te interesa y te muestro la información disponible; el operador confirma los requisitos finales.",
+        "opciones": [
+          {
+            "etiqueta": "Helicóptero",
+            "accion": "pregunta",
+            "valor": "Requisitos para helicóptero"
+          },
+          {
+            "etiqueta": "Cuatrimotos",
+            "accion": "pregunta",
+            "valor": "Requisitos para cuatrimotos"
+          },
+          {
+            "etiqueta": "Actividades de agua",
+            "accion": "pregunta",
+            "valor": "Requisitos para actividades de agua"
+          },
+          {
+            "etiqueta": "Enviar consulta por WhatsApp",
+            "accion": "whatsapp",
+            "valor": ""
+          }
+        ]
+      },
+      "duracion": {
+        "texto": "La duración de {servicio} depende de la ruta, modalidad y disponibilidad del operador. Se confirma junto con la fecha de la reserva para darte información exacta.",
+        "opciones": [
+          {
+            "etiqueta": "Enviar consulta por WhatsApp",
+            "accion": "whatsapp",
+            "valor": ""
+          }
+        ]
+      },
+      "horarios": {
+        "texto": "El horario de {servicio} depende de la ruta, modalidad y disponibilidad del operador. Se confirma junto con la fecha de la reserva para darte información exacta.",
+        "opciones": [
+          {
+            "etiqueta": "Enviar consulta por WhatsApp",
+            "accion": "whatsapp",
+            "valor": ""
+          }
+        ]
+      },
+      "ubicacion": {
+        "texto": "Las experiencias y hospedajes están ubicados en Guatapé y El Peñol, Antioquia, Colombia. El punto exacto de encuentro cambia según la actividad y se confirma al reservar.",
+        "opciones": [
+          {
+            "etiqueta": "Ver destinos",
+            "accion": "seccion",
+            "valor": "#destinos"
+          },
+          {
+            "etiqueta": "Enviar consulta por WhatsApp",
+            "accion": "whatsapp",
+            "valor": ""
+          }
+        ]
+      },
+      "incluye": {
+        "texto": "Lo incluido cambia según la experiencia. Indícame si te interesa aire, tierra, agua u hospedaje para darte la información correspondiente.",
+        "opciones": [
+          {
+            "etiqueta": "Aire",
+            "accion": "pregunta",
+            "valor": "Experiencias de aire"
+          },
+          {
+            "etiqueta": "Tierra",
+            "accion": "pregunta",
+            "valor": "Experiencias de tierra"
+          },
+          {
+            "etiqueta": "Agua",
+            "accion": "pregunta",
+            "valor": "Experiencias de agua"
+          },
+          {
+            "etiqueta": "Hospedaje",
+            "accion": "pregunta",
+            "valor": "Opciones de hospedaje"
+          }
+        ]
+      },
+      "fotografias": {
+        "texto": "La página incluye fotografías reales, publicidad y videos de varias experiencias. Puedes abrir cada tarjeta o visitar la galería general.",
+        "opciones": [
+          {
+            "etiqueta": "Abrir galería",
+            "accion": "seccion",
+            "valor": "#galeria"
+          },
+          {
+            "etiqueta": "Ver experiencias",
+            "accion": "seccion",
+            "valor": "#experiencias"
+          }
+        ]
+      },
+      "recomendaciones": {
+        "texto": "Te ayudo a elegir. ¿Prefieres adrenalina, una experiencia panorámica, actividades sobre el agua o un plan de descanso y hospedaje?",
+        "opciones": [
+          {
+            "etiqueta": "Adrenalina",
+            "accion": "pregunta",
+            "valor": "Quiero una experiencia de adrenalina"
+          },
+          {
+            "etiqueta": "Vista panorámica",
+            "accion": "pregunta",
+            "valor": "Quiero una experiencia panorámica en helicóptero"
+          },
+          {
+            "etiqueta": "Sobre el agua",
+            "accion": "pregunta",
+            "valor": "¿Qué actividades de agua ofrecen?"
+          },
+          {
+            "etiqueta": "Descanso",
+            "accion": "pregunta",
+            "valor": "Quiero hospedaje o Día de Sol"
+          }
+        ]
+      },
+      "hospedajes": {
+        "texto": "Manejamos hoteles, cabañas para pareja y dos opciones destacadas para grupos: una cabaña disponible para hasta 20 personas y otra para hasta 12 personas. La recomendación se hace según tus fechas, número de viajeros y presupuesto.",
+        "opciones": [
+          {
+            "etiqueta": "Cabaña hasta 20",
+            "accion": "pregunta",
+            "valor": "Quiero información de la cabaña para hasta 20 personas"
+          },
+          {
+            "etiqueta": "Cabaña hasta 12",
+            "accion": "pregunta",
+            "valor": "Quiero información de la cabaña para hasta 12 personas"
+          },
+          {
+            "etiqueta": "Ver hospedajes",
+            "accion": "servicio",
+            "valor": "hospedaje"
+          },
+          {
+            "etiqueta": "Consultar disponibilidad",
+            "accion": "whatsapp",
+            "valor": ""
+          }
+        ]
+      },
+      "grupos": {
+        "texto": "Para grupos contamos con experiencias de tierra, aire y agua, además de dos cabañas destacadas: una para hasta 20 personas y otra para hasta 12 personas, ambas con cocina equipada y jacuzzi.",
+        "opciones": [
+          {
+            "etiqueta": "Ver cabaña hasta 20",
+            "accion": "servicio",
+            "valor": "cabana20"
+          },
+          {
+            "etiqueta": "Ver cabaña hasta 12",
+            "accion": "servicio",
+            "valor": "cabana12"
+          },
+          {
+            "etiqueta": "Consultar grupo",
+            "accion": "whatsapp",
+            "valor": ""
+          }
+        ]
+      },
+      "parejas": {
+        "texto": "También manejamos cabañas para pareja y hospedajes desde opciones económicas hasta alternativas de lujo. Podemos recomendarte según las fechas, el presupuesto y el tipo de ambiente que buscas.",
+        "opciones": [
+          {
+            "etiqueta": "Ver hospedajes",
+            "accion": "servicio",
+            "valor": "hospedaje"
+          },
+          {
+            "etiqueta": "Consultar para dos",
+            "accion": "whatsapp",
+            "valor": ""
+          }
+        ]
+      },
+      "clima": {
+        "texto": "Las actividades dependen de las condiciones del clima y de la decisión del operador. Antes de salir se confirma si la experiencia puede realizarse o si corresponde reprogramarla.",
+        "opciones": [
+          {
+            "etiqueta": "Enviar consulta por WhatsApp",
+            "accion": "whatsapp",
+            "valor": ""
+          }
+        ]
+      },
+      "transporte": {
+        "texto": "El punto de encuentro y la disponibilidad de transporte o traslado dependen del plan seleccionado. Un asesor puede confirmarlo según tu ubicación y la experiencia elegida.",
+        "opciones": [
+          {
+            "etiqueta": "Enviar consulta por WhatsApp",
+            "accion": "whatsapp",
+            "valor": ""
+          }
+        ]
+      },
+      "cancelaciones": {
+        "texto": "Las políticas de cambio, cancelación y reembolso dependen del operador o alojamiento. Te recomendamos confirmarlas antes de hacer el pago de la reserva.",
+        "opciones": [
+          {
+            "etiqueta": "Enviar consulta por WhatsApp",
+            "accion": "whatsapp",
+            "valor": ""
+          }
+        ]
+      },
+      "experiencias": {
+        "texto": "Puedes elegir vuelos en helicóptero, parapente, cuatrimotos, Paintball, JetCar, Jet Ski, Flyboard, Wakeboard, lanchas, planchones, Día de Sol y hospedajes para distintos presupuestos y tamaños de grupo.",
+        "opciones": [
+          {
+            "etiqueta": "Aire y tierra",
+            "accion": "seccion",
+            "valor": "#destacadas"
+          },
+          {
+            "etiqueta": "Experiencias de agua",
+            "accion": "seccion",
+            "valor": "#nautico"
+          },
+          {
+            "etiqueta": "JetCar",
+            "accion": "servicio",
+            "valor": "jetcar"
+          },
+          {
+            "etiqueta": "Hospedaje",
+            "accion": "pregunta",
+            "valor": "¿Qué hospedajes manejan?"
+          }
+        ]
+      },
+      "otraRespuestaDeGracias": {
+        "texto": "Con mucho gusto. Puedo ayudarte con otra experiencia o preparar tu consulta por WhatsApp.",
+        "opciones": [
+          {
+            "etiqueta": "Otra experiencia",
+            "accion": "pregunta",
+            "valor": "¿Qué experiencias ofrecen?"
+          },
+          {
+            "etiqueta": "Enviar consulta por WhatsApp",
+            "accion": "whatsapp",
+            "valor": ""
+          }
+        ]
+      },
+      "precioDeServicio": {
+        "texto": "Los precios de {servicio} se manejan exclusivamente por WhatsApp. Allí un asesor te dará la información correspondiente.",
+        "opciones": [
+          {
+            "etiqueta": "Solicita nuestros precios por WhatsApp",
+            "accion": "whatsapp",
+            "valor": ""
+          }
+        ]
+      },
+      "requisitoDeServicio": {
+        "texto": "Los requisitos de {servicio} —como edad mínima, equipo, acompañamiento y condiciones de seguridad— se confirman directamente con el operador antes de reservar.",
+        "opciones": [
+          {
+            "etiqueta": "Solicita nuestros precios por WhatsApp",
+            "accion": "whatsapp",
+            "valor": ""
+          },
+          {
+            "etiqueta": "Ver disponibilidad",
+            "accion": "pregunta",
+            "valor": "¿Hay disponibilidad para {servicio}?"
+          },
+          {
+            "etiqueta": "Ver fotos",
+            "accion": "servicio",
+            "valor": "{clave}"
+          },
+          {
+            "etiqueta": "Ver sección",
+            "accion": "seccion",
+            "valor": "{seccion}"
+          }
+        ]
+      },
+      "incluyeServicio": {
+        "texto": "{servicio}: {descripcion}\n\nInformación destacada: {caracteristicas}.",
+        "opciones": [
+          {
+            "etiqueta": "Solicita nuestros precios por WhatsApp",
+            "accion": "whatsapp",
+            "valor": ""
+          },
+          {
+            "etiqueta": "Ver disponibilidad",
+            "accion": "pregunta",
+            "valor": "¿Hay disponibilidad para {servicio}?"
+          },
+          {
+            "etiqueta": "Ver fotos",
+            "accion": "servicio",
+            "valor": "{clave}"
+          },
+          {
+            "etiqueta": "Ver sección",
+            "accion": "seccion",
+            "valor": "{seccion}"
+          }
+        ]
+      },
+      "fotosConVideo": {
+        "texto": "Puedes abrir la galería de {servicio} para ver su publicidad, fotografías reales y videos.",
+        "opciones": [
+          {
+            "etiqueta": "Solicita nuestros precios por WhatsApp",
+            "accion": "whatsapp",
+            "valor": ""
+          },
+          {
+            "etiqueta": "Ver disponibilidad",
+            "accion": "pregunta",
+            "valor": "¿Hay disponibilidad para {servicio}?"
+          },
+          {
+            "etiqueta": "Ver fotos",
+            "accion": "servicio",
+            "valor": "{clave}"
+          },
+          {
+            "etiqueta": "Ver sección",
+            "accion": "seccion",
+            "valor": "{seccion}"
+          }
+        ]
+      },
+      "detalleServicio": {
+        "texto": "{descripcion}\n\nLo más importante: {caracteristicas}.",
+        "opciones": [
+          {
+            "etiqueta": "Solicita nuestros precios por WhatsApp",
+            "accion": "whatsapp",
+            "valor": ""
+          },
+          {
+            "etiqueta": "Ver disponibilidad",
+            "accion": "pregunta",
+            "valor": "¿Hay disponibilidad para {servicio}?"
+          },
+          {
+            "etiqueta": "Ver fotos",
+            "accion": "servicio",
+            "valor": "{clave}"
+          },
+          {
+            "etiqueta": "Ver sección",
+            "accion": "seccion",
+            "valor": "{seccion}"
+          }
+        ]
+      },
+      "datosDeGrupo": {
+        "texto": "Perfecto, registré que serían {personas} personas. También necesitamos la fecha y la experiencia o tipo de hospedaje que prefieren. Con esos datos un asesor puede confirmar la opción adecuada.",
+        "opciones": [
+          {
+            "etiqueta": "Elegir experiencia",
+            "accion": "pregunta",
+            "valor": "¿Qué experiencias ofrecen?"
+          },
+          {
+            "etiqueta": "Ver hospedaje",
+            "accion": "pregunta",
+            "valor": "¿Qué hospedajes manejan?"
+          },
+          {
+            "etiqueta": "Enviar consulta por WhatsApp",
+            "accion": "whatsapp",
+            "valor": ""
+          }
+        ]
+      },
+      "fotosSinVideo": {
+        "texto": "Puedes abrir la galería de {servicio} para ver su publicidad, fotografías reales.",
+        "opciones": [
+          {
+            "etiqueta": "Solicita nuestros precios por WhatsApp",
+            "accion": "whatsapp",
+            "valor": ""
+          },
+          {
+            "etiqueta": "Ver disponibilidad",
+            "accion": "pregunta",
+            "valor": "¿Hay disponibilidad para {servicio}?"
+          },
+          {
+            "etiqueta": "Ver fotos",
+            "accion": "servicio",
+            "valor": "{clave}"
+          },
+          {
+            "etiqueta": "Ver sección",
+            "accion": "seccion",
+            "valor": "{seccion}"
+          }
+        ]
+      },
+      "experienciasDeAgua": {
+        "texto": "Sobre el agua puedes elegir JetCar, Jet Ski, Flyboard, Wakeboard, paseos en lancha, planchones y Día de Sol. La disponibilidad y los requisitos se confirman según la fecha y el operador.",
+        "opciones": [
+          {
+            "etiqueta": "Ver sección náutica",
+            "accion": "seccion",
+            "valor": "#nautico"
+          },
+          {
+            "etiqueta": "JetCar",
+            "accion": "servicio",
+            "valor": "jetcar"
+          },
+          {
+            "etiqueta": "Consultar",
+            "accion": "whatsapp",
+            "valor": ""
+          }
+        ]
+      },
+      "experienciasDeAire": {
+        "texto": "En el aire puedes elegir el vuelo panorámico en helicóptero o la experiencia de parapente tándem sobre el embalse y sus islas. La disponibilidad y los requisitos se confirman según el clima y el operador.",
+        "opciones": [
+          {
+            "etiqueta": "Helicóptero",
+            "accion": "servicio",
+            "valor": "helicoptero"
+          },
+          {
+            "etiqueta": "Parapente",
+            "accion": "servicio",
+            "valor": "parapente"
+          },
+          {
+            "etiqueta": "Consultar",
+            "accion": "whatsapp",
+            "valor": ""
+          }
+        ]
+      },
+      "experienciasDeTierra": {
+        "texto": "En tierra puedes elegir rutas en cuatrimoto y Paintball. Si buscas aún más adrenalina, también puedes combinar el plan con JetCar, Jet Ski o Flyboard.",
+        "opciones": [
+          {
+            "etiqueta": "Cuatrimotos",
+            "accion": "servicio",
+            "valor": "cuatrimotos"
+          },
+          {
+            "etiqueta": "Paintball",
+            "accion": "servicio",
+            "valor": "paintball"
+          },
+          {
+            "etiqueta": "Consultar",
+            "accion": "whatsapp",
+            "valor": ""
+          }
+        ]
+      },
+      "sinCoincidencias": {
+        "texto": "No encontré una respuesta suficientemente segura para esa pregunta. Puedo orientarte sobre actividades, hospedaje, disponibilidad o reservas. Los precios se consultan directamente por WhatsApp.",
+        "opciones": [
+          {
+            "etiqueta": "Ver experiencias",
+            "accion": "pregunta",
+            "valor": "¿Qué experiencias ofrecen?"
+          },
+          {
+            "etiqueta": "Hospedaje",
+            "accion": "pregunta",
+            "valor": "¿Qué hospedajes manejan?"
+          },
+          {
+            "etiqueta": "Solicita nuestros precios por WhatsApp",
+            "accion": "whatsapp",
+            "valor": ""
+          },
+          {
+            "etiqueta": "Enviar consulta por WhatsApp",
+            "accion": "whatsapp",
+            "valor": ""
+          }
+        ]
+      }
+    },
+    "intenciones": {
+      "saludo": {
+        "frases": [
+          "hola",
+          "buenas",
+          "buenos dias",
+          "buenas tardes",
+          "buenas noches",
+          "hey",
+          "hola xebax"
+        ],
+        "palabras": [
+          "saludos"
+        ],
+        "umbral": 2
+      },
+      "agradecimiento": {
+        "frases": [
+          "muchas gracias",
+          "gracias",
+          "muy amable",
+          "perfecto gracias",
+          "listo gracias"
+        ],
+        "palabras": [
+          "agradecido",
+          "agradecida"
+        ],
+        "umbral": 2
+      },
+      "despedida": {
+        "frases": [
+          "adios",
+          "hasta luego",
+          "nos vemos",
+          "chao",
+          "bye"
+        ],
+        "palabras": [
+          "despedida"
+        ],
+        "umbral": 2
+      },
+      "asesor": {
+        "frases": [
+          "hablar con una persona",
+          "hablar con alguien",
+          "hablar con un asesor",
+          "asesor humano",
+          "atencion humana",
+          "contactar operador"
+        ],
+        "palabras": [
+          "asesor",
+          "humano",
+          "operador",
+          "contacto",
+          "whatsapp",
+          "telefono",
+          "llamar"
+        ],
+        "umbral": 2
+      },
+      "precios": {
+        "frases": [
+          "cuanto cuesta",
+          "cuanto vale",
+          "que precio tiene",
+          "cual es el precio",
+          "consultar precio",
+          "ver precios"
+        ],
+        "palabras": [
+          "precio",
+          "precios",
+          "tarifa",
+          "tarifas",
+          "valor",
+          "costo",
+          "costos",
+          "promocion",
+          "descuento"
+        ],
+        "umbral": 2
+      },
+      "disponibilidad": {
+        "frases": [
+          "hay disponibilidad",
+          "tienen disponibilidad",
+          "hay cupo",
+          "tienen cupo",
+          "esta disponible",
+          "quiero saber si hay"
+        ],
+        "palabras": [
+          "disponibilidad",
+          "disponible",
+          "cupo",
+          "cupos",
+          "fecha",
+          "fechas"
+        ],
+        "umbral": 2
+      },
+      "reservas": {
+        "frases": [
+          "quiero reservar",
+          "como puedo reservar",
+          "hacer una reserva",
+          "quiero apartar",
+          "separar un cupo"
+        ],
+        "palabras": [
+          "reservar",
+          "reserva",
+          "apartar",
+          "separar",
+          "agendar",
+          "comprar"
+        ],
+        "umbral": 2
+      },
+      "datosViaje": {
+        "frases": [
+          "somos un grupo",
+          "somos una pareja",
+          "viajamos el",
+          "vamos el",
+          "para este fin de semana"
+        ],
+        "palabras": [
+          "somos",
+          "viajamos",
+          "llegamos",
+          "adultos",
+          "ninos",
+          "niños",
+          "personas",
+          "huespedes",
+          "huéspedes"
+        ],
+        "umbral": 4
+      },
+      "pagos": {
+        "frases": [
+          "como se paga",
+          "formas de pago",
+          "metodos de pago",
+          "hay que dar anticipo",
+          "pago anticipado"
+        ],
+        "palabras": [
+          "pagar",
+          "pago",
+          "pagos",
+          "anticipo",
+          "abono",
+          "transferencia",
+          "tarjeta",
+          "efectivo"
+        ],
+        "umbral": 2
+      },
+      "requisitos": {
+        "frases": [
+          "que requisitos piden",
+          "cuales son los requisitos",
+          "edad minima",
+          "pueden ir ninos",
+          "pueden ir niños",
+          "es seguro"
+        ],
+        "palabras": [
+          "requisito",
+          "requisitos",
+          "edad",
+          "menor",
+          "menores",
+          "nino",
+          "niño",
+          "seguridad",
+          "seguro",
+          "chaleco",
+          "proteccion"
+        ],
+        "umbral": 2
+      },
+      "duracion": {
+        "frases": [
+          "cuanto dura",
+          "que duracion tiene",
+          "tiempo del recorrido",
+          "cuanto tiempo"
+        ],
+        "palabras": [
+          "duracion",
+          "dura",
+          "minutos",
+          "horas",
+          "tiempo"
+        ],
+        "umbral": 2
+      },
+      "horarios": {
+        "frases": [
+          "a que hora",
+          "cual es el horario",
+          "horarios disponibles",
+          "hora de salida"
+        ],
+        "palabras": [
+          "horario",
+          "horarios",
+          "hora",
+          "abren",
+          "cierran",
+          "salida"
+        ],
+        "umbral": 2
+      },
+      "ubicacion": {
+        "frases": [
+          "donde estan",
+          "donde queda",
+          "como llego",
+          "cual es la ubicacion",
+          "en que lugar"
+        ],
+        "palabras": [
+          "ubicacion",
+          "direccion",
+          "mapa",
+          "llegar",
+          "donde"
+        ],
+        "umbral": 2
+      },
+      "incluye": {
+        "frases": [
+          "que incluye",
+          "que viene incluido",
+          "que trae",
+          "que ofrecen en",
+          "incluye equipo"
+        ],
+        "palabras": [
+          "incluye",
+          "incluido",
+          "incluyen",
+          "trae",
+          "servicio"
+        ],
+        "umbral": 2
+      },
+      "fotografias": {
+        "frases": [
+          "quiero ver fotos",
+          "tienen fotos",
+          "ver la galeria",
+          "quiero ver videos",
+          "tienen videos"
+        ],
+        "palabras": [
+          "foto",
+          "fotos",
+          "fotografia",
+          "fotografias",
+          "video",
+          "videos",
+          "galeria",
+          "imagenes"
+        ],
+        "umbral": 2
+      },
+      "recomendaciones": {
+        "frases": [
+          "que me recomiendan",
+          "que me recomiendas",
+          "cual es mejor",
+          "ayudame a elegir",
+          "no se cual elegir"
+        ],
+        "palabras": [
+          "recomendar",
+          "recomiendan",
+          "recomiendas",
+          "elegir",
+          "mejor"
+        ],
+        "umbral": 2
+      },
+      "hospedajes": {
+        "frases": [
+          "hotel economico",
+          "hospedaje economico",
+          "hotel barato",
+          "hotel de lujo",
+          "hospedaje de lujo",
+          "diferentes presupuestos"
+        ],
+        "palabras": [
+          "economico",
+          "económico",
+          "barato",
+          "lujo",
+          "presupuesto"
+        ],
+        "umbral": 2
+      },
+      "grupos": {
+        "frases": [
+          "vamos en grupo",
+          "para grupos",
+          "familia grande",
+          "grupo grande",
+          "muchas personas"
+        ],
+        "palabras": [
+          "grupo",
+          "grupos",
+          "familia",
+          "familias"
+        ],
+        "umbral": 2
+      },
+      "parejas": {
+        "frases": [
+          "plan para pareja",
+          "cabana para pareja",
+          "cabaña para pareja",
+          "viaje romantico",
+          "somos dos"
+        ],
+        "palabras": [
+          "pareja",
+          "parejas",
+          "romantico",
+          "romántico"
+        ],
+        "umbral": 2
+      },
+      "clima": {
+        "frases": [
+          "que pasa si llueve",
+          "si esta lloviendo",
+          "depende del clima",
+          "mal clima"
+        ],
+        "palabras": [
+          "lluvia",
+          "llueve",
+          "clima",
+          "tormenta",
+          "lloviendo"
+        ],
+        "umbral": 2
+      },
+      "transporte": {
+        "frases": [
+          "incluye transporte",
+          "tienen transporte",
+          "me recogen",
+          "servicio de transporte"
+        ],
+        "palabras": [
+          "transporte",
+          "recoger",
+          "recogen",
+          "traslado",
+          "vehiculo"
+        ],
+        "umbral": 2
+      },
+      "cancelaciones": {
+        "frases": [
+          "puedo cancelar",
+          "politica de cancelacion",
+          "devolucion del dinero",
+          "cambiar la fecha"
+        ],
+        "palabras": [
+          "cancelar",
+          "cancelacion",
+          "devolucion",
+          "reembolso",
+          "cambiar",
+          "reprogramar"
+        ],
+        "umbral": 2
+      },
+      "experiencias": {
+        "frases": [
+          "que experiencias tienen",
+          "que actividades ofrecen",
+          "que planes manejan",
+          "que puedo hacer",
+          "que ofrecen",
+          "ver experiencias"
+        ],
+        "palabras": [
+          "experiencias",
+          "actividades",
+          "planes",
+          "opciones",
+          "aventuras"
+        ],
+        "umbral": 2
+      }
+    },
+    "mensajesWhatsApp": {
+      "sinConversacion": "Hola XEBAX Adventure Connection, quiero información sobre sus experiencias en Guatapé",
+      "conConversacion": "Hola XEBAX Adventure Connection, quiero continuar una consulta{tema}.{grupo} En el asistente escribí: {mensajes}",
+      "tema": " sobre {servicio}",
+      "grupo": " Somos {personas} personas."
+    }
+  },
+  "interfaz": {
+    "abrirMenu": "Abrir menú",
+    "cerrarMenu": "Cerrar menú",
+    "pausarRecorrido": "Pausar recorrido visual",
+    "reproducirRecorrido": "Reproducir recorrido visual",
+    "verMenos": "Ver menos",
+    "verMasFotos": "Ver más fotos",
+    "verImagen": "Ver imagen {numero}",
+    "escribiendo": "El asistente está escribiendo",
+    "opcionSinElegir": "la opción que te interesa"
+  }
+}
