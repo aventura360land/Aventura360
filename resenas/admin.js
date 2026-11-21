@@ -1,26 +1,12 @@
+import {hasSession,beginSession,clearSession,currentToken,setEditor} from './sesion.js';
 import {configured,request,listReviews,moderate,element,reviewCard,accountEmail} from './api.js';
 import {createEditor,confirmar} from '../cms/editor.js';
 const byId=id=>document.getElementById(id);
 const login=byId('login'),dashboard=byId('dashboard'),filter=byId('filter'),more=byId('more'),list=byId('list');
-let token=null,refreshToken='',expires=0,refreshing=null,authEpoch=0,next=null,revision=0;
-function storeSession(session){
-  token=session.access_token;refreshToken=session.refresh_token;expires=Date.now()+Number(session.expires_in||3600)*1000;
-}
-async function currentToken(){
-  if(!token)throw new Error('Inicia sesión para continuar.');
-  if(Date.now()<expires-90000)return token;
-  if(!refreshing){
-    const epoch=authEpoch;
-    refreshing=request('/auth/v1/token?grant_type=refresh_token',{method:'POST',body:{refresh_token:refreshToken}}).then(s=>{
-      if(epoch!==authEpoch)throw new Error('La sesión ha cambiado.');
-      storeSession(s);return token;
-    }).finally(()=>{if(epoch===authEpoch)refreshing=null;});
-  }
-  return refreshing;
-}
+let next=null,revision=0;
 const editor=createEditor({token:currentToken,report:msg=>{byId('notice').textContent=msg;},openReviews:()=>load()});
 function reset(){
-  editor.stop();authEpoch++;refreshToken='';expires=0;refreshing=null;revision++;token=null;next=null;dashboard.hidden=true;login.hidden=false;
+  editor.stop();clearSession();revision++;next=null;dashboard.hidden=true;login.hidden=false;
   filter.value='pending';list.replaceChildren();login.reset();byId('profile-username').textContent='';
 }
 function report(error){
@@ -54,6 +40,23 @@ async function load(append=false){
   }catch(e){if(seq===revision)report(e);return false;}
   finally{if(seq===revision)more.disabled=false;}
 }
+async function enter(){
+  const token=await currentToken();
+  const profiles=await request('/rest/v1/xebax_moderators?select=username&limit=1',{token});
+  if(!profiles.length){clearSession();throw Error('Esta cuenta no está autorizada para moderar reseñas.');}
+  byId('profile-username').textContent=profiles[0].username;
+  login.hidden=true;dashboard.hidden=false;byId('notice').textContent='';
+  try{
+    const access=await request('/rest/v1/xebax_site_editors?select=user_id&limit=1',{token});
+    setEditor(!!access.length);
+    if(access.length){
+      await editor.start();
+      const siteLink=document.querySelector('.mast a:last-child');siteLink.target='_self';
+    }else editor.showReviews();
+  }catch(error){
+    editor.showReviews();byId('notice').textContent='El editor de contenido no pudo cargarse. Vuelve a entrar para reintentar.';
+  }
+}
 login.onsubmit=async e=>{
   e.preventDefault();const button=login.querySelector('button');button.disabled=true;
   byId('notice').textContent='Verificando acceso…';
@@ -61,24 +64,22 @@ login.onsubmit=async e=>{
     const email=accountEmail(byId('username').value);
     const session=await request('/auth/v1/token?grant_type=password',{method:'POST',body:{email,password:byId('password').value}});
     byId('password').value='';
-    const profiles=await request('/rest/v1/xebax_moderators?select=username&limit=1',{token:session.access_token});
-    if(!profiles.length)throw new Error('Esta cuenta no está autorizada para moderar reseñas.');
-    byId('profile-username').textContent=profiles[0].username;
-    authEpoch++;storeSession(session);login.hidden=true;dashboard.hidden=false;byId('notice').textContent='';
-    try{
-      const access=await request('/rest/v1/xebax_site_editors?select=user_id&limit=1',{token});
-      if(access.length)await editor.start();else editor.showReviews();
-    }catch(error){
-      editor.showReviews();byId('notice').textContent='El editor de contenido no pudo cargarse. Vuelve a entrar para reintentar.';
-    }
+    beginSession(session);await enter();
+
   }catch(e){byId('notice').textContent=e.status===400||e.status===401?'Revisa el nombre de usuario y la contraseña.':e.message;}
   finally{button.disabled=false;}
 };
 byId('logout').onclick=async()=>{
   if(editor.isSaving())return;
   if(editor.hasChanges()&&!await confirmar('Cerrar sesión','Hay cambios sin guardar. Si sales ahora se perderán.','Salir'))return;
-  const previous=token;reset();byId('notice').textContent='Sesión cerrada.';
-  try{await request('/auth/v1/logout?scope=local',{method:'POST',token:previous});}catch{}
+  const previous=await currentToken().catch(()=>null);reset();byId('notice').textContent='Sesión cerrada.';
+  try{if(previous)await request('/auth/v1/logout?scope=local',{method:'POST',token:previous});}catch{}
 };
 filter.onchange=()=>load();more.onclick=()=>load(true);byId('refresh').onclick=()=>load();
 if(!configured){login.hidden=true;byId('notice').textContent='Configura la URL y la clave pública de Xebax en resenas/config.js para activar el panel.';}
+
+else if(hasSession()){
+  login.hidden=true;
+  enter().catch(error=>{reset();report(error);});
+}
+window.addEventListener('pageshow',event=>{if(event.persisted)location.reload();});
