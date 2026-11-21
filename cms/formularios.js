@@ -87,6 +87,9 @@ export function objectFields(container,obj,context,helpers){
       container.append(details(label+' ('+value.length+')',draw));
     }else if(value!==null&&typeof value==='object'){
       container.append(details(label,panel=>objectFields(panel,value,key,helpers)));
-    }else container.append(field({label,...infer(key,value,context)},value,v=>{obj[key]=v;changed();},choose));
+    }else{
+      const control=field({label,...infer(key,value,context)},value,v=>{obj[key]=v;changed();},choose);
+      control.dataset.wpKey=key;container.append(control);
+    }
   }
 }
