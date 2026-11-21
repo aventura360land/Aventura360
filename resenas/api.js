@@ -25,7 +25,13 @@ export async function request(path,{method='GET',body,token,prefer}={}) {
   const text=await response.text();
   let data=null;
   if(text) { try {data=JSON.parse(text);} catch {throw new Error('El servicio de reseñas no está disponible.');} }
-  if(!response.ok) throw new ApiError(response.status===429?'Has hecho varios intentos. Espera un momento.':'No se pudo completar la solicitud.',response.status,data?.code);
+  if(!response.ok){
+    let message=response.status===429?'Has hecho varios intentos. Espera un momento.':'No se pudo completar la solicitud.';
+    if(data?.code==='PGRST202'&&path==='/rest/v1/rpc/xebax_publish_page'){
+      message='Falta la función de publicación en Supabase. Actualiza el proyecto con cms/instalar.sql y vuelve a publicar.';
+    }
+    throw new ApiError(message,response.status,data?.code);
+  }
   return data;
 }
 export async function listReviews(status,before,token) {

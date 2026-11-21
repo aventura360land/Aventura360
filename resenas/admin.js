@@ -1,3 +1,4 @@
+import {pageAfterLogin} from '../cms/acceso-visual.js';
 import {hasSession,beginSession,clearSession,currentToken,setEditor} from './sesion.js';
 import {configured,request,listReviews,moderate,element,reviewCard,accountEmail} from './api.js';
 import {createEditor,confirmar} from '../cms/editor.js';
@@ -50,9 +51,14 @@ async function enter(){
     const access=await request('/rest/v1/xebax_site_editors?select=user_id&limit=1',{token});
     setEditor(!!access.length);
     if(access.length){
+      const destination=pageAfterLogin(new URLSearchParams(location.search));
+      if(destination){location.replace(destination);return;}
       await editor.start();
       const siteLink=document.querySelector('.mast a:last-child');siteLink.target='_self';
-    }else editor.showReviews();
+    }else{
+      editor.showReviews();
+      if(new URLSearchParams(location.search).has('editarPagina'))byId('notice').textContent='Esta cuenta solo tiene acceso a la moderación de reseñas.';
+    }
   }catch(error){
     editor.showReviews();byId('notice').textContent='El editor de contenido no pudo cargarse. Vuelve a entrar para reintentar.';
   }
