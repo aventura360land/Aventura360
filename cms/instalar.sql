@@ -73,5 +73,20 @@ drop policy if exists xebax_editor_list_media on storage.objects;
 create policy xebax_editor_list_media on storage.objects for select to authenticated using(
   bucket_id='xebax-media' and exists(select 1 from public.xebax_site_editors where user_id=(select auth.uid()))
 );
+create or replace function public.xebax_publish_page(draft_content jsonb, live_content jsonb, expected_version bigint)
+returns bigint language plpgsql security definer set search_path='' as $$
+declare v bigint;
+begin
+  if draft_content is null or jsonb_typeof(draft_content)<>'object' or octet_length(draft_content::text)>3500000 then
+    raise exception 'Borrador inválido' using errcode='22023';
+  end if;
+  -- La función existente comprueba auth.uid(), el rol de editor y la versión antes de escribir.
+  v := public.xebax_save_site(live_content, expected_version, true);
+  update public.xebax_cms set content=draft_content where slot='draft';
+  return v;
+end; $$;
+revoke all on function public.xebax_publish_page(jsonb,jsonb,bigint) from public,anon,authenticated;
+grant execute on function public.xebax_publish_page(jsonb,jsonb,bigint) to authenticated;
+
 notify pgrst,'reload schema';
 commit;

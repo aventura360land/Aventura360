@@ -1,6 +1,21 @@
 import {request} from '../resenas/api.js';
 import {currentToken,editorSession} from '../resenas/sesion.js';
 
+const files={inicio:'index.html',privacidad:'privacidad.html',terminos:'terminos.html',pagina:'pagina.html'};
+export function loginForPage(id,slug){
+  const url=new URL('../resenas/admin.html',import.meta.url);
+  url.searchParams.set('editarPagina',id);
+  if(id==='pagina'&&slug)url.searchParams.set('p',slug);
+  return url;
+}
+export function pageAfterLogin(params){
+  const id=params.get('editarPagina'),slug=params.get('p');
+  if(!Object.hasOwn(files,id)||(id==='pagina'&&!slug))return null;
+  const url=new URL('../'+files[id],import.meta.url);
+  if(id==='pagina')url.searchParams.set('p',slug);
+  url.searchParams.set('editar','1');
+  return url;
+}
 export async function openDraft(){
   if(!editorSession())return null;
   const rows=await request('/rest/v1/xebax_cms?select=slot,content,version',{token:await currentToken()});

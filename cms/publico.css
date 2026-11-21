@@ -8,3 +8,13 @@
 body.xc-document{margin:0;font:1rem/1.5 Inter,system-ui,sans-serif;background:var(--paper,#fffdf8);color:var(--ink,#10211e)}.xc-document header{background:var(--deep,#062d2b);color:#fff;padding:1rem max(5vw,1rem);display:flex;align-items:center;gap:2rem;flex-wrap:wrap}.xc-document header a{color:inherit}.xc-document nav{display:flex;gap:1rem;flex-wrap:wrap}.xc-page{padding:clamp(1.3rem,5vw,4rem)}.xc-document .xc-intro{font-size:1.15rem}
 [data-x-section][hidden]{display:none!important}
 .xc-inspect [data-x-node]:hover,.xc-inspect .xc-section:hover{outline:3px dashed #198471!important;outline-offset:2px;cursor:crosshair!important}
+
+/* El primer elemento de cada colección ocupa la foto destacada al reordenar. */
+@media (min-width:621px){
+  .cabana-feature .group-stay-media > .group-stay-photo:first-child{grid-column:1;grid-row:1/3}
+  .cabana-feature .group-stay-media > .group-stay-photo:not(:first-child){grid-column:2;grid-row:auto}
+}
+@media (min-width:901px){
+  .destino-band > .destino-card:first-child{grid-column:1;grid-row:1/3;min-height:520px}
+  .destino-band > .destino-card:not(:first-child){grid-column:2;grid-row:auto;min-height:0}
+}

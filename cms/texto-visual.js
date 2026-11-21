@@ -1,4 +1,22 @@
-// Vincula texto visible con el campo original sin sustituir enlaces, iconos ni controles.
+import {textWithEdit} from './formato.js';
+
+const nodes='[data-x-field],[data-x-node]';
+const textChildren=el=>[...el.childNodes].filter(n=>n.nodeType===3);
+function customParts(el){
+  const walker=el.ownerDocument.createTreeWalker(el,NodeFilter.SHOW_TEXT),parts=[];
+  while(walker.nextNode())if(walker.currentNode.data.trim())parts.push(walker.currentNode);
+  return parts;
+}
+// El punto del clic distingue dos tramos del mismo párrafo separados por un enlace.
+export function textAtPoint(event){
+  const {clientX:x,clientY:y,target}=event,doc=target.ownerDocument;
+  if(!doc||!target.closest)return null;
+  const pos=doc.caretPositionFromPoint?.(x,y);
+  const part=pos?.offsetNode||doc.caretRangeFromPoint?.(x,y)?.startContainer;
+  if(part?.nodeType!==3||!target.contains(part)||!part.data.trim())return null;
+  const range=doc.createRange();range.selectNodeContents(part);
+  return [...range.getClientRects()].some(r=>x>=r.left&&x<=r.right&&y>=r.top&&y<=r.bottom)?part:null;
+}
 export function visualText(page,getState){
   const fields=new Map();
   for(const section of page.sections||[]){
@@ -9,38 +27,41 @@ export function visualText(page,getState){
     section.fields.forEach(f=>index(f,null));
     for(const c of section.collections)for(const item of c.items)item.fields.forEach(f=>index(f,c));
   }
-  function binding(hit,unit){
-    if(!hit||unit.matches('[data-layout-type=section],form,.map-layout,#reelFrame')||hit.closest('form,svg,button[disabled]'))return null;
-    const block=hit.closest('[data-x-block]');
-    let node=hit.closest('[data-x-node]');
-    if(!node||!fields.has(node.dataset.xNode)||!unit.contains(node)){
-      node=[unit,...unit.querySelectorAll('[data-x-node]')].find(n=>fields.has(n.dataset.xNode));
+  function choices(el){
+    if(el.dataset.xField){
+      const block=el.closest('[data-x-block]'),ownerId=block?.dataset.xOwner||el.dataset.xOwner;
+      if(!ownerId)return [];
+      const key=el.dataset.xField,idx=el.dataset.xIndex;
+      return customParts(el).map(part=>({part,write(value,display){
+        const state=getState(),owner=[...state.pages,...state.extras].find(o=>o.id===ownerId);
+        const data=block?owner.blocks.find(b=>b.blockId===block.dataset.xBlock):owner;
+        const updated=textWithEdit(part,display);
+        if(idx!==undefined)data[key][Number(idx)]=updated;else data[key]=updated;
+      }}));
     }
-    if(!block&&node){
-      const texts=[...node.childNodes].filter(t=>t.nodeType===3);
-      const field=fields.get(node.dataset.xNode)?.find(f=>texts[f.spec.text]?.data.trim());
-      if(field){
-        const rowId=node.closest('[data-x-item]')?.dataset.xItem;
-        return {part:texts[field.spec.text],write(value){
-          const data=getState().template,{spec,collection}=field;
-          if(collection&&rowId){
-            const rows=data.collections[collection.id]??=collection.items.map(i=>({id:i.id,source:i.id,values:{}}));
-            const row=rows.find(r=>r.id===rowId);if(!row)return;(row.values??={})[spec.id]=value;
-          }else data.values[spec.id]=value;
-        }};
+    const parts=textChildren(el),rowId=el.closest('[data-x-item]')?.dataset.xItem;
+    return (fields.get(el.dataset.xNode)||[]).filter(f=>parts[f.spec.text]).map(({spec,collection})=>({
+      part:parts[spec.text],write(value){
+        const data=getState().template;
+        if(!collection||!rowId){data.values[spec.id]=value;return;}
+        const rows=data.collections[collection.id]??=collection.items.map(i=>({id:i.id,source:i.id,values:{}}));
+        const row=rows.find(r=>r.id===rowId);(row.values??={})[spec.id]=value;
       }
-    }
-    const area=hit.closest('.xc-section,#page-content');
-    if(!area&&!block)return null;
-    const leaf=hit.closest('h1,h2,h3,p,figcaption,strong,.xc-button')||unit.querySelector('h1,h2,h3,p,figcaption,strong,.xc-button');
-    if(!leaf||leaf.childElementCount||leaf.childNodes.length!==1||leaf.firstChild.nodeType!==3)return null;
-    const ownerId=block?.dataset.xOwner||(area?.matches('.xc-section')?area.id.slice(8):page.id);
-    const owner=()=>[...getState().pages,...getState().extras].find(o=>o.id===ownerId);
-    const model=()=>block?owner()?.blocks.find(b=>b.blockId===block.dataset.xBlock):owner();
-    const b=model();if(!b)return null;
-    const key=leaf.matches('h1,h2,h3')?'titulo':leaf.matches('figcaption')?'pie':leaf.matches('strong')?'precio':
-      leaf.matches('.xc-button')?'etiqueta':!block?'descripcion':b.type==='paquete'?(leaf===block.querySelector('p')&&b.duracion?'duracion':'descripcion'):'texto';
-    return typeof b[key]==='string'?{part:leaf.firstChild,write:v=>{model()[key]=v;}}:null;
+    }));
   }
-  return binding;
+  return (hit,unit,clicked)=>{
+    if(!hit||!unit||unit.matches('[data-layout-type=section],form,.map-layout,#reelFrame')||hit.closest('form,svg,button[disabled]'))return null;
+    if(clicked&&hit.contains(clicked)){
+      const el=clicked.parentElement.closest(nodes);
+      if(el&&unit.contains(el))return choices(el).find(entry=>entry.part===clicked)||null;
+    }
+    const local=hit.closest(nodes);
+    if(local&&unit.contains(local)){
+      const options=choices(local).filter(f=>hit.contains(f.part));
+      if(options.length)return options.length===1?options[0]:null;
+    }
+    // Un botón de texto solo elige automáticamente cuando existe un único campo posible.
+    const options=[hit,...hit.querySelectorAll(nodes)].flatMap(choices);
+    return options.length===1?options[0]:null;
+  };
 }

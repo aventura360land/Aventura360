@@ -141,7 +141,7 @@ export function pageCanvas(host,page,ctx,back){
         const box=findBlock(owner.id,i);if(!box)return;
         editableValue(box.querySelector('h3'),b,'titulo',owner,i);
         if(b.type==='texto')editableValue(box.querySelector('p'),b,'texto',owner,i);
-        if(b.type==='paquete')editableValue(box.querySelector('strong'),b,'precio',owner,i);
+        if(b.type==='paquete')editableValue(box.querySelector('[data-x-field="precio"]'),b,'precio',owner,i);
         if(['imagen','video'].includes(b.type))editableValue(box.querySelector('figcaption'),b,'pie',owner,i);
         if(['boton','paquete'].includes(b.type))editableValue(box.querySelector('.xc-button'),b,'etiqueta',owner,i);
       });

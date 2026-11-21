@@ -18,6 +18,14 @@ export function pageLayout(state,page,write=false){
 }
 export function layoutUnits(doc){return [...doc.querySelectorAll(unitSelector)];}
 export function layoutKey(node){return node?.getAttribute(keyAttr);}
+const reversedGroups='.experience-story.air,.group-stay-card';
+export function orderedChildren(parent){
+  const nodes=[...parent.children];
+  const view=parent.ownerDocument.defaultView;
+  if(!view||!parent.matches(reversedGroups)||parent.hasAttribute('data-layout-ordered'))return nodes;
+  const order=new Map(nodes.map(n=>[n,Number(view.getComputedStyle(n).order)]));
+  return nodes.sort((a,b)=>order.get(a)-order.get(b));
+}
 export function describe(node){
   if(!node)return '';
   const type=node.dataset.layoutType,tag=node.localName;
@@ -76,7 +84,7 @@ function originZone(node){
   return node.closest('main,body > header,body > footer')?.tagName;
 }
 export function destination(source,target,side){
-  if(!source||!target||source===target||source.contains(target)||!['before','after','inside'].includes(side))return null;
+  if(!layoutKey(source)||!layoutKey(target)||source===target||source.contains(target)||!['before','after','inside'].includes(side))return null;
   const type=source.dataset.layoutType,targetType=target.dataset.layoutType;
   if(type==='section'){
     if(side==='inside'||targetType!=='section')return null;
@@ -95,14 +103,17 @@ export function destination(source,target,side){
   const before=side==='inside'?null:side==='before'?target:target.nextSibling;
   return {parent,before};
 }
-export function place(source,target,side){
+export function place(source,target,side,replay=false){
   const where=destination(source,target,side);
   if(!where)return false;
   const {parent,before}=where;
-  if(side==='before'&&source.nextElementSibling===target||side==='after'&&target.nextElementSibling===source||
-    side==='inside'&&parent.lastElementChild===source)return false;
+  if(parent===source.parentElement&&!(replay&&parent.matches(reversedGroups))){
+    const siblings=orderedChildren(parent),i=siblings.indexOf(source);
+    if(side==='before'&&siblings[i+1]===target||side==='after'&&siblings[i-1]===target||
+      side==='inside'&&i===siblings.length-1)return false;
+  }
   parent.insertBefore(source,before);
-  if(parent.matches('.experience-story.air,.group-stay-card'))parent.dataset.layoutOrdered='';
+  if(parent.matches(reversedGroups))parent.dataset.layoutOrdered='';
   if(source.dataset.layoutType==='section'&&parent.matches('main')&&parent.querySelector(':scope > #inicio')){
     [...parent.children].forEach((child,i)=>child.style.order=String(i+1));
   }
@@ -132,7 +143,7 @@ export function mountLayout(doc,page,layout){
       if(!move)continue;
       const source=nodes.get(move.from),target=nodes.get(move.to);
       if(!source)continue;
-      if(target){place(source,target,move.side);continue;}
+      if(target){place(source,target,move.side,true);continue;}
       // Si se eliminó el destino, conserva la posición usando sus vecinos o su contenedor.
       const slot=slots.get(move.slot);
       if(!slot||source.contains(slot)||originZone(source)!==originZone(slot))continue;

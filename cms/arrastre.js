@@ -1,52 +1,78 @@
-import {describe,destination} from './disposicion.js';
+import {textAtPoint} from './texto-visual.js';
+import {describe,destination,orderedChildren} from './disposicion.js';
 
 const unit='[data-x-layout]',section='[data-layout-type="section"]';
 const clamp=(n,min,max)=>Math.max(min,Math.min(n,max));
-const near=(node,rule)=>node?.closest?.(rule);
+const near=(node,selector)=>node?.closest?.(selector);
+const visible=node=>node.getClientRects().length>0;
 
-// Pointer Events conserva el agarre al pasar del botón al documento, también con el dedo.
+// El fondo, la foto y el título de una tarjeta comparten el mismo agarre.
+function itemAt(element,level){
+  if(level===section)return near(element,section);
+  const node=near(element,unit);
+  if(!node||node.matches(section))return null;
+  return near(element,'[data-layout-type="row"],#heroVisual[data-x-layout]')||node;
+}
+function childAt(parent,under){
+  let n=under;
+  while(n&&n.parentElement!==parent)n=n.parentElement;
+  return n;
+}
+function distance(r,x,y){
+  return Math.hypot(Math.max(r.left-x,0,x-r.right),Math.max(r.top-y,0,y-r.bottom));
+}
+
 export function directDrag({host,ui,move,editText,canEdit,changeImage,canChangeImage}){
-  const {bar,box,tools,caption,grip,line,tip,ghost,up,down,parent,text,image,blocks,sections}=ui;
-  let selected=null,hit=null,level=unit,pinned=false,drag=null,target=null,frame=0,typing=false;
-  let pressed=null,swallowClick=false;
+  const {bar,box,tools,caption,grip,line,tip,ghost,up,down,parent,child,text,image,blocks,sections}=ui;
+  let selected=null,hit=null,textPart=null,level=unit,pressed=null,drag=null,typing=false;
+  let swallowClick=false,frame=0;
+
   function peers(){
-    return [...(selected?.parentElement?.children||[])].filter(n=>n===selected||destination(selected,n,'before'));
+    if(!selected)return [];
+    return orderedChildren(selected.parentElement).filter(n=>visible(n)&&(n===selected||destination(selected,n,'before')));
   }
-  function pick(node,element=node,lock=false){
-    selected=node;hit=element;pinned=lock;
+  function inner(){
+    const n=near(hit,unit);
+    return n!==selected&&selected?.contains(n)&&!selected.matches('#heroVisual')?n:null;
+  }
+  function pick(node,element=node,part=null){
+    selected=node;hit=element;textPart=part;
     box.hidden=tools.hidden=!node;
     if(!node)return;
-    caption.textContent=describe(node).split(' · ')[0];
-    tools.setAttribute('aria-label','Acciones de '+describe(node));
+    const name=describe(node);
+    caption.textContent=name;caption.title=name;
+    tools.setAttribute('aria-label','Acciones de '+name);
     const siblings=peers(),i=siblings.indexOf(node);
     up.disabled=i<=0;down.disabled=i<0||i===siblings.length-1;
     parent.hidden=!near(node.parentElement,unit)||level===section;
-    text.hidden=level===section||!canEdit(element,node);
+    child.hidden=level===section||!inner();
+    text.hidden=level===section||!canEdit(element,node,part);
     image.hidden=level===section||!canChangeImage(element,node);
     position();
   }
   function position(){
     if(!selected||typing||drag)return;
     const r=selected.getBoundingClientRect(),top=bar.getBoundingClientRect().bottom;
-    const visible=r.bottom>top&&r.top<innerHeight&&r.width>0&&r.height>0;
-    box.hidden=tools.hidden=!visible;if(!visible)return;
+    box.hidden=tools.hidden=r.bottom<=top||r.top>=innerHeight||!r.width||!r.height;
+    if(box.hidden)return;
     Object.assign(box.style,{left:r.left+'px',top:r.top+'px',width:r.width+'px',height:r.height+'px'});
-    const y=r.top-tools.offsetHeight;
-    tools.style.top=clamp(y>=top?y:Math.max(r.top,top),top,innerHeight-tools.offsetHeight)+'px';
-    tools.style.left=clamp(r.left,4,innerWidth-tools.offsetWidth-4)+'px';
+    const above=r.top-tools.offsetHeight;
+    tools.style.top=clamp(above>=top?above:r.top,top,innerHeight-tools.offsetHeight)+'px';
+    tools.style.left=clamp(r.left,4,document.documentElement.clientWidth-tools.offsetWidth-4)+'px';
   }
   function setMode(value){
-    level=value;pick(null);blocks.setAttribute('aria-pressed',String(value===unit));sections.setAttribute('aria-pressed',String(value===section));
+    cancel();level=value;pick(null);
+    blocks.setAttribute('aria-pressed',String(value===unit));
+    sections.setAttribute('aria-pressed',String(value===section));
   }
   blocks.onclick=()=>setMode(unit);sections.onclick=()=>setMode(section);
-  parent.onclick=()=>pick(near(selected?.parentElement,unit),undefined,true);
-  text.onclick=()=>{if(selected)editText(hit,selected);};
+  parent.onclick=()=>pick(near(selected?.parentElement,unit),hit,textPart);
+  child.onclick=()=>{const n=inner();if(n)pick(n,hit,textPart);};
+  text.onclick=()=>{if(selected)editText(hit,selected,textPart);};
   image.onclick=()=>{if(selected)changeImage(hit,selected);};
   function step(delta){
     const siblings=peers(),other=siblings[siblings.indexOf(selected)+delta];
-    if(other&&move(selected,other,delta<0?'before':'after')){
-      selected.scrollIntoView({block:'nearest',inline:'nearest'});pick(selected,hit,true);
-    }
+    if(other&&move(selected,other,delta<0?'before':'after'))pick(selected,hit,textPart);
   }
   up.onclick=()=>step(-1);down.onclick=()=>step(1);
   grip.onkeydown=e=>{
@@ -54,54 +80,74 @@ export function directDrag({host,ui,move,editText,canEdit,changeImage,canChangeI
       e.preventDefault();step(e.key==='ArrowUp'||e.key==='ArrowLeft'?-1:1);
     }
   };
-  function pageEvent(e){return !e.composedPath().includes(host);}
-  document.addEventListener('pointermove',e=>{
-    if(!pageEvent(e)||pinned||typing||drag||e.pointerType==='touch'||e.buttons)return;
-    const n=near(e.target,level);
-    if(n&&n!==selected)pick(n,e.target);
-    else if(n&&hit!==e.target){hit=e.target;text.hidden=level===section||!canEdit(hit,n);image.hidden=level===section||!canChangeImage(hit,n);}
-  },true);
+  const pageEvent=e=>!e.composedPath().includes(host);
+  const siteControl=element=>near(element,'#avisoOk,#menuBtn,#galleryToggle');
   document.addEventListener('click',e=>{
     if(!pageEvent(e))return;
     if(typing&&near(e.target,'[data-x-writing]')){e.stopImmediatePropagation();return;}
-    if(!swallowClick&&near(e.target,'#avisoOk,#menuBtn,#galleryToggle'))return;
-    if(swallowClick){e.preventDefault();e.stopImmediatePropagation();swallowClick=false;return;}
+    if(!swallowClick&&siteControl(e.target))return;
     e.preventDefault();e.stopImmediatePropagation();
-    const n=near(e.target,level);pick(n,e.target,!!n);
+    if(!swallowClick)pick(itemAt(e.target,level),e.target,textAtPoint(e));
   },true);
   document.addEventListener('dblclick',e=>{
     if(!pageEvent(e)||typing||level===section)return;
-    const n=near(e.target,level);
-    if(n){e.preventDefault();e.stopImmediatePropagation();editText(e.target,n);}
+    const n=itemAt(e.target,level);
+    if(n){e.preventDefault();e.stopImmediatePropagation();editText(e.target,n,textAtPoint(e));}
   },true);
-  document.addEventListener('submit',e=>{if(pageEvent(e)){e.preventDefault();e.stopImmediatePropagation();}},true);
-  // Bloquea la apertura de enlaces (incluido el clic de rueda) mientras se edita.
-  document.addEventListener('auxclick',e=>{if(pageEvent(e)){e.preventDefault();e.stopImmediatePropagation();}},true);
+  for(const name of ['submit','auxclick','dragstart']){
+    document.addEventListener(name,e=>{if(pageEvent(e)&&!typing){e.preventDefault();e.stopImmediatePropagation();}},true);
+  }
+
+  // Busca primero el hermano bajo el puntero, incluso si la foto o el título lo cubren.
+  // En los huecos de una cuadrícula se usa el borde de la tarjeta visible más próxima.
+  function edge(node,x,y){
+    const r=node.getBoundingClientRect();
+    const s=drag.node.getBoundingClientRect();
+    const sameColumn=node.parentElement===drag.node.parentElement&&
+      Math.min(r.right,s.right)>Math.max(r.left,s.left)+1&&(s.bottom<=r.top+2||s.top>=r.bottom-2);
+    const neighbors=orderedChildren(node.parentElement).filter(n=>n!==node&&n.matches(unit)&&visible(n));
+    const across=!sameColumn&&!node.matches(section)&&neighbors.some(n=>{
+      const b=n.getBoundingClientRect();
+      return Math.min(r.bottom,b.bottom)>Math.max(r.top,b.top)+1&&(b.left>=r.right-2||b.right<=r.left+2);
+    });
+    const horizontal=across&&y>=r.top&&y<=r.bottom;
+    const first=horizontal?x<(r.left+r.right)/2:y<(Math.max(r.top,bar.offsetHeight)+Math.min(r.bottom,innerHeight))/2;
+    return {node,r,across:horizontal,side:first?'before':'after'};
+  }
   function landing(x,y){
     if(y<=bar.getBoundingClientRect().bottom)return null;
-    const under=document.elementFromPoint(x,y);
-    let n=near(under,selected.matches(section)?section:unit);
-    while(n){
-      if(n===selected||selected.contains(n))return null;
-      const r=n.getBoundingClientRect();
-      const s=n.nextElementSibling||n.previousElementSibling,neighbor=s?.getBoundingClientRect();
-      const across=!n.matches(section)&&neighbor&&Math.min(r.bottom,neighbor.bottom)>Math.max(r.top,neighbor.top)&&
-        (neighbor.left>=r.right-2||neighbor.right<=r.left+2);
-      const first=across?x<(r.left+r.right)/2:y<(Math.max(r.top,bar.offsetHeight)+Math.min(r.bottom,innerHeight))/2;
-      let side=first?'before':'after';
-      const interior=under===n&&y>r.top+Math.min(r.height*.25,32)&&y<r.bottom-Math.min(r.height*.25,32);
-      if(interior&&destination(selected,n,'inside'))return {node:n,side:'inside',r,across:false};
-      if(destination(selected,n,side))return {node:n,side,r,across};
-      if(destination(selected,n,'inside'))return {node:n,side:'inside',r,across:false};
-      n=near(n.parentElement,selected.matches(section)?section:unit);
+    const under=document.elementFromPoint(x,y),source=drag.node,holder=source.parentElement;
+    if(!under||source.contains(under)||under===host)return null;
+    if(holder.contains(under)){
+      const sibling=childAt(holder,under);
+      if(sibling&&destination(source,sibling,'before'))return edge(sibling,x,y);
+      if(under===holder){
+        let closest=null,min=Infinity;
+        for(const n of peers()){
+          const d=distance(n.getBoundingClientRect(),x,y);
+          if(d<min){min=d;closest=n;}
+        }
+        return closest&&closest!==source?edge(closest,x,y):null;
+      }
+    }
+    // Un destino externo conserva sus propios bloques, salvo al soltar directamente en un contenedor.
+    const selector=source.matches(section)?section:unit;
+    for(let n=near(under,selector);n;n=near(n.parentElement,selector)){
+      if(n===source||source.contains(n))return null;
+      if(under===n&&destination(source,n,'inside')){
+        const r=n.getBoundingClientRect();
+        if(y>r.top+16&&y<r.bottom-16)return {node:n,side:'inside',r,across:false};
+      }
+      if(destination(source,n,'before'))return edge(n,x,y);
     }
     return null;
   }
   function indicator(){
     ghost.style.left=clamp(drag.x+14,4,innerWidth-ghost.offsetWidth-4)+'px';
     ghost.style.top=clamp(drag.y+16,bar.offsetHeight,innerHeight-ghost.offsetHeight-4)+'px';
-    target=landing(drag.x,drag.y);line.hidden=!target;
-    if(!target){tip.textContent='Busca un lugar para soltar';return;}
+    const target=landing(drag.x,drag.y);
+    line.hidden=!target;
+    if(!target){tip.textContent='Busca un lugar para soltar';return null;}
     const {node,side,r,across}=target;
     tip.textContent=(side==='before'?'Antes de ':side==='after'?'Después de ':'Dentro de ')+describe(node);
     line.classList.toggle('inside',side==='inside');
@@ -110,59 +156,86 @@ export function directDrag({host,ui,move,editText,canEdit,changeImage,canChangeI
     Object.assign(line.style,side==='inside'?{left:r.left+'px',top:r.top+'px',width:r.width+'px',height:r.height+'px'}:
       across?{left:clamp(x-2,1,innerWidth-5)+'px',top:r.top+'px',width:'4px',height:r.height+'px'}:
       {left:r.left+'px',top:clamp(edge-2,top+1,innerHeight-5)+'px',width:r.width+'px',height:'4px'});
+    return target;
   }
-  function tick(){
-    if(!drag)return;
-    const barEnd=bar.getBoundingClientRect().bottom;
-    let dy=0;
-    if(drag.y<barEnd+65)dy=-Math.ceil(clamp((barEnd+65-drag.y)/3,0,24));
-    if(drag.y>innerHeight-75)dy=Math.ceil(clamp((drag.y-innerHeight+75)/3,0,24));
-    if(dy)window.scrollBy({top:dy,behavior:'instant'});
-    indicator();frame=requestAnimationFrame(tick);
+  function scrollEdge(y){
+    const top=bar.getBoundingClientRect().bottom;
+    return y<top+24?-1:y>innerHeight-24?1:0;
+  }
+  function autoScroll(now){
+    if(!drag||!drag.direction)return;
+    if(now-drag.entered>=550){
+      const dy=drag.direction*Math.min(12,(now-drag.last)*.35);
+      window.scrollBy({top:dy,behavior:'instant'});indicator();
+    }
+    drag.last=now;frame=requestAnimationFrame(autoScroll);
+  }
+  function updateEdge(){
+    const direction=scrollEdge(drag.y);
+    if(direction===drag.edge)return;
+    cancelAnimationFrame(frame);drag.edge=direction;drag.direction=direction;
+    if(direction){
+      drag.last=drag.entered=performance.now();frame=requestAnimationFrame(autoScroll);
+    }
   }
   function cancel(){
-    if(!drag)return;
-    const id=drag.id;drag=null;pressed=null;cancelAnimationFrame(frame);target=null;
-    if(grip.hasPointerCapture(id))grip.releasePointerCapture(id);
+    const current=drag||pressed;
+    pressed=null;drag=null;cancelAnimationFrame(frame);
+    if(!current)return;
+    if(grip.hasPointerCapture(current.id))grip.releasePointerCapture(current.id);
     line.hidden=tip.hidden=ghost.hidden=true;tools.classList.remove('dragging');
-    selected?.removeAttribute('data-x-grabbed');position();
+    current.node.removeAttribute('data-x-grabbed');position();
   }
   function start(e){
-    if(!selected||typing||drag)return;
-    e.preventDefault();pinned=true;window.getSelection()?.removeAllRanges();
-    drag={id:e.pointerId,x:e.clientX,y:e.clientY};grip.setPointerCapture(e.pointerId);
-    ghost.replaceChildren();
-    const photo=selected.matches('img')?selected:selected.matches('picture,figure,.xc-block')?selected.querySelector('img'):null;
-    if(photo){const thumb=document.createElement('img');thumb.src=photo.currentSrc||photo.src;thumb.alt='';ghost.append(thumb);}
-    ghost.append(describe(selected));ghost.hidden=false;
-    selected.dataset.xGrabbed='';box.hidden=true;tools.classList.add('dragging');tip.hidden=false;
-    tick();
+    const source=pressed;pressed=null;
+    pick(source.node,source.hit);
+    drag={...source,x:e.clientX,y:e.clientY,edge:scrollEdge(source.y),direction:0};
+    grip.setPointerCapture(e.pointerId);
+    window.getSelection()?.removeAllRanges();
+    ghost.textContent=describe(source.node);ghost.hidden=false;
+    source.node.dataset.xGrabbed='';box.hidden=true;tools.classList.add('dragging');tip.hidden=false;
   }
-  grip.onpointerdown=e=>{if(e.button===0)start(e);};
+  grip.onpointerdown=e=>{
+    if(e.button!==0||!e.isPrimary||!selected||typing)return;
+    e.preventDefault();
+    pressed={node:selected,hit,x:e.clientX,y:e.clientY,id:e.pointerId};grip.setPointerCapture(e.pointerId);
+  };
   document.addEventListener('pointerdown',e=>{
-    if(!pageEvent(e)||typing||e.pointerType!=='mouse'||e.button!==0)return;
-    const n=near(e.target,level);if(n)pressed={node:n,hit:e.target,x:e.clientX,y:e.clientY,id:e.pointerId};
+    if(!pageEvent(e)||typing||!e.isPrimary||e.pointerType!=='mouse'||e.button!==0||siteControl(e.target))return;
+    const item=itemAt(e.target,level);
+    const node=item?.contains(selected)&&selected?.contains(e.target)?selected:item;
+    if(node)pressed={node,hit:e.target,x:e.clientX,y:e.clientY,id:e.pointerId};
   },true);
   document.addEventListener('pointermove',e=>{
-    if(!pressed||drag||!e.buttons||pressed.id!==e.pointerId)return;
-    if(Math.hypot(e.clientX-pressed.x,e.clientY-pressed.y)<6)return;
-    pick(pressed.node,pressed.hit,true);start(e);pressed=null;
+    const current=drag||pressed;
+    if(!current||current.id!==e.pointerId)return;
+    if(!e.buttons){cancel();return;}
+    if(!drag){
+      if(Math.hypot(e.clientX-pressed.x,e.clientY-pressed.y)<7)return;
+      start(e);
+    }
+    e.preventDefault();drag.x=e.clientX;drag.y=e.clientY;updateEdge();indicator();
+  },{capture:true,passive:false});
+  document.addEventListener('pointerup',e=>{
+    if((drag||pressed)?.id!==e.pointerId)return;
+    if(!drag){cancel();return;}
+    const {node,hit:element}=drag,target=landing(e.clientX,e.clientY);
+    const overSource=node.contains(document.elementFromPoint(e.clientX,e.clientY));
+    swallowClick=true;setTimeout(()=>{swallowClick=false;},0);
+    cancel();
+    if(target)move(node,target.node,target.side);
+    else if(!overSource)ui.status.textContent=node.dataset.layoutType==='row'
+      ?'Suelta el elemento junto a otro de la misma colección.'
+      :'Suelta el bloque donde aparezca la línea azul.';
+    pick(node,element);
   },true);
-  document.addEventListener('dragstart',e=>{if(pageEvent(e)&&!typing)e.preventDefault();},true);
-  document.addEventListener('pointerup',()=>{pressed=null;},true);
-  document.addEventListener('pointercancel',()=>{pressed=null;},true);
-  grip.onpointermove=e=>{if(drag&&drag.id===e.pointerId){drag.x=e.clientX;drag.y=e.clientY;}};
-  grip.onpointerup=e=>{
-    if(!drag||e.pointerId!==drag.id)return;
-    drag.x=e.clientX;drag.y=e.clientY;indicator();const chosen=target;
-    cancel();swallowClick=true;setTimeout(()=>{swallowClick=false;},0);if(chosen)move(selected,chosen.node,chosen.side);
-    pick(selected,hit,true);
-  };
-  grip.onpointercancel=cancel;grip.onlostpointercapture=cancel;
+  document.addEventListener('pointercancel',e=>{if((drag||pressed)?.id===e.pointerId)cancel();},true);
+  grip.onlostpointercapture=e=>{if((drag||pressed)?.id===e.pointerId)cancel();};
   document.addEventListener('keydown',e=>{
-    if(e.key==='Escape'&&!typing){if(drag)cancel();else pick(null);}
+    if(e.key==='Escape'&&!typing){if(drag||pressed)cancel();else pick(null);}
   });
   window.addEventListener('blur',cancel);
-  window.addEventListener('scroll',position,{passive:true,capture:true});window.addEventListener('resize',position);
-  return {select:node=>pick(node,node,true),writing(active){typing=active;if(active)box.hidden=tools.hidden=true;else position();}};
+  window.addEventListener('scroll',()=>drag?indicator():position(),{passive:true,capture:true});
+  window.addEventListener('resize',position);
+  return {select:node=>pick(node),writing(active){typing=active;if(active)box.hidden=tools.hidden=true;else position();}};
 }

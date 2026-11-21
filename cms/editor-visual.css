@@ -23,7 +23,8 @@ button:focus-visible,a:focus-visible{outline:2px solid #f6aa49;outline-offset:1p
 .tools .grip{touch-action:none;cursor:grab;user-select:none;min-width:38px;font-size:20px;line-height:1;color:white;background:var(--accent)}
 .tools .grip:hover:enabled{background:#045c48}
 .dragging{opacity:0;pointer-events:none}
-.caption{padding:0 6px;font-size:12px;font-weight:650}
+.caption{padding:0 6px;font-size:12px;font-weight:650;max-width:19ch;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+@media(max-width:520px){.tools{flex-wrap:wrap}.caption{max-width:11ch}}
 .line{pointer-events:none;background:#075fdd;border-radius:2px;box-shadow:0 0 0 1px white}
 .line.inside{background:#0071ff14;border:3px dashed #075fdd}
 .tip{pointer-events:none;bottom:max(15px,env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);width:max-content;max-width:90vw;background:var(--bar);color:white;padding:8px 14px;border-radius:6px;text-align:center}

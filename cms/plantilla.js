@@ -48,7 +48,7 @@ function recordAttribute(session, el, name, value) {
   else el.setAttribute(name, value);
 }
 
-function safeCssImage(value, doc) {
+export function safeCssImage(value, doc) {
   const url = new URL(value, doc.baseURI).href.replace(/["\\]/g, char => encodeURIComponent(char));
   return 'url("' + url + '")';
 }

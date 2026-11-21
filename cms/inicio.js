@@ -40,7 +40,12 @@ function privatePreview(){
 }
 async function start(){
   const front=window===window.top&&editorSession();
-  const editing=front&&new URLSearchParams(location.search).get('editar')==='1';
+  const params=new URLSearchParams(location.search);
+  const editing=window===window.top&&params.get('editar')==='1';
+  if(editing&&!front){
+    const {loginForPage}=await import('./acceso-visual.js');
+    location.replace(loginForPage(pageId,params.get('p')));return;
+  }
   let draftError='';
   const data=async()=>{
     if(preview)return {raw:await privatePreview()};
