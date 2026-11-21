@@ -1,7 +1,8 @@
+import {validatePublish} from './publicacion.js';
 import {pageCanvas} from './lienzo.js';
 import {pagesList,mergePage,paginaURL} from './paginas.js';
 import {request} from '../resenas/api.js';
-import {createState,themeFields,reviewCopy,nombre,slugify} from './modelo.js';
+import {createState,themeFields,reviewCopy,nombre} from './modelo.js';
 import {appearanceFields} from './apariencia.js';
 import {replaceAsset} from './reemplazar.js';
 import {mediaLibrary} from './medios.js';
@@ -17,20 +18,6 @@ export function confirmar(title,body,ok='Continuar'){
 }
 function jsonFile(file){return fetch(new URL(file,import.meta.url)).then(r=>{if(!r.ok)throw Error('Falta un archivo del editor.');return r.json();});}
 const definitions=[['all-pages','Páginas'],['site-content','Contenido del sitio'],['inicio','Página de inicio'],['privacidad','Privacidad'],['terminos','Términos y condiciones'],['extras','Secciones y paquetes'],['pages','Páginas nuevas'],['servicios','Fichas de servicios'],['mapa','Puntos del mapa'],['asistente','Asistente de la web'],['interfaz','Contacto y mensajes'],['appearance','Apariencia'],['media','Biblioteca de medios'],['history','Historial']];
-function validatePublish(state){
-  const slugs=new Set();
-  for(const p of state.pages){
-    if(!p.titulo.trim()||!p.slug||slugify(p.slug)!==p.slug||slugs.has(p.slug))throw Error('Revisa Páginas nuevas. Cada página necesita título y dirección única en minúsculas, sin espacios.');
-    slugs.add(p.slug);
-  }
-  if(state.dynamic&&!/^\d{7,15}$/.test(state.dynamic.whatsapp))throw Error('Revisa el número en Contacto y mensajes. Escribe solo dígitos con el indicativo internacional.');
-  for(const p of [...state.pages,...state.extras]){
-    if(!p.visible)continue;
-    for(const b of p.blocks||[]){
-      if(b.type==='paquete'&&!b.titulo.trim())throw Error('Escribe un nombre para el paquete turístico de «'+p.titulo+'».');
-    }
-  }
-}
 export function createEditor({token,report,openReviews}){
   let state,catalog,dynamic,revision=0,dirty=false,serial=0,working=false,section='',previewNonce='',session=0,conflict=false;
   let live=createState(),activePage=null,disposeCanvas=null;
@@ -122,7 +109,10 @@ export function createEditor({token,report,openReviews}){
     const title=activePage?.label||activePage?.titulo||definitions.find(d=>d[0]===k)?.[1]||'Contenido';host.append(el('h1',title));
     if(conflict)host.append(button('Cargar la versión actual del servidor',reloadDraft));
     const content=el('div');host.append(content);const c=ctx(),page=catalog.pages.find(p=>p.id===k);
-    if(k==='all-pages')pagesList(content,c,live,p=>open('canvas',p));
+    if(k==='all-pages')pagesList(content,c,live,async p=>{
+      if(working||dirty&&!await save(false))return;
+      const url=new URL(paginaURL(p),location.href);url.searchParams.set('editar','1');location.assign(url);
+    },p=>open('canvas',p));
     else if(k==='canvas'){disposeCanvas=pageCanvas(content,activePage,c,()=>open('all-pages'));syncHistoryButtons();}
     else if(k==='site-content'){
       const menu=el('div',undefined,'wp-options');
@@ -207,7 +197,10 @@ export function createEditor({token,report,openReviews}){
     const [row,c,d]=await Promise.all([readDraft(),jsonFile('plantilla.json'),jsonFile('dinamico.json')]);
     if(active!==session)return;catalog=c;dynamic=d;replaceDraft(row);
     for(const [id,label] of definitions.filter(([id])=>['all-pages','site-content','media','appearance','history'].includes(id))){const b=button(label,()=>open(id));b.dataset.view=id;nav.insertBefore(b,$('reviews-nav'));}
-    for(const id of fileKeys)$(id).hidden=false;open('all-pages');
+    for(const id of fileKeys)$(id).hidden=false;
+    const id=new URL(location.href).searchParams.get('ajustes');
+    const page=[...catalog.pages,...state.pages].find(p=>p.id===id);
+    if(page)open('canvas',page);else open('all-pages');
   }
   function stop(){clearTimeout(groupTimer);groupTimer=0;undoStack=[];redoStack=[];baseline=null;disposeCanvas?.();disposeCanvas=null;activePage=null;live=createState();document.body.classList.remove('wp-editing');session++;dirty=false;conflict=false;state=null;previewNonce='';host.replaceChildren();host.hidden=true;nav.querySelectorAll('button:not(#reviews-nav)').forEach(b=>b.remove());for(const id of fileKeys)$(id).hidden=true;$('save-state').textContent='';for(const id of ['media-dialog','preview-dialog'])if($(id).open)$(id).close();}
   return {start,stop,showReviews:()=>open('reviews'),hasChanges:()=>dirty,isSaving:()=>working};

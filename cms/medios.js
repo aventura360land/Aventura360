@@ -4,9 +4,9 @@ import {el,button,$} from './formularios.js';
 const bucket='xebax-media',folder='contenido';
 const types={'image/jpeg':'jpg','image/png':'png','image/webp':'webp','image/avif':'avif','image/gif':'gif','video/mp4':'mp4','video/webm':'webm'};
 function video(url){return /\.(?:mp4|webm)$/i.test(new URL(url,location.href).pathname);}
-function assetUrl(url){return /^https?:/i.test(url)?url:new URL('../'+url,location.href).href;}
+function assetUrl(url){return /^https?:/i.test(url)?url:new URL('../'+url,import.meta.url).href;}
 function remoteUrl(name){return projectUrl+'/storage/v1/object/public/'+bucket+'/'+folder+'/'+encodeURIComponent(name);}
-export function mediaLibrary(getToken,report){
+export function mediaLibrary(getToken,report,dialog=null){
   let originals,remote=[];const generations=new WeakMap();
   async function listAll(){
     const files=[];let offset=0;
@@ -25,7 +25,7 @@ export function mediaLibrary(getToken,report){
       const rows=[...remote,...(originals||[])].filter(url=>(!kind||video(url)===(kind==='video'))&&decodeURIComponent(url).toLowerCase().includes(filter.value.toLowerCase()));
       grid.replaceChildren();msg.textContent=(failed?'No se pudieron listar los archivos subidos. ':'')+rows.length+' archivos';
       for(const url of rows.slice(0,count)){
-        const card=button('',async()=>{if(pick){pick(url);$('media-dialog').close();}else {const link=el('a');link.href=assetUrl(url);link.target='_blank';link.rel='noopener';link.click();}},'media-card');
+        const card=button('',async()=>{if(pick){pick(url);(dialog||$('media-dialog')).close();}else {const link=el('a');link.href=assetUrl(url);link.target='_blank';link.rel='noopener';link.click();}},'media-card');
         const isVideo=video(url),thumb=el(isVideo?'video':'img');if(isVideo){thumb.preload='none';}else{thumb.loading='lazy';thumb.alt='';}thumb.src=assetUrl(url);card.append(thumb,el('span',decodeURIComponent(url.split('/').pop()).replace(/^[0-9a-f-]{36}-/,'')));if(replace){
           const entry=el('div',undefined,'media-entry');entry.append(card,button('Reemplazar en todo el sitio',()=>replace(isVideo?'video':'image',url)));grid.append(entry);
         }else grid.append(card);
@@ -41,7 +41,7 @@ export function mediaLibrary(getToken,report){
         const filename=crypto.randomUUID()+'-'+safe+'.'+types[f.type];
         const res=await fetch(projectUrl+'/storage/v1/object/'+bucket+'/'+folder+'/'+filename,{method:'POST',headers:{apikey:publishableKey,Authorization:'Bearer '+await getToken(),'Content-Type':f.type},body:f});
         if(!res.ok)throw Error('No se pudo subir el archivo. Revisa el tamaño, la conexión y el espacio del proyecto.');
-        const url=remoteUrl(filename);remote.unshift(url);if(pick){pick(url);$('media-dialog').close();}else{filter.value='';draw();report('Archivo subido.');}
+        const url=remoteUrl(filename);remote.unshift(url);if(pick){pick(url);(dialog||$('media-dialog')).close();}else{filter.value='';draw();report('Archivo subido.');}
       }catch(e){msg.textContent=e.message;}finally{up.disabled=false;}
     };
     try{

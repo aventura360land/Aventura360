@@ -1,5 +1,5 @@
 import {el,button,select} from './formularios.js';
-import {applyStyle,describe,destination,layoutKey,layoutUnits,pageLayout,place,spacings} from './disposicion.js';
+import {applyStyle,describe,recordMove,destination,layoutKey,layoutUnits,pageLayout,place,spacings} from './disposicion.js';
 
 const selector='[data-x-layout]';
 const sides=[['before','Antes del destino'],['after','Después del destino'],['inside','Dentro del destino, al final']];
@@ -69,50 +69,9 @@ export function layoutEditor({frame,inspector,page,ctx,leave}){
     }
     return node;
   }
-  function rememberMove(a,b,position){
-    // Las filas siguen compartiendo el mismo orden con el editor de colecciones.
-    if(a.dataset.layoutType==='row'&&a.parentElement===b.parentElement){
-      const id=a.parentElement.dataset.xCollection;
-      const collection=page.sections?.flatMap(s=>s.collections).find(c=>c.id===id);
-      if(collection){
-        const rows=ctx.state.template.collections[id]??=collection.items.map(i=>({id:i.id,source:i.id,values:{}}));
-        const ordering=new Map([...a.parentElement.children].map((child,i)=>[child.dataset.xItem,i]));
-        rows.sort((x,y)=>ordering.get(x.id)-ordering.get(y.id));return;
-      }
-    }
-    if(a.dataset.layoutType==='section'&&page.sections){
-      const parent=a.parentElement;
-      const sections=[...parent.children].filter(n=>n.hasAttribute('data-x-section'));
-      if(sections.length){
-        const visibility=new Map((ctx.state.template.sections[page.id]||[]).map(s=>[s.id,s.visible]));
-        ctx.state.template.sections[page.id]=sections.map(n=>({id:n.dataset.xSection,visible:visibility.get(n.dataset.xSection)!==false}));
-      }
-      const extras=ctx.state.extras,byId=new Map(extras.map(x=>['seccion-'+x.id,x]));
-      let preceding='';const ordered=[];
-      for(const n of parent.children){
-        if(n.hasAttribute('data-x-section')){preceding=n.dataset.xSection;continue;}
-        const extra=byId.get(n.id);if(!extra)continue;
-        extra.after=preceding;
-        if(!preceding&&sections.length)extra.beforeFirst=true;else delete extra.beforeFirst;
-        ordered.push(extra);
-      }
-      const set=new Set(ordered);let index=0;
-      ctx.state.extras=extras.map(x=>set.has(x)?ordered[index++]:x);
-      return;
-    }
-    const layout=pageLayout(ctx.state,page,true);
-    const move={from:layoutKey(a),to:layoutKey(b),side:position};
-    const slot=a.parentElement.dataset.xLayoutSlot;
-    if(slot){
-      move.slot=slot;
-      const previous=layoutKey(a.previousElementSibling),next=layoutKey(a.nextElementSibling);
-      if(previous)move.prev=previous;if(next)move.next=next;
-    }
-    (layout.moves??=[]).push(move);
-  }
   function move(a,b,position){
     if(!place(a,b,position)){feedback='El elemento ya está ahí o ese destino no admite este movimiento.';draw();return;}
-    ctx.changeLayout(()=>rememberMove(a,b,position));selectSource(a,true);feedback='Se movió en el borrador.';draw();
+    ctx.changeLayout(()=>recordMove(ctx.state,page,a,b,position));selectSource(a,true);feedback='Se movió en el borrador.';draw();
   }
   function style(key,value){
     ctx.changeLayout(()=>{

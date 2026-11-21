@@ -51,7 +51,7 @@ export function createPage(state,title,livePages=[]){
   let slug=base,i=2;while(assigned.has(slug))slug=base+'-'+i++;
   const p={id:idNuevo(),titulo:title,slug,descripcion:'',visible:true,menu:false,blocks:[]};state.pages.push(p);return p;
 }
-export function pagesList(host,ctx,live,edit){
+export function pagesList(host,ctx,live,edit,advanced){
   let query='',filter='Todas';const tools=el('div',undefined,'wp-list-tools'),grid=el('div',undefined,'wp-page-table');
   const search=el('input');search.type='search';search.placeholder='Buscar páginas';search.setAttribute('aria-label','Buscar páginas');
   const filterBox=select(['Todas','Publicadas','Borradores','Cambios pendientes'],filter,v=>{filter=v;draw();});filterBox.setAttribute('aria-label','Filtrar por estado');
@@ -70,8 +70,8 @@ export function pagesList(host,ctx,live,edit){
       const item=el('div',undefined,'wp-page-row'),text=el('div'),actions=el('div',undefined,'wp-row-actions'),link=button(name,()=>edit(page),'wp-page-title');
       text.append(link,el('small',page.sections?(page.id==='inicio'?'Portada del sitio':'Página legal'):paginaURL(page).slice(3)));
       const action=button('Editar',()=>edit(page));action.setAttribute('aria-label','Editar '+name);
-      actions.append(action);const published=page.sections?page:live.pages.find(p=>p.id===page.id&&p.visible);
-      if(published){const view=el('a','Ver');view.href=paginaURL(published);view.target='_blank';view.rel='noopener';view.setAttribute('aria-label','Ver '+name+' en el sitio');actions.append(view);}
+      actions.append(action,button('Ajustes',()=>advanced(page)));const published=page.sections?page:live.pages.find(p=>p.id===page.id&&p.visible);
+      if(published){const view=el('a','Ver');view.href=paginaURL(published);view.setAttribute('aria-label','Ver '+name+' en el sitio');actions.append(view);}
       item.append(text,el('span',status,'wp-status'),actions);grid.append(item);
     }if(!grid.childElementCount)grid.append(el('p','No hay páginas que coincidan con la búsqueda.'));
   }

@@ -1,3 +1,4 @@
+import {editorSession} from '../resenas/sesion.js';
 import {mountLayout,pageLayout} from './disposicion.js';
 import {projectUrl,publishableKey} from '../resenas/config.js';
 import {applyTemplate} from './plantilla.js';
@@ -38,18 +39,38 @@ function privatePreview(){
   });
 }
 async function start(){
-  const [catalog,dynamic,raw]=await Promise.all([localFile('plantilla.json'),localFile('dinamico.json'),preview?privatePreview():readPublic()]);
+  const front=window===window.top&&editorSession();
+  const editing=front&&new URLSearchParams(location.search).get('editar')==='1';
+  let draftError='';
+  const data=async()=>{
+    if(preview)return {raw:await privatePreview()};
+    if(editing){
+      try{
+        const {openDraft}=await import('./acceso-visual.js'),rows=await openDraft();
+        if(rows)return {raw:rows.draft.content,rows};
+      }catch(error){draftError=error.message;}
+    }
+    return {raw:await readPublic()};
+  };
+  const [catalog,dynamic,{raw,rows}]=await Promise.all([localFile('plantilla.json'),localFile('dinamico.json'),data()]);
   if(document.readyState==='loading')await new Promise(r=>document.addEventListener('DOMContentLoaded',r,{once:true}));
   const state=createState(raw||{});
   window.xebaxDynamic=state.dynamic||dynamic;
   window.xebaxReviewCopy={...reviewCopy,...state.reviews};
   if(pageId!=='pagina')applyTemplate(document,catalog,state.template,pageId);
-  applyAppearance(document,state.appearance||{});renderSite(state,pageId,preview);
+  applyAppearance(document,state.appearance||{});renderSite(state,pageId,preview||!!rows);
   const page=pageId==='pagina'
-    ?state.pages.find(p=>p.slug===new URLSearchParams(location.search).get('p')&&(p.visible||preview))
+    ?state.pages.find(p=>p.slug===new URLSearchParams(location.search).get('p')&&(p.visible||preview||rows))
     :catalog.pages.find(p=>p.id===pageId);
   const layout=pageLayout(state,page);
-  if(page&&(preview||layout))mountLayout(document,page,layout);
+  if(page&&(preview||rows||layout))mountLayout(document,page,layout);
+  if(rows&&page){
+    const {frontEditor}=await import('./editor-visual.js');
+    frontEditor({page,state,rows});
+  }else if(front){
+    const {editLink}=await import('./acceso-visual.js');editLink(draftError);
+  }
+  if(front)window.addEventListener('pageshow',event=>{if(event.persisted)location.reload();});
   if(preview){
     let inspect=false;
     const setMode=e=>{

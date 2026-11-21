@@ -155,3 +155,45 @@ export function mountLayout(doc,page,layout){
     :is(img,figure,picture,video,button,a,span,strong,small)[data-layout-align=right]{margin-inline:auto 0}
   `;doc.head.append(css);
 }
+
+export function recordMove(state,page,a,b,position){
+  // Las filas siguen compartiendo el mismo orden con el editor de colecciones.
+  if(a.dataset.layoutType==='row'&&a.parentElement===b.parentElement){
+    const id=a.parentElement.dataset.xCollection;
+    const collection=page.sections?.flatMap(s=>s.collections).find(c=>c.id===id);
+    if(collection){
+      const rows=state.template.collections[id]??=collection.items.map(i=>({id:i.id,source:i.id,values:{}}));
+      const ordering=new Map([...a.parentElement.children].map((child,i)=>[child.dataset.xItem,i]));
+      rows.sort((x,y)=>ordering.get(x.id)-ordering.get(y.id));return;
+    }
+  }
+  if(a.dataset.layoutType==='section'&&page.sections){
+    const parent=a.parentElement;
+    const sections=[...parent.children].filter(n=>n.hasAttribute('data-x-section'));
+    if(sections.length){
+      const visibility=new Map((state.template.sections[page.id]||[]).map(s=>[s.id,s.visible]));
+      state.template.sections[page.id]=sections.map(n=>({id:n.dataset.xSection,visible:visibility.get(n.dataset.xSection)!==false}));
+    }
+    const extras=state.extras,byId=new Map(extras.map(x=>['seccion-'+x.id,x]));
+    let preceding='';const ordered=[];
+    for(const n of parent.children){
+      if(n.hasAttribute('data-x-section')){preceding=n.dataset.xSection;continue;}
+      const extra=byId.get(n.id);if(!extra)continue;
+      extra.after=preceding;
+      if(!preceding&&sections.length)extra.beforeFirst=true;else delete extra.beforeFirst;
+      ordered.push(extra);
+    }
+    const set=new Set(ordered);let index=0;
+    state.extras=extras.map(x=>set.has(x)?ordered[index++]:x);
+    return;
+  }
+  const layout=pageLayout(state,page,true);
+  const move={from:layoutKey(a),to:layoutKey(b),side:position};
+  const slot=a.parentElement.dataset.xLayoutSlot;
+  if(slot){
+    move.slot=slot;
+    const previous=layoutKey(a.previousElementSibling),next=layoutKey(a.nextElementSibling);
+    if(previous)move.prev=previous;if(next)move.next=next;
+  }
+  (layout.moves??=[]).push(move);
+}
