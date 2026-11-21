@@ -27,10 +27,26 @@ export function hrefSeguro(input, medio=false) {
 export function slugify(input) {
   return String(input).normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'');
 }
+// Asigna claves reproducibles a los bloques anteriores al editor de disposición.
+function ownersWithKeys(rows){
+  return (Array.isArray(rows)?rows:[]).map(owner=>{
+    const used=new Set();
+    const blocks=(owner.blocks||[]).map((block,i)=>{
+      if(typeof block.blockId==='string'&&block.blockId&&!used.has(block.blockId)){
+        used.add(block.blockId);return block;
+      }
+      let key='original-'+i;
+      while(used.has(key))key+='-';
+      used.add(key);return {...block,blockId:key};
+    });
+    return {...owner,blocks};
+  });
+}
+export function copyBlock(block){return {...structuredClone(block),blockId:idNuevo()};}
 export function createState(raw={}) {
   return { ...raw, template:{values:{},sections:{},collections:{},...raw.template},
-    theme:{...raw.theme}, reviews:{...raw.reviews}, pages:Array.isArray(raw.pages)?raw.pages:[],
-    extras:Array.isArray(raw.extras)?raw.extras:[] };
+    theme:{...raw.theme}, reviews:{...raw.reviews}, pages:ownersWithKeys(raw.pages),
+    extras:ownersWithKeys(raw.extras) };
 }
 export function nombre(key){
   const labels={src:'Archivo',alt:'Descripción accesible',poster:'Portada del video',url:'Enlace',portrait:'Formato vertical',label:'Etiqueta',whatsapp:'WhatsApp',titulo:'Título',descripcion:'Descripción',duracion:'Duración',boton:'Botón',categoria:'Categoría',caracteristicas:'Características',etiqueta:'Texto del botón',accion:'Acción',id:'Identificador',incluye:'Incluye',pie:'Pie de imagen o video',precio:'Precio',texto:'Texto',imagen:'Imagen',menu:'Mostrar en el menú',srcset:'Tamaños alternativos',servicios:'Fichas de servicios',mapa:'Puntos del mapa',asistente:'Asistente de la web',interfaz:'Mensajes de la interfaz'};

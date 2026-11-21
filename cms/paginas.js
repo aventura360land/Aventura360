@@ -11,6 +11,10 @@ export function mergePage(liveRaw,draft,page){
     return live;
   }
   const target=live.template,source=draft.template;
+  if(source.layout||target.layout){
+    copyKey(target.layout??={},source.layout||{},page.id);
+    if(!Object.keys(target.layout).length)delete target.layout;
+  }
   copyKey(target.sections,source.sections,page.id);
   for(const s of page.sections){
     for(const f of s.fields)copyKey(target.values,source.values,f.id);

@@ -1,6 +1,7 @@
 import {el,button,field,objectFields,rowActions,select} from './formularios.js';
 import {editTemplate} from './edicion.js';
-import {blockTypes,idNuevo} from './modelo.js';
+import {layoutEditor} from './mover.js';
+import {blockTypes,copyBlock,idNuevo} from './modelo.js';
 import {paginaURL} from './paginas.js';
 
 export function pageCanvas(host,page,ctx,back){
@@ -22,6 +23,7 @@ export function pageCanvas(host,page,ctx,back){
   function refresh(delay=280){
     clearTimeout(timer);timer=setTimeout(()=>{if(!host.isConnected)return;scroll=frame.contentWindow?.scrollY||0;load();},delay);
   }
+  const layout=layoutEditor({frame,inspector,page,ctx,leave:()=>{layout.close();outline();}});
   const modified=()=>{ctx.changed();refresh();};
   const helpers={...ctx,changed:modified};
   function ownerRows(entry,rowId){
@@ -65,8 +67,8 @@ export function pageCanvas(host,page,ctx,back){
     }
     const block=owner.blocks[index];if(!block)return outline();
     insHeading(blockTypes[block.type]?.[0]||'Bloque');
-    inspector.append(rowActions(owner.blocks,index,{...helpers,redraw:()=>{jumpTo=null;outline();},duplicate:structuredClone}));
-    objectFields(inspector,block,block.type,{...helpers,skip:['type']});
+    inspector.append(rowActions(owner.blocks,index,{...helpers,redraw:()=>{jumpTo=null;outline();},duplicate:copyBlock}));
+    objectFields(inspector,block,block.type,{...helpers,skip:['type','blockId']});
     inspector.append(button('Añadir otro bloque',insert));
   }
   function outline(){
@@ -100,14 +102,15 @@ export function pageCanvas(host,page,ctx,back){
           if(!owner){owner={id:idNuevo(),titulo:'',visible:true,menu:false,pagina:page.id,after,blocks:[],editorGroup:true};ctx.state.extras.push(owner);}
         }
       }
-      owner.blocks.push({type,...structuredClone(defaults)});ctx.changed();focusOwner(owner,owner.blocks.length-1);refresh(0);
+      owner.blocks.push({blockId:idNuevo(),type,...structuredClone(defaults)});ctx.changed();focusOwner(owner,owner.blocks.length-1);refresh(0);
     }));
     inspector.append(grid);
   }
   function findBlock(id,index){
     const doc=frame.contentDocument;if(!doc)return;
-    const parent=template?doc.getElementById('seccion-'+id):doc.getElementById('page-content');
-    return index===undefined?parent:parent?.querySelectorAll('.xc-block')[index];
+    if(index===undefined)return template?doc.getElementById('seccion-'+id):doc.getElementById('page-content');
+    const block=owners().find(owner=>owner.id===id)?.blocks[index];
+    if(block)return doc.querySelector('[data-x-owner="'+CSS.escape(id)+'"][data-x-block="'+CSS.escape(block.blockId)+'"]');
   }
   function setup(){
     const d=frame.contentDocument;if(!d||!d.body)return;
@@ -134,9 +137,8 @@ export function pageCanvas(host,page,ctx,back){
       const area=template?d.getElementById('seccion-'+owner.id):d.getElementById('page-content');if(!area)continue;
       editableValue(template?area.querySelector('.xc-wrap > h2'):area.querySelector(':scope > h1'),owner,'titulo',owner);
       if(!template)editableValue(area.querySelector('.xc-intro'),owner,'descripcion',owner);
-      const blocks=area.querySelectorAll('.xc-block');
       owner.blocks.forEach((b,i)=>{
-        const box=blocks[i];if(!box)return;
+        const box=findBlock(owner.id,i);if(!box)return;
         editableValue(box.querySelector('h3'),b,'titulo',owner,i);
         if(b.type==='texto')editableValue(box.querySelector('p'),b,'texto',owner,i);
         if(b.type==='paquete')editableValue(box.querySelector('strong'),b,'precio',owner,i);
@@ -144,6 +146,7 @@ export function pageCanvas(host,page,ctx,back){
         if(['boton','paquete'].includes(b.type))editableValue(box.querySelector('.xc-button'),b,'etiqueta',owner,i);
       });
     }
+    layout.attach(d);
     function readRow(node){return node.closest('[data-x-item]')?.dataset.xItem;}
     d.addEventListener('input',e=>{
       const run=e.target.closest('[data-wp-run]'),custom=customRuns.get(run);
@@ -164,9 +167,9 @@ export function pageCanvas(host,page,ctx,back){
       const run=e.target.closest('[data-wp-run]'),customRun=customRuns.get(run);
       if(customRun){focusOwner(customRun.owner,customRun.index);highlight(run.parentElement);if(d.activeElement!==run)run.focus();return;}
       const node=e.target.closest('[data-x-node]'),entry=node&&fieldsByNode.get(node.dataset.xNode),extra=e.target.closest('.xc-section'),custom=e.target.closest('.xc-block');
-      if(extra||(!template&&custom)){
-        const owner=template?owners().find(x=>'seccion-'+x.id===extra?.id):page;
-        if(owner){const index=custom?Array.from((extra||d.getElementById('page-content')).querySelectorAll('.xc-block')).indexOf(custom):undefined;focusOwner(owner,index);highlight(custom||extra);}
+      if(custom||extra&&!entry){
+        const owner=custom?owners().find(x=>x.id===custom.dataset.xOwner):owners().find(x=>'seccion-'+x.id===extra.id);
+        if(owner){const index=custom?owner.blocks.findIndex(b=>b.blockId===custom.dataset.xBlock):undefined;focusOwner(owner,index);highlight(custom||extra);}
       }else if(entry){showFields(entry,ownerRows(entry,readRow(node)),readRow(node),node);const run=e.target.closest('[data-wp-run]');if(run&&d.activeElement!==run)run.focus();}
       else if(!template){settings();}
       else{const section=e.target.closest('[data-x-section]')?.dataset.xSection;if(section){currentSection=section;advanced(section);}}
@@ -187,7 +190,8 @@ export function pageCanvas(host,page,ctx,back){
   const size=select([['wide','Escritorio'],['mobile','Móvil']],'wide',v=>paper.classList.toggle('wp-mobile',v==='mobile'));size.setAttribute('aria-label','Tamaño del lienzo');
   const undo=button('Deshacer',()=>ctx.changeHistory('undo')),redo=button('Rehacer',()=>ctx.changeHistory('redo'));
   undo.dataset.editAction='undo';redo.dataset.editAction='redo';
-  toolbar.append(button('← Páginas',back),button('+ Añadir bloque',insert,'primary'),undo,redo,button('Estructura',outline),button('Ajustes de página',settings),size);
+  const edit=action=>()=>{layout.close();action();};
+  toolbar.append(button('← Páginas',back),button('+ Añadir bloque',edit(insert),'primary'),layout.trigger,undo,redo,button('Estructura',edit(outline)),button('Ajustes de página',edit(settings)),size);
   insHeading('Edición visual');inspector.append(el('p','Haz clic en un texto para escribir sobre él. Selecciona una imagen o un botón para cambiar sus propiedades.','hint'));
   if(!template&&!page.blocks.length)insert();
   window.addEventListener('message',onMessage);load();

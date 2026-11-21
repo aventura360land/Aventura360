@@ -1,5 +1,5 @@
 import {button,details,el,field,objectFields,rowActions,select} from './formularios.js';
-import {blockTypes,idNuevo,nombre,slugify} from './modelo.js';
+import {blockTypes,copyBlock,idNuevo,nombre,slugify} from './modelo.js';
 
 export function editTemplate(host,page,ctx,jump=null){
   const state=ctx.state.template, tools=el('div',undefined,'section-tools'),view=el('div');
@@ -110,21 +110,21 @@ export function editCustom(host,isPage,ctx){
         const position=el('div');
         const selector=()=>{
           const p=ctx.catalog.pages.find(p=>p.id===(x.pagina||'inicio'));const options=[['','Al final'],...p.sections.filter(s=>s.sortable).map(s=>[s.id,s.label])];
-          position.replaceChildren(field({label:'Colocar después de',type:'select',options},x.after||'',v=>{x.after=v;ctx.changed();}));
+          position.replaceChildren(field({label:'Colocar después de',type:'select',options},x.after||'',v=>{delete x.beforeFirst;x.after=v;ctx.changed();}));
         };
-        box.append(field({label:'Página de destino',type:'select',options:ctx.catalog.pages.map(p=>[p.id,p.label])},x.pagina||'inicio',v=>{x.pagina=v;x.after='';ctx.changed();selector();}),position);selector();
+        box.append(field({label:'Página de destino',type:'select',options:ctx.catalog.pages.map(p=>[p.id,p.label])},x.pagina||'inicio',v=>{delete x.beforeFirst;x.pagina=v;x.after='';ctx.changed();selector();}),position);selector();
       }
       edit('visible','Visible al publicar','boolean');edit('menu','Añadir enlace al menú','boolean');
       box.append(el('h3','Bloques de contenido'));const content=el('div');box.append(content);
       const blocks=()=>{content.replaceChildren();
         x.blocks.forEach((b,bi)=>{const spec=blockTypes[b.type];if(!spec)return;
           content.append(details(spec[0]+(b.titulo?' · '+b.titulo:''),panel=>{
-            panel.append(rowActions(x.blocks,bi,{...ctx,redraw:blocks,duplicate:structuredClone}));
-            objectFields(panel,b,b.type,{...ctx,skip:['type']});
+            panel.append(rowActions(x.blocks,bi,{...ctx,redraw:blocks,duplicate:copyBlock}));
+            objectFields(panel,b,b.type,{...ctx,skip:['type','blockId']});
           }));
         });
         const addBar=el('div',undefined,'section-tools');let choice='texto';const picker=select(Object.entries(blockTypes).map(([k,v])=>[k,v[0]]),choice,v=>choice=v);picker.setAttribute('aria-label','Tipo de bloque');
-        addBar.append(picker,button('Añadir bloque',()=>{x.blocks.push({type:choice,...structuredClone(blockTypes[choice][1])});ctx.changed();blocks();content.querySelectorAll(':scope > details')[x.blocks.length-1].open=true;}));content.append(addBar);
+        addBar.append(picker,button('Añadir bloque',()=>{x.blocks.push({blockId:idNuevo(),type:choice,...structuredClone(blockTypes[choice][1])});ctx.changed();blocks();content.querySelectorAll(':scope > details')[x.blocks.length-1].open=true;}));content.append(addBar);
       };blocks();
     })));
   };draw();

@@ -1,3 +1,4 @@
+import {mountLayout,pageLayout} from './disposicion.js';
 import {projectUrl,publishableKey} from '../resenas/config.js';
 import {applyTemplate} from './plantilla.js';
 import {renderSite} from './bloques.js';
@@ -44,6 +45,11 @@ async function start(){
   window.xebaxReviewCopy={...reviewCopy,...state.reviews};
   if(pageId!=='pagina')applyTemplate(document,catalog,state.template,pageId);
   applyAppearance(document,state.appearance||{});renderSite(state,pageId,preview);
+  const page=pageId==='pagina'
+    ?state.pages.find(p=>p.slug===new URLSearchParams(location.search).get('p')&&(p.visible||preview))
+    :catalog.pages.find(p=>p.id===pageId);
+  const layout=pageLayout(state,page);
+  if(page&&(preview||layout))mountLayout(document,page,layout);
   if(preview){
     let inspect=false;
     const setMode=e=>{

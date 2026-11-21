@@ -21,8 +21,9 @@ function link(text,url){
 function list(values){
   const ul=node('ul');for(const v of values||[])if(typeof v==='string'&&v.trim())ul.append(node('li',v));return ul.childElementCount?ul:null;
 }
-function block(b){
+function block(b,owner){
   const box=node('div',null,'xc-block');
+  box.dataset.xOwner=owner.id;box.dataset.xBlock=b.blockId;
   switch(b.type){
     case 'texto': if(b.titulo)box.append(node('h3',b.titulo));if(b.texto)box.append(paragraph(b.texto));break;
     case 'imagen':case 'video':{
@@ -56,10 +57,15 @@ export function renderSite(state,pageId,draft=false){
       if(!x.visible||(x.pagina||'inicio')!==pageId)continue;
       const el=node('section',null,'xc-section');el.id='seccion-'+x.id;
       const wrap=node('div',null,'xc-wrap');if(x.titulo)wrap.append(node('h2',x.titulo));
-      for(const b of x.blocks||[])wrap.append(block(b));el.append(wrap);
-      const after=anchorMap.get(x.after)||Array.from(main?.querySelectorAll('[data-x-section]')||[]).find(v=>v.dataset.xSection===x.after);
-      if(after)after.after(el);else main?.append(el);
-      anchorMap.set(x.after,el);
+      for(const b of x.blocks||[])wrap.append(block(b,x));el.append(wrap);
+      if(x.beforeFirst){
+        const first=main?.querySelector('[data-x-section]');
+        if(first)first.before(el);else main?.append(el);
+      }else{
+        const after=anchorMap.get(x.after)||Array.from(main?.querySelectorAll('[data-x-section]')||[]).find(v=>v.dataset.xSection===x.after);
+        if(after)after.after(el);else main?.append(el);
+        anchorMap.set(x.after,el);
+      }
     }
     if(pageId==='inicio'&&main)Array.from(main.children).forEach((el,i)=>el.style.order=String(i+1));
   }
@@ -71,7 +77,7 @@ export function renderSite(state,pageId,draft=false){
     if(!p){document.title='Página no disponible';main.append(node('h1','Página no disponible'),link('Volver al inicio','./'));return;}
     document.title=p.titulo;document.querySelector('meta[name="description"]').content=p.descripcion||p.titulo;
     main.append(node('h1',p.titulo));if(p.descripcion)main.append(node('p',p.descripcion,'xc-intro'));
-    for(const b of p.blocks||[])main.append(block(b));
+    for(const b of p.blocks||[])main.append(block(b,p));
     const go=document.querySelector('[data-cms-home]');if(go)go.href=homeLink||'./';
   }
 }

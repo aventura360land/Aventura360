@@ -61,7 +61,14 @@ export function createEditor({token,report,openReviews}){
   const nav=$('cms-nav'),host=$('workspace'),media=mediaLibrary(token,report);
   const fileKeys=['preview','save','publish'];
   const changed=()=>{track();dirty=true;serial++;$('save-state').textContent=conflict?'Conflicto de versiones':'Cambios sin guardar';};
-  const ctx=()=>({state,catalog,dynamic,changed,choose:media.choose,confirm:confirmar,report,saveDraft:()=>save(false),changeHistory});
+  function changeLayout(update){
+    clearTimeout(groupTimer);groupTimer=0;
+    baseline=mergePage({},state,activePage);
+    update();changed();
+    clearTimeout(groupTimer);groupTimer=0;
+    baseline=mergePage({},state,activePage);
+  }
+  const ctx=()=>({state,catalog,dynamic,changed,changeLayout,choose:media.choose,confirm:confirmar,report,saveDraft:()=>save(false),changeHistory});
   const readDraft=async()=>{
     const rows=await request('/rest/v1/xebax_cms?select=slot,content,version',{token:await token()});
     const draft=rows.find(r=>r.slot==='draft'),published=rows.find(r=>r.slot==='live');
