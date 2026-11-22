@@ -19,21 +19,44 @@ function chrome(page){
   const host=el('div');host.id='xebax-editor-visual';const shadow=host.attachShadow({mode:'open'});
   const css=el('link');css.rel='stylesheet';css.href=new URL('./editor-visual.css',import.meta.url);
   const bar=el('nav','bar');bar.setAttribute('aria-label','Editor de página');
-  const mode=el('div','mode'),blocks=button('Seleccionar bloques','Bloques'),sections=button('Seleccionar secciones','Secciones');
-  blocks.setAttribute('aria-pressed','true');sections.setAttribute('aria-pressed','false');mode.append(blocks,sections);
-  const history=el('div','history'),undo=button('Deshacer','↶'),redo=button('Rehacer','↷');history.append(undo,redo);
-  const status=el('span','status','Selecciona un bloque y arrastra el tirador ⠿');status.setAttribute('role','status');
-  const save=button('Guardar borrador','Guardar','secondary'),publish=button('Publicar esta página','Publicar','primary'),exit=button('Salir de edición','Salir');
-  const panel=button('Ajustes de la página','Ajustes');
+  const start=el('div','bar-start'),end=el('div','bar-end'),history=el('div','history');
+  const treeToggle=button('Estructura de la página','☷  Estructura','toggle');
+  treeToggle.setAttribute('aria-expanded','true');treeToggle.setAttribute('aria-controls','xebax-structure');
   const pageName=el('strong','page',page.label||page.titulo);
-  bar.append(pageName,mode,history,status,panel,save,publish,exit);
-  const box=el('div','box'),tools=el('div','tools'),line=el('div','line'),tip=el('div','tip'),ghost=el('div','ghost');
+  const undo=button('Deshacer','↶'),redo=button('Rehacer','↷');history.append(undo,redo);
+  const status=el('span','status','Sin cambios pendientes');status.setAttribute('role','status');
+  const save=button('Guardar borrador','Guardar borrador','secondary');
+  const publish=button('Publicar esta página','Publicar','primary'),exit=button('Salir de edición','Salir');
+  const panel=button('Ajustes de la página','Ajustes de página');
+  start.append(treeToggle,pageName,history);end.append(save,publish,exit);bar.append(start,status,end);
+
+  const dock=el('aside','dock');dock.id='xebax-structure';dock.setAttribute('aria-label','Estructura de la página');
+  const dockHead=el('div','dock-head'),fold=button('Cerrar estructura','×','fold');
+  dockHead.append(el('h2','','Estructura'),fold);
+  const list=el('div','outline');list.setAttribute('aria-label','Secciones y bloques');
+  const section=el('div','inspector'),caption=el('strong','selection','Ningún bloque seleccionado');
+  const controls=el('div','selection-actions');
+  const up=button('Mover antes','↑  Subir'),down=button('Mover después','↓  Bajar');
+  const moveTo=button('Elegir destino','Mover a…'),text=button('Editar texto aquí','Editar texto');
+  const image=button('Cambiar imagen','Cambiar foto');
+  controls.append(up,down,moveTo,text,image);
+  const target=el('div','target-actions');target.hidden=true;
+  const instruction=el('p','target-label');
+  const before=button('Colocar antes','Antes'),after=button('Colocar después','Después');
+  const inside=button('Colocar dentro','Dentro'),cancelMove=button('Cancelar movimiento','Cancelar');
+  const choices=el('div','target-buttons');choices.append(before,after,inside,cancelMove);
+  target.append(instruction,choices);
+  section.append(caption,controls,target);
+  const dockFoot=el('div','dock-foot');dockFoot.append(panel);
+  dock.append(dockHead,list,section,dockFoot);
+
+  const box=el('div','box'),handle=el('div','handle'),line=el('div','line'),ghost=el('div','ghost');
+  const grip=button('Arrastrar selección','⠿','grip'),tag=el('span','tag');
+  grip.setAttribute('aria-describedby','xebax-drag-help');
+  const dragHelp=el('span','sr-only','Arrastra el bloque o usa las flechas del teclado para cambiar su posición.');
+  dragHelp.id='xebax-drag-help';handle.append(grip,tag);
   ghost.setAttribute('aria-hidden','true');
-  tools.setAttribute('role','toolbar');
-  const caption=el('span','caption'),grip=button('Arrastrar bloque','⠿','grip'),up=button('Mover antes','↑'),down=button('Mover después','↓');
-  const parent=button('Seleccionar grupo superior','Grupo'),child=button('Seleccionar elemento interior','Detalle'),text=button('Editar texto aquí','Texto');
-  const image=button('Cambiar imagen','Foto');tools.append(grip,caption,up,down,parent,child,text,image);
-  for(const n of [box,tools,line,tip,ghost])n.hidden=true;
+  for(const n of [box,handle,line,ghost])n.hidden=true;
   const dialog=el('dialog'),question=el('h2'),detail=el('p'),actions=el('div'),cancel=button('Cancelar'),ok=button('Confirmar','Confirmar','primary');
   actions.append(cancel,ok);dialog.append(question,detail,actions);cancel.onclick=()=>dialog.close('cancel');ok.onclick=()=>dialog.close('ok');
   function confirm(title,body,action){
@@ -45,19 +68,38 @@ function chrome(page){
   const media=el('dialog','media'),mediaHead=el('header'),mediaBody=el('div');
   media.setAttribute('aria-label','Elegir imagen');const close=button('Cerrar biblioteca','Cerrar');
   mediaHead.append(el('h2','','Elegir imagen'),close);media.append(mediaHead,mediaBody);close.onclick=()=>media.close();
-  const spacer=el('div');spacer.setAttribute('aria-hidden','true');spacer.style.height='var(--xebax-bar,46px)';document.body.prepend(spacer);
+  const spacer=el('div');spacer.setAttribute('aria-hidden','true');document.body.prepend(spacer);
+  document.documentElement.classList.add('xebax-editing');
   const styles=el('style');styles.textContent=`
-    html{scroll-padding-top:calc(var(--xebax-bar,46px) + 5rem);scroll-behavior:auto!important;overflow-anchor:none}
-    .top-promo,.legal-header{top:var(--xebax-bar,46px)!important}
-    #siteHeader{top:calc(var(--xebax-bar,46px) + 50px)!important}
-    [data-x-grabbed]{outline:2px dashed #05725c!important}
-    [data-x-writing]{outline:2px solid #087965!important;outline-offset:2px;cursor:text!important;user-select:text!important}
-    .reveal{opacity:1!important;transform:none!important}
+    html{scroll-padding-top:calc(var(--xebax-bar,64px) + 140px);scroll-behavior:auto!important;overflow-anchor:none}
+    .xebax-editing body{margin-inline-start:var(--xebax-rail,0px)!important}
+    .top-promo,.legal-header{top:var(--xebax-bar,64px)!important}
+    .top-promo,#siteHeader{left:var(--xebax-rail,0px)!important}
+    #siteHeader{top:calc(var(--xebax-bar,64px) + 50px)!important}
+    [data-x-grabbed]{opacity:.62!important}
+    [data-x-writing]{outline:2px solid #255bc5!important;outline-offset:2px;cursor:text!important;user-select:text!important}
+    .reveal{opacity:1!important;transform:none!important;transition:none!important}
     .xc-block:empty{min-height:2rem}
+    .xebax-rail-open #siteHeader .nav{gap:.75rem}
+    .xebax-rail-open #siteHeader .nav-links{gap:clamp(.7rem,1.1vw,1.8rem)}
   `;
-  document.head.append(styles);shadow.append(css,bar,box,tools,line,tip,ghost,dialog,media);document.body.append(host);
-  new ResizeObserver(()=>document.documentElement.style.setProperty('--xebax-bar',bar.offsetHeight+'px')).observe(bar);
-  return {host,bar,pageName,status,undo,redo,save,publish,exit,blocks,sections,box,tools,line,tip,ghost,caption,grip,up,down,parent,child,text,image,panel,media,mediaBody,confirm};
+  document.head.append(styles);shadow.append(css,bar,dock,box,handle,line,ghost,dragHelp,dialog,media);document.body.append(host);
+  const wide=matchMedia('(min-width:1180px)');
+  function toggleDock(open){
+    dock.hidden=!open;treeToggle.setAttribute('aria-expanded',String(open));
+    document.documentElement.classList.toggle('xebax-rail-open',open&&wide.matches);
+    document.documentElement.style.setProperty('--xebax-rail',open&&wide.matches?'272px':'0px');
+  }
+  new ResizeObserver(()=>{
+    document.documentElement.style.setProperty('--xebax-bar',bar.offsetHeight+'px');
+    spacer.style.height=bar.offsetHeight+'px';
+  }).observe(bar);
+  wide.addEventListener('change',()=>toggleDock(wide.matches));
+  treeToggle.onclick=()=>toggleDock(dock.hidden);
+  fold.onclick=()=>toggleDock(false);
+  toggleDock(wide.matches);
+  return {host,bar,dock,list,caption,controls,treeToggle,toggleDock,wide,pageName,status,undo,redo,save,publish,exit,
+    box,handle,grip,tag,line,ghost,up,down,moveTo,text,image,target,instruction,before,after,inside,cancelMove,panel,media,mediaBody,confirm};
 }
 export function frontEditor({page,state,rows}){
   const ui=chrome(page),undo=[],redo=[];
@@ -86,10 +128,10 @@ export function frontEditor({page,state,rows}){
     if(undo.length>30)undo.shift();redo.length=0;changed(message);
   }
   function history(back){
-    finishText(true);const stack=back?undo:redo,other=back?redo:undo;
+    finishText(true);drag.cancel();const stack=back?undo:redo,other=back?redo:undo;
     if(!stack.length||busy)return;
     const change=stack.pop();
-    revision=back?change.from:change.to;restore(back?change.before:change.after);(back?change.undoView:change.redoView)();other.push(change);
+    revision=back?change.from:change.to;restore(back?change.before:change.after);(back?change.undoView:change.redoView)();other.push(change);drag.refresh();
     changed(back?'Cambio deshecho':'Cambio recuperado');
   }
   ui.undo.onclick=()=>history(true);ui.redo.onclick=()=>history(false);
@@ -113,7 +155,8 @@ export function frontEditor({page,state,rows}){
     span.replaceWith(part);drag.writing(false);
     if(!accept||value===previous){buttons();return;}
     const next=old.match(/^\s*/)[0]+value+old.match(/\s*$/)[0];
-    commit(()=>{write(value,next);part.data=next;},()=>{part.data=old;},()=>{part.data=next;},'Texto editado · Sin guardar');
+    commit(()=>{write(value,next);part.data=next;},()=>{part.data=old;},()=>{part.data=next;},'Cambios sin guardar');
+    drag.refresh();
   }
   function editText(hit,n,clicked){
     if(busy)return;finishText(true);
@@ -151,12 +194,12 @@ export function frontEditor({page,state,rows}){
       commit(()=>{update(url);show();},revert,show,'Imagen cambiada · Sin guardar');
     });
   }
-  const drag=directDrag({host:ui.host,ui,move,editText,changeImage,canChangeImage:(h,n)=>!!photo(h,n),canEdit:(h,n,part)=>!!binding(h,n,part)});
+  const drag=directDrag({host:ui.host,ui,move,editText,changeImage,canChangeImage:(h,n)=>!!photo(h,n),canEdit:(h,n,part)=>!!binding(h,n,part),canMove:()=>!busy});
   async function save(publish){
     finishText(true);if(busy||conflict||(!publish&&!dirty))return;
     const draft=structuredClone(state),out=publish?mergePage(live,draft,activePage()):null;
     if(publish){try{validatePublish(out);}catch(e){ui.status.textContent=e.message;return;}}
-    const submitted=revision;busy=true;buttons();
+    const submitted=revision;busy=true;drag.cancel();ui.status.textContent=publish?'Publicando…':'Guardando…';buttons();
     try{
       const path=publish?'xebax_publish_page':'xebax_save_site';
       const body=publish?{draft_content:draft,live_content:out,expected_version:version}:{payload:draft,publish_now:false,expected_version:version};

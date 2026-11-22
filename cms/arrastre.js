@@ -1,241 +1,326 @@
 import {textAtPoint} from './texto-visual.js';
-import {describe,destination,orderedChildren} from './disposicion.js';
+import {destination,orderedChildren} from './disposicion.js';
+import {labelOf,outline,unitSelector} from './estructura.js';
 
-const unit='[data-x-layout]',section='[data-layout-type="section"]';
+const movableCard='[data-layout-type="row"],#heroVisual[data-x-layout]';
+const siteControl='#avisoOk,#menuBtn,#galleryToggle';
+const labels={before:'Antes de ',after:'Después de ',inside:'Dentro de '};
 const clamp=(n,min,max)=>Math.max(min,Math.min(n,max));
+const visible=node=>node?.getClientRects().length>0;
 const near=(node,selector)=>node?.closest?.(selector);
-const visible=node=>node.getClientRects().length>0;
 
-// El fondo, la foto y el título de una tarjeta comparten el mismo agarre.
-function itemAt(element,level){
-  if(level===section)return near(element,section);
-  const node=near(element,unit);
-  if(!node||node.matches(section))return null;
-  return near(element,'[data-layout-type="row"],#heroVisual[data-x-layout]')||node;
+function canvasItem(element){
+  return near(element,movableCard)||near(element,unitSelector);
 }
-function childAt(parent,under){
-  let n=under;
-  while(n&&n.parentElement!==parent)n=n.parentElement;
-  return n;
-}
-function distance(r,x,y){
+
+function rectDistance(r,x,y){
   return Math.hypot(Math.max(r.left-x,0,x-r.right),Math.max(r.top-y,0,y-r.bottom));
 }
 
-export function directDrag({host,ui,move,editText,canEdit,changeImage,canChangeImage}){
-  const {bar,box,tools,caption,grip,line,tip,ghost,up,down,parent,child,text,image,blocks,sections}=ui;
-  let selected=null,hit=null,textPart=null,level=unit,pressed=null,drag=null,typing=false;
-  let swallowClick=false,frame=0;
+export function directDrag({host,ui,move,editText,canEdit,changeImage,canChangeImage,canMove}){
+  let selected=null,hit=null,textPart=null,pressed=null,drag=null,typing=false;
+  let choosing=false,chosen=null,drop=null,frame=0,swallowClick=false;
+  const tree=outline(ui.list,node=>{
+    if(choosing)chooseTarget(node,true);
+    else {pick(node);showOnPage(node);}
+  });
+  tree.refresh();
 
-  function peers(){
-    if(!selected)return [];
-    return orderedChildren(selected.parentElement).filter(n=>visible(n)&&(n===selected||destination(selected,n,'before')));
+  function siblings(node){
+    if(!node)return [];
+    return orderedChildren(node.parentElement).filter(other=>visible(other)&&(other===node||destination(node,other,'before')));
   }
-  function inner(){
-    const n=near(hit,unit);
-    return n!==selected&&selected?.contains(n)&&!selected.matches('#heroVisual')?n:null;
+
+  function position(){
+    if(!visible(selected)||typing||drag){ui.box.hidden=ui.handle.hidden=true;return;}
+    const r=selected.getBoundingClientRect(),top=ui.bar.getBoundingClientRect().bottom;
+    const left=Math.max(r.left,ui.wide.matches&&!ui.dock.hidden?ui.dock.getBoundingClientRect().right:0);
+    const right=Math.min(r.right,document.documentElement.clientWidth);
+    const bottom=ui.wide.matches||ui.dock.hidden?innerHeight:ui.dock.getBoundingClientRect().top;
+    ui.box.hidden=right<=left||r.bottom<=top||r.top>=bottom;
+    ui.handle.hidden=ui.box.hidden||choosing;
+    if(ui.box.hidden)return;
+    const clippedTop=Math.max(top,r.top);
+    Object.assign(ui.box.style,{left:left+'px',top:clippedTop+'px',width:right-left+'px',height:Math.min(r.bottom,bottom)-clippedTop+'px'});
+    if(choosing)return;
+    ui.handle.style.left=clamp(left,2,Math.max(2,document.documentElement.clientWidth-ui.handle.offsetWidth-2))+'px';
+    const above=r.top-ui.handle.offsetHeight;
+    ui.handle.style.top=clamp(above>=top?above:clippedTop,top,Math.max(top,bottom-ui.handle.offsetHeight))+'px';
   }
+
   function pick(node,element=node,part=null){
-    selected=node;hit=element;textPart=part;
-    box.hidden=tools.hidden=!node;
-    if(!node)return;
-    const name=describe(node);
-    caption.textContent=name;caption.title=name;
-    tools.setAttribute('aria-label','Acciones de '+name);
-    const siblings=peers(),i=siblings.indexOf(node);
-    up.disabled=i<=0;down.disabled=i<0||i===siblings.length-1;
-    parent.hidden=!near(node.parentElement,unit)||level===section;
-    child.hidden=level===section||!inner();
-    text.hidden=level===section||!canEdit(element,node,part);
-    image.hidden=level===section||!canChangeImage(element,node);
+    selected=node;hit=element;textPart=part;tree.select(node);
+    ui.controls.hidden=!node;
+    ui.caption.textContent=node?labelOf(node).name:'Selecciona un bloque en la página';
+    ui.tag.textContent=node?labelOf(node).kind:'';
+    if(node){
+      const options=siblings(node),index=options.indexOf(node);
+      ui.up.disabled=index<=0;ui.down.disabled=index<0||index>=options.length-1;
+      ui.text.hidden=!canEdit(element,node,part);
+      ui.image.hidden=!canChangeImage(element,node);
+    }
     position();
   }
-  function position(){
-    if(!selected||typing||drag)return;
-    const r=selected.getBoundingClientRect(),top=bar.getBoundingClientRect().bottom;
-    box.hidden=tools.hidden=r.bottom<=top||r.top>=innerHeight||!r.width||!r.height;
-    if(box.hidden)return;
-    Object.assign(box.style,{left:r.left+'px',top:r.top+'px',width:r.width+'px',height:r.height+'px'});
-    const above=r.top-tools.offsetHeight;
-    tools.style.top=clamp(above>=top?above:r.top,top,innerHeight-tools.offsetHeight)+'px';
-    tools.style.left=clamp(r.left,4,document.documentElement.clientWidth-tools.offsetWidth-4)+'px';
+
+  function showOnPage(node){
+    if(!visible(node))return;
+    const r=node.getBoundingClientRect();
+    const fixedTop=Math.max(ui.bar.offsetHeight,...[...document.querySelectorAll('#siteHeader,.legal-header')].map(n=>n.getBoundingClientRect().bottom));
+    const bottom=ui.wide.matches||ui.dock.hidden?innerHeight:ui.dock.getBoundingClientRect().top;
+    if(r.bottom>fixedTop+12&&r.top<bottom-12)return;
+    window.scrollBy({top:r.top-fixedTop-20,behavior:'instant'});
   }
-  function setMode(value){
-    cancel();level=value;pick(null);
-    blocks.setAttribute('aria-pressed',String(value===unit));
-    sections.setAttribute('aria-pressed',String(value===section));
-  }
-  blocks.onclick=()=>setMode(unit);sections.onclick=()=>setMode(section);
-  parent.onclick=()=>pick(near(selected?.parentElement,unit),hit,textPart);
-  child.onclick=()=>{const n=inner();if(n)pick(n,hit,textPart);};
-  text.onclick=()=>{if(selected)editText(hit,selected,textPart);};
-  image.onclick=()=>{if(selected)changeImage(hit,selected);};
-  function step(delta){
-    const siblings=peers(),other=siblings[siblings.indexOf(selected)+delta];
-    if(other&&move(selected,other,delta<0?'before':'after'))pick(selected,hit,textPart);
-  }
-  up.onclick=()=>step(-1);down.onclick=()=>step(1);
-  grip.onkeydown=e=>{
-    if(['ArrowUp','ArrowLeft','ArrowDown','ArrowRight'].includes(e.key)){
-      e.preventDefault();step(e.key==='ArrowUp'||e.key==='ArrowLeft'?-1:1);
+
+  function updateMovement(){
+    ui.target.hidden=!choosing;
+    ui.controls.hidden=choosing||!selected;
+    ui.moveTo.setAttribute('aria-pressed',String(choosing));
+    if(!choosing)return;
+    ui.instruction.textContent=chosen?'Destino · '+labelOf(chosen).name:'Selecciona el destino en la lista o sobre la página.';
+    for(const side of ['before','after','inside']){
+      ui[side].hidden=!chosen||!destination(selected,chosen,side);
     }
+  }
+
+  function clearDestination(){
+    choosing=false;chosen=null;updateMovement();showDrop(null);
+  }
+
+  function chooseTarget(node,fromList){
+    if(!node||!['before','after','inside'].some(side=>destination(selected,node,side))){
+      ui.status.textContent='Elige un bloque compatible como destino.';
+      return;
+    }
+    chosen=node;updateMovement();
+    if(!ui.wide.matches)ui.toggleDock(true);
+    if(fromList)showOnPage(node);
+    const side=['before','after','inside'].find(s=>destination(selected,node,s));
+    showDrop(dropOnNode(node,side));
+  }
+
+  ui.moveTo.onclick=()=>{
+    if(!selected||!canMove())return;
+    choosing=true;chosen=null;updateMovement();position();
+    ui.status.textContent='Selecciona dónde colocar el bloque.';
+    if(!ui.wide.matches)ui.toggleDock(false);
   };
+  ui.cancelMove.onclick=()=>{clearDestination();position();ui.status.textContent='Movimiento cancelado';};
+  for(const side of ['before','after','inside']){
+    ui[side].onclick=()=>{
+      const moved=chosen&&move(selected,chosen,side);
+      clearDestination();
+      if(moved)tree.refresh(true);
+      else ui.status.textContent='El bloque ya está en esa posición.';
+      pick(selected,hit,textPart);
+    };
+    ui[side].onpointerenter=ui[side].onfocus=()=>{if(chosen)showDrop(dropOnNode(chosen,side));};
+  }
+
+  ui.text.onclick=()=>{if(selected)editText(hit,selected,textPart);};
+  ui.image.onclick=()=>{if(selected)changeImage(hit,selected);};
+  function step(delta){
+    if(!selected)return;
+    const options=siblings(selected),target=options[options.indexOf(selected)+delta];
+    if(target&&move(selected,target,delta<0?'before':'after')){tree.refresh(true);pick(selected,hit,textPart);}
+  }
+  ui.up.onclick=()=>step(-1);ui.down.onclick=()=>step(1);
+  ui.grip.onkeydown=e=>{
+    if(!['ArrowUp','ArrowLeft','ArrowDown','ArrowRight'].includes(e.key))return;
+    e.preventDefault();step(e.key==='ArrowUp'||e.key==='ArrowLeft'?-1:1);
+  };
+  ui.grip.onclick=()=>{
+    if(swallowClick)return;
+    ui.toggleDock(true);tree.refresh(true);
+  };
+  ui.treeToggle.addEventListener('click',()=>{tree.refresh(true);position();});
+
   const pageEvent=e=>!e.composedPath().includes(host);
-  const siteControl=element=>near(element,'#avisoOk,#menuBtn,#galleryToggle');
   document.addEventListener('click',e=>{
     if(!pageEvent(e))return;
     if(typing&&near(e.target,'[data-x-writing]')){e.stopImmediatePropagation();return;}
-    if(!swallowClick&&siteControl(e.target))return;
+    if(!swallowClick&&near(e.target,siteControl))return;
     e.preventDefault();e.stopImmediatePropagation();
-    if(!swallowClick)pick(itemAt(e.target,level),e.target,textAtPoint(e));
+    if(swallowClick)return;
+    const node=canvasItem(e.target);
+    if(choosing){chooseTarget(node,false);return;}
+    pick(node,e.target,textAtPoint(e));
   },true);
   document.addEventListener('dblclick',e=>{
-    if(!pageEvent(e)||typing||level===section)return;
-    const n=itemAt(e.target,level);
-    if(n){e.preventDefault();e.stopImmediatePropagation();editText(e.target,n,textAtPoint(e));}
+    if(!pageEvent(e)||typing||choosing)return;
+    const node=canvasItem(e.target);
+    if(node){e.preventDefault();e.stopImmediatePropagation();editText(e.target,node,textAtPoint(e));}
   },true);
-  for(const name of ['submit','auxclick','dragstart']){
-    document.addEventListener(name,e=>{if(pageEvent(e)&&!typing){e.preventDefault();e.stopImmediatePropagation();}},true);
+  for(const event of ['submit','auxclick','dragstart']){
+    document.addEventListener(event,e=>{if(pageEvent(e)&&!typing){e.preventDefault();e.stopImmediatePropagation();}},true);
   }
 
-  // Busca primero el hermano bajo el puntero, incluso si la foto o el título lo cubren.
-  // En los huecos de una cuadrícula se usa el borde de la tarjeta visible más próxima.
-  function edge(node,x,y){
-    const r=node.getBoundingClientRect();
-    const s=drag.node.getBoundingClientRect();
-    const sameColumn=node.parentElement===drag.node.parentElement&&
-      Math.min(r.right,s.right)>Math.max(r.left,s.left)+1&&(s.bottom<=r.top+2||s.top>=r.bottom-2);
-    const neighbors=orderedChildren(node.parentElement).filter(n=>n!==node&&n.matches(unit)&&visible(n));
-    const across=!sameColumn&&!node.matches(section)&&neighbors.some(n=>{
-      const b=n.getBoundingClientRect();
-      return Math.min(r.bottom,b.bottom)>Math.max(r.top,b.top)+1&&(b.left>=r.right-2||b.right<=r.left+2);
-    });
-    const horizontal=across&&y>=r.top&&y<=r.bottom;
-    const first=horizontal?x<(r.left+r.right)/2:y<(Math.max(r.top,bar.offsetHeight)+Math.min(r.bottom,innerHeight))/2;
-    return {node,r,across:horizontal,side:first?'before':'after'};
+  function dropOnNode(node,side,horizontal=false){
+    return {node,side,horizontal,row:null};
   }
-  function landing(x,y){
-    if(y<=bar.getBoundingClientRect().bottom)return null;
-    const under=document.elementFromPoint(x,y),source=drag.node,holder=source.parentElement;
-    if(!under||source.contains(under)||under===host)return null;
-    if(holder.contains(under)){
-      const sibling=childAt(holder,under);
-      if(sibling&&destination(source,sibling,'before'))return edge(sibling,x,y);
-      if(under===holder){
-        let closest=null,min=Infinity;
-        for(const n of peers()){
-          const d=distance(n.getBoundingClientRect(),x,y);
-          if(d<min){min=d;closest=n;}
-        }
-        return closest&&closest!==source?edge(closest,x,y):null;
+
+  function canvasDrop(x,y){
+    const over=document.elementFromPoint(x,y),source=drag.node,parent=source.parentElement;
+    if(!over||over===host||y<ui.bar.offsetHeight||source.contains(over))return null;
+    let hovered=over;
+    while(hovered&&hovered.parentElement!==parent)hovered=hovered.parentElement;
+    let entry=drag.peers.find(item=>item.node===hovered);
+    if(!entry&&parent.contains(over)){
+      // El relleno de una cuadrícula solo admite una inserción cerca de sus bloques.
+      let nearest=26;
+      for(const item of drag.peers){
+        const distance=rectDistance(item.node.getBoundingClientRect(),x,y);
+        if(distance<nearest){nearest=distance;entry=item;}
       }
     }
-    // Un destino externo conserva sus propios bloques, salvo al soltar directamente en un contenedor.
-    const selector=source.matches(section)?section:unit;
-    for(let n=near(under,selector);n;n=near(n.parentElement,selector)){
-      if(n===source||source.contains(n))return null;
-      if(under===n&&destination(source,n,'inside')){
-        const r=n.getBoundingClientRect();
-        if(y>r.top+16&&y<r.bottom-16)return {node:n,side:'inside',r,across:false};
-      }
-      if(destination(source,n,'before'))return edge(n,x,y);
-    }
-    return null;
+    if(!entry||entry.node===source)return null;
+    const r=entry.node.getBoundingClientRect(),from=source.getBoundingClientRect();
+    const xOverlap=Math.min(r.right,from.right)-Math.max(r.left,from.left);
+    const yOverlap=Math.min(r.bottom,from.bottom)-Math.max(r.top,from.top);
+    const horizontal=yOverlap>3&&(xOverlap<3||drag.horizontal);
+    const position=horizontal?(x-r.left)/r.width:(y-r.top)/r.height;
+    // En el centro, soltar sobre el vecino lo intercambia. En los bordes manda el sitio señalado.
+    const side=position<.35?'before':position>.65?'after':entry.index>drag.index?'after':'before';
+    return dropOnNode(entry.node,side,horizontal);
   }
-  function indicator(){
-    ghost.style.left=clamp(drag.x+14,4,innerWidth-ghost.offsetWidth-4)+'px';
-    ghost.style.top=clamp(drag.y+16,bar.offsetHeight,innerHeight-ghost.offsetHeight-4)+'px';
-    const target=landing(drag.x,drag.y);
-    line.hidden=!target;
-    if(!target){tip.textContent='Busca un lugar para soltar';return null;}
-    const {node,side,r,across}=target;
-    tip.textContent=(side==='before'?'Antes de ':side==='after'?'Después de ':'Dentro de ')+describe(node);
-    line.classList.toggle('inside',side==='inside');
-    const edge=side==='before'?r.top:r.bottom,x=side==='before'?r.left:r.right;
-    const top=bar.getBoundingClientRect().bottom;
-    Object.assign(line.style,side==='inside'?{left:r.left+'px',top:r.top+'px',width:r.width+'px',height:r.height+'px'}:
-      across?{left:clamp(x-2,1,innerWidth-5)+'px',top:r.top+'px',width:'4px',height:r.height+'px'}:
-      {left:r.left+'px',top:clamp(edge-2,top+1,innerHeight-5)+'px',width:r.width+'px',height:'4px'});
+
+  function treeDrop(x,y){
+    const hit=host.shadowRoot.elementFromPoint(x,y);
+    const row=near(hit,'.outline-row'),node=tree.nodeFor(row);
+    const entry=drag.peers.find(item=>item.node===node);
+    if(!entry||node===drag.node)return null;
+    const r=row.getBoundingClientRect();
+    return {node,row,side:y<(r.top+r.bottom)/2?'before':'after',horizontal:false};
+  }
+
+  function findDrop(x,y){
+    const target=treeDrop(x,y)||canvasDrop(x,y);
+    if(!target)return null;
+    const targetIndex=drag.peers.find(item=>item.node===target.node).index;
+    target.same=target.side==='after'?targetIndex===drag.index-1:targetIndex===drag.index+1;
     return target;
   }
-  function scrollEdge(y){
-    const top=bar.getBoundingClientRect().bottom;
-    return y<top+24?-1:y>innerHeight-24?1:0;
+
+  function showDrop(next){
+    drop?.row?.removeAttribute('data-drop');
+    drop=next;ui.line.hidden=!next||next.same||!visible(next.node);
+    if(!next)return;
+    if(next.row&&!next.same)next.row.dataset.drop=next.side;
+    if(ui.line.hidden)return;
+    const r=next.node.getBoundingClientRect();
+    const {side,horizontal}=next,before=side==='before',inside=side==='inside';
+    const minX=ui.wide.matches&&!ui.dock.hidden?ui.dock.getBoundingClientRect().right:0;
+    const left=Math.max(minX,r.left),top=Math.max(ui.bar.offsetHeight,r.top);
+    const right=Math.min(document.documentElement.clientWidth,r.right),bottom=Math.min(innerHeight,r.bottom);
+    if(right<=left||bottom<=top){ui.line.hidden=true;return;}
+    ui.line.className='line'+(inside?' inside':horizontal?' vertical':'');
+    Object.assign(ui.line.style,{
+      left:(horizontal?clamp((before?r.left:r.right)-2,minX,right-3):left)+'px',
+      top:(inside||horizontal?top:clamp((before?r.top:r.bottom)-2,ui.bar.offsetHeight,innerHeight-4))+'px',
+      width:(horizontal?4:right-left)+'px',height:(inside||horizontal?bottom-top:4)+'px'
+    });
   }
-  function autoScroll(now){
-    if(!drag||!drag.direction)return;
-    if(now-drag.entered>=550){
-      const dy=drag.direction*Math.min(12,(now-drag.last)*.35);
-      window.scrollBy({top:dy,behavior:'instant'});indicator();
+
+  function dragAt(){
+    const next=findDrop(drag.x,drag.y);showDrop(next);
+    ui.ghost.textContent=next?.same?'Posición actual':next?labels[next.side]+labelOf(next.node).name:labelOf(drag.node).name;
+    ui.ghost.classList.toggle('valid',!!next&&!next.same);
+    ui.ghost.style.left=clamp(drag.x+16,6,Math.max(6,innerWidth-ui.ghost.offsetWidth-6))+'px';
+    ui.ghost.style.top=clamp(drag.y+17,ui.bar.offsetHeight+4,innerHeight-ui.ghost.offsetHeight-4)+'px';
+  }
+
+  function clearGesture(){
+    const current=pressed||drag;
+    pressed=drag=null;cancelAnimationFrame(frame);frame=0;
+    if(current){
+      if(current.capture.hasPointerCapture(current.id))current.capture.releasePointerCapture(current.id);
+      current.node.removeAttribute('data-x-grabbed');ui.ghost.hidden=true;showDrop(null);
     }
-    drag.last=now;frame=requestAnimationFrame(autoScroll);
+    position();
   }
-  function updateEdge(){
-    const direction=scrollEdge(drag.y);
-    if(direction===drag.edge)return;
-    cancelAnimationFrame(frame);drag.edge=direction;drag.direction=direction;
-    if(direction){
-      drag.last=drag.entered=performance.now();frame=requestAnimationFrame(autoScroll);
+  function cancel(){clearGesture();clearDestination();position();}
+
+  function edgeSpeed(y,top,bottom){
+    const band=38;
+    if(y>=top&&y<top+band)return -(top+band-y)/band;
+    if(y<=bottom&&y>bottom-band)return (y-bottom+band)/band;
+    return 0;
+  }
+  function scrollTarget(){
+    const r=ui.list.getBoundingClientRect();
+    if(!ui.dock.hidden&&drag.x>=r.left&&drag.x<=r.right&&drag.y>=r.top&&drag.y<=r.bottom){
+      return {element:ui.list,speed:edgeSpeed(drag.y,r.top,r.bottom)};
     }
+    const top=ui.bar.offsetHeight;
+    return {element:window,speed:edgeSpeed(drag.y,top,innerHeight)};
   }
-  function cancel(){
-    const current=drag||pressed;
-    pressed=null;drag=null;cancelAnimationFrame(frame);
-    if(!current)return;
-    if(grip.hasPointerCapture(current.id))grip.releasePointerCapture(current.id);
-    line.hidden=tip.hidden=ghost.hidden=true;tools.classList.remove('dragging');
-    current.node.removeAttribute('data-x-grabbed');position();
+  function scrollTick(now){
+    if(!drag)return;
+    const {element,speed}=scrollTarget();
+    if(element!==drag.scroller||Math.sign(speed)!==drag.direction){
+      drag.scroller=element;drag.direction=Math.sign(speed);drag.edgeSince=now;
+    }
+    if(speed&&now-drag.edgeSince>420){
+      element.scrollBy({top:Math.sign(speed)*Math.max(1,Math.abs(speed)*Math.min(24,now-drag.last)*.26),behavior:'instant'});
+      dragAt();
+    }
+    drag.last=now;frame=requestAnimationFrame(scrollTick);
   }
-  function start(e){
-    const source=pressed;pressed=null;
-    pick(source.node,source.hit);
-    drag={...source,x:e.clientX,y:e.clientY,edge:scrollEdge(source.y),direction:0};
-    grip.setPointerCapture(e.pointerId);
-    window.getSelection()?.removeAllRanges();
-    ghost.textContent=describe(source.node);ghost.hidden=false;
-    source.node.dataset.xGrabbed='';box.hidden=true;tools.classList.add('dragging');tip.hidden=false;
+
+  function registerPress(e,node,capture,element=node){
+    if(!node||!canMove()||typing||choosing||!e.isPrimary||e.button!==0)return;
+    pressed={node,capture,element,id:e.pointerId,x:e.clientX,y:e.clientY};
+    if(capture!==host)e.preventDefault();
   }
-  grip.onpointerdown=e=>{
-    if(e.button!==0||!e.isPrimary||!selected||typing)return;
-    e.preventDefault();
-    pressed={node:selected,hit,x:e.clientX,y:e.clientY,id:e.pointerId};grip.setPointerCapture(e.pointerId);
-  };
+
+  ui.grip.onpointerdown=e=>registerPress(e,selected,ui.grip,hit);
+  ui.list.addEventListener('pointerdown',e=>{
+    const grip=near(e.target,'[data-grip]');
+    if(grip)registerPress(e,tree.nodeFor(near(grip,'.outline-row')),grip);
+  });
   document.addEventListener('pointerdown',e=>{
-    if(!pageEvent(e)||typing||!e.isPrimary||e.pointerType!=='mouse'||e.button!==0||siteControl(e.target))return;
-    const item=itemAt(e.target,level);
-    const node=item?.contains(selected)&&selected?.contains(e.target)?selected:item;
-    if(node)pressed={node,hit:e.target,x:e.clientX,y:e.clientY,id:e.pointerId};
+    if(!pageEvent(e)||e.pointerType!=='mouse'||near(e.target,siteControl))return;
+    const node=selected?.contains(e.target)?selected:canvasItem(e.target);
+    registerPress(e,node,host,e.target);
   },true);
   document.addEventListener('pointermove',e=>{
     const current=drag||pressed;
     if(!current||current.id!==e.pointerId)return;
-    if(!e.buttons){cancel();return;}
+    if(!e.buttons){clearGesture();return;}
     if(!drag){
       if(Math.hypot(e.clientX-pressed.x,e.clientY-pressed.y)<7)return;
-      start(e);
+      const source=pressed,options=siblings(source.node);
+      drag={...source,peers:options.map((node,index)=>({node,index})),index:options.indexOf(source.node),
+        horizontal:getComputedStyle(source.node.parentElement).display==='flex'&&getComputedStyle(source.node.parentElement).flexDirection==='row',
+        edgeSince:performance.now(),last:performance.now()};
+      pressed=null;drag.capture.setPointerCapture(e.pointerId);
+      window.getSelection()?.removeAllRanges();source.node.dataset.xGrabbed='';
+      selected=source.node;hit=source.element;textPart=null;
+      ui.ghost.hidden=false;ui.box.hidden=ui.handle.hidden=true;
+      frame=requestAnimationFrame(scrollTick);
     }
-    e.preventDefault();drag.x=e.clientX;drag.y=e.clientY;updateEdge();indicator();
+    e.preventDefault();drag.x=e.clientX;drag.y=e.clientY;dragAt();
   },{capture:true,passive:false});
   document.addEventListener('pointerup',e=>{
     if((drag||pressed)?.id!==e.pointerId)return;
-    if(!drag){cancel();return;}
-    const {node,hit:element}=drag,target=landing(e.clientX,e.clientY);
-    const overSource=node.contains(document.elementFromPoint(e.clientX,e.clientY));
+    if(!drag){clearGesture();return;}
+    const {node,element}=drag,target=findDrop(e.clientX,e.clientY);
     swallowClick=true;setTimeout(()=>{swallowClick=false;},0);
-    cancel();
-    if(target)move(node,target.node,target.side);
-    else if(!overSource)ui.status.textContent=node.dataset.layoutType==='row'
-      ?'Suelta el elemento junto a otro de la misma colección.'
-      :'Suelta el bloque donde aparezca la línea azul.';
+    clearGesture();
+    if(target){if(!target.same&&move(node,target.node,target.side))tree.refresh(true);else ui.status.textContent='El bloque ya está en esa posición.';}
+    else ui.status.textContent='Suelta el bloque junto a otro del mismo grupo.';
     pick(node,element);
   },true);
-  document.addEventListener('pointercancel',e=>{if((drag||pressed)?.id===e.pointerId)cancel();},true);
-  grip.onlostpointercapture=e=>{if((drag||pressed)?.id===e.pointerId)cancel();};
+  document.addEventListener('pointercancel',e=>{if((drag||pressed)?.id===e.pointerId)clearGesture();},true);
+  document.addEventListener('lostpointercapture',e=>{if(drag?.id===e.pointerId)clearGesture();},true);
   document.addEventListener('keydown',e=>{
-    if(e.key==='Escape'&&!typing){if(drag||pressed)cancel();else pick(null);}
+    if(e.key==='Escape'&&!typing&&!host.shadowRoot.querySelector('dialog[open]')){
+      if(choosing||drag||pressed)cancel();else pick(null);
+    }
   });
-  window.addEventListener('blur',cancel);
-  window.addEventListener('scroll',()=>drag?indicator():position(),{passive:true,capture:true});
+  window.addEventListener('blur',clearGesture);
+  window.addEventListener('scroll',()=>{if(drag)dragAt();else{position();if(chosen&&drop)showDrop(drop);}}, {passive:true,capture:true});
   window.addEventListener('resize',position);
-  return {select:node=>pick(node),writing(active){typing=active;if(active)box.hidden=tools.hidden=true;else position();}};
+  new ResizeObserver(position).observe(ui.dock);
+  pick(null);
+  return {select:node=>pick(node),refresh:()=>{tree.refresh();pick(selected,hit,textPart);},cancel,writing(active){typing=active;position();}};
 }
