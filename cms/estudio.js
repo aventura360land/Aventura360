@@ -47,6 +47,7 @@ function updatePages(){
   $('add-section').hidden=!page()?.sections;
   const actual=page()?.sections?page():live.pages.find(p=>p.id===pageId&&p.visible);
   $('visit').hidden=!actual;
+  publish.textContent=actual?'Actualizar':'Publicar';
   if(actual)$('visit').href=paginaURL(actual);
 }
 
@@ -108,6 +109,7 @@ function setTab(next){
 function setLeftTab(add){
   $('layers').hidden=add;$('insert').hidden=!add;
   $('layers-tab').setAttribute('aria-pressed',String(!add));$('add-tab').setAttribute('aria-pressed',String(add));
+  $('inserter').setAttribute('aria-expanded',String(add));
 }
 
 function showPath(node){
@@ -301,12 +303,17 @@ const inspector=studioInspector(inspectorHost,{
 });
 
 const canvas=canvasUI({
-  frame,paper:$('paper'),selection:$('selection'),grip:$('grip'),gripCaption:$('grip-caption'),drop:$('drop'),dragLabel:$('drag-label'),tree,preview:()=>preview
+  frame,paper:$('paper'),selection:$('selection'),grip:$('grip'),gripCaption:$('grip-caption'),bar:$('blockbar'),up:$('bar-up'),down:$('bar-down'),addBelow:$('add-below'),drop:$('drop'),dragLabel:$('drag-label'),tree,preview:()=>preview
 },{
   nodes:()=>nodes,ready:()=>mounted&&!busy&&!preview,choosing:()=>choosing,label:labelOf,
   select:(node)=>{selectedKey=layoutKey(node);showPath(node);},move,step,report,
-  onSelect,onText:editInline,key:keyboard,openInspector:()=>pane('right',true)
+  onSelect,onText:editInline,key:keyboard,openInspector:()=>pane('right',true),barState
 });
+
+function barState(node){
+  const acts=inspector.actions(node);
+  $('bar-dup').hidden=$('bar-del').hidden=!acts;
+}
 
 function finishInline(accept){
   if(!inline)return;
@@ -319,17 +326,30 @@ function finishInline(accept){
   }
   canvas.draw();buttons();
 }
-function editInline(node,hit,event){
+// Posición del cursor dentro del texto donde se hizo clic (null si no cae en ese texto).
+function caretIn(doc,event,text){
+  if(!event||event.clientX===undefined)return null;
+  let node=null,offset=0;
+  try{
+    if(doc.caretPositionFromPoint){const p=doc.caretPositionFromPoint(event.clientX,event.clientY);node=p?.offsetNode;offset=p?.offset??0;}
+    else if(doc.caretRangeFromPoint){const r=doc.caretRangeFromPoint(event.clientX,event.clientY);node=r?.startContainer;offset=r?.startOffset??0;}
+  }catch{}
+  return node===text?offset:null;
+}
+function editInline(node,hit,event,soft=false){
   if(busy||!mounted||!inspector.flush())return;
   if(revision!==displayedRevision){load();return;}
   finishInline(true);
   const binding=visualText(page(),()=>draft)(hit,node,textAtPoint(event));
-  if(!binding){onSelect(node);pane('right',true);return;}
+  if(!binding){if(!soft){onSelect(node);pane('right',true);}return;}
   const original=binding.part,doc=original.ownerDocument,span=doc.createElement('span');
+  const caret=soft?caretIn(doc,event,original):null;
   span.contentEditable='plaintext-only';span.dataset.studioWriting='';span.setAttribute('role','textbox');span.setAttribute('aria-label','Editar texto del bloque');
   span.style.outline='2px solid #149064';span.textContent=original.data;
   inline={span,original,write:binding.write};original.replaceWith(span);
-  const range=doc.createRange();range.selectNodeContents(span);
+  const range=doc.createRange(),text=span.firstChild;
+  if(soft&&text){range.setStart(text,Math.min(caret??text.length,text.length));range.collapse(true);}
+  else range.selectNodeContents(span);
   span.focus({preventScroll:true});const selected=doc.getSelection();selected.removeAllRanges();selected.addRange(range);
   span.oninput=buttons;span.onblur=()=>finishInline(true);
   span.onkeydown=e=>{
@@ -374,7 +394,10 @@ async function saveToServer(publishing){
   if(!publishing&&revision===saved)return;
   const payload=structuredClone(draft),current=page(),publicDoc=publishing?mergePage(live,draft,current):null;
   if(publishing){try{validatePublish(publicDoc);}catch(error){report(error.message,true);return;}}
-  if(publishing&&!await modal('Publicar '+pageTitle(current),'Los visitantes verán los cambios guardados en esta página.','Publicar cambios'))return;
+  if(publishing){
+    const updating=publish.textContent==='Actualizar';
+    if(!await modal((updating?'Actualizar ':'Publicar ')+pageTitle(current),'Los visitantes verán los cambios guardados en esta página.',updating?'Actualizar página':'Publicar página'))return;
+  }
   busy=true;canvas.cancel();buttons();report(publishing?'Publicando…':'Guardando…');
   const savedAt=revision;
   try{
@@ -407,6 +430,11 @@ function keyboard(e){
   if(document.querySelector('dialog[open]'))return;
   const tag=e.target?.localName;
   if(e.key==='Escape'&&choosing){e.preventDefault();cancelMove();return;}
+  if(e.key==='Delete'&&mounted&&!busy&&!preview&&!choosing&&!inline&&selection()&&!e.target?.isContentEditable&&!['input','textarea','select'].includes(tag)){
+    const acts=inspector.actions(selection());
+    if(acts){e.preventDefault();acts.remove();}
+    return;
+  }
   if(!(e.ctrlKey||e.metaKey))return;
   const key=e.key.toLowerCase();
   if(key==='s'){e.preventDefault();saveToServer(false);}
@@ -434,6 +462,20 @@ for(const [type,[label]] of Object.entries(blockTypes))$('insert').append(button
 save.onclick=()=>saveToServer(false);
 publish.onclick=()=>saveToServer(true);
 $('undo').onclick=()=>history(true);$('redo').onclick=()=>history(false);
+$('bar-up').onclick=()=>step(-1);
+$('bar-down').onclick=()=>step(1);
+$('bar-dup').onclick=()=>inspector.actions(selection())?.duplicate();
+$('bar-del').onclick=()=>inspector.actions(selection())?.remove();
+function openInserter(){
+  setLeftTab(true);pane('left',true);
+  $('insert').querySelector('.block-option')?.focus();
+}
+$('add-below').onclick=openInserter;
+$('inserter').onclick=()=>{
+  const visible=!$('insert').hidden&&(matchMedia('(min-width:761px)').matches||$('left').hasAttribute('data-open'));
+  if(visible){setLeftTab(false);if(matchMedia('(max-width:760px)').matches)pane('left',false);return;}
+  openInserter();
+};
 $('preview').onclick=()=>{
   finishInline(true);if(!inspector.flush())return;
   cancelMove(false);preview=!preview;

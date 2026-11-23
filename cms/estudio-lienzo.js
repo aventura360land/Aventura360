@@ -5,10 +5,18 @@ const clamp=(n,min,max)=>Math.max(min,Math.min(n,Math.max(min,max)));
 const rectDistance=(r,x,y)=>Math.hypot(Math.max(r.left-x,0,x-r.right),Math.max(r.top-y,0,y-r.bottom));
 const sideNames={before:'Antes de ',after:'Después de ',inside:'Dentro de '};
 const isVisible=node=>node?.getClientRects().length>0;
+const rowSelector='[data-layout-type="row"],#heroVisual[data-x-layout]';
+const itemOf=element=>element?.closest?.(rowSelector)||element?.closest?.(unit)||null;
 
 export function canvasUI(ui,actions){
-  let doc,selected,indicator,gesture,frameRequest=0,suppressClick=false;
-  const {frame,paper,selection,grip,gripCaption,drop,dragLabel,tree}=ui;
+  let doc,selected,indicator,gesture,frameRequest=0,suppressClick=false,hovered=null;
+  const {frame,paper,selection,grip,gripCaption,drop,dragLabel,tree,bar,up,down,addBelow}=ui;
+
+  function setHover(node){
+    if(hovered===node)return;
+    hovered?.removeAttribute('data-x-hover');
+    hovered=node;hovered?.setAttribute('data-x-hover','');
+  }
 
   function size(box,left,top,width,height){
     Object.assign(box.style,{left:left+'px',top:top+'px',width:width+'px',height:height+'px'});
@@ -26,7 +34,7 @@ export function canvasUI(ui,actions){
   }
 
   function draw(){
-    selection.hidden=grip.hidden=true;
+    selection.hidden=bar.hidden=addBelow.hidden=true;
     if(ui.preview()||!isVisible(selected)||gesture?.active)return;
     const area=selected.getBoundingClientRect();
     const ratio=scale();
@@ -35,9 +43,15 @@ export function canvasUI(ui,actions){
     if(right<=x||bottom<=y)return;
     selection.hidden=false;size(selection,x,y,right-x,bottom-y);
     if(!actions.ready()||actions.choosing())return;
-    grip.hidden=false;gripCaption.textContent=actions.label(selected).kind;
-    grip.style.left=clamp(x,1,paper.clientWidth-grip.offsetWidth-1)+'px';
-    grip.style.top=clamp(area.top*ratio-grip.offsetHeight>=0?area.top*ratio-grip.offsetHeight:area.top*ratio,0,paper.clientHeight-grip.offsetHeight)+'px';
+    const order=siblings(selected),index=order.indexOf(selected);
+    up.disabled=index<=0;down.disabled=index<0||index>=order.length-1;
+    actions.barState?.(selected);
+    bar.hidden=false;gripCaption.textContent=actions.label(selected).kind;
+    bar.style.left=clamp(x,1,paper.clientWidth-bar.offsetWidth-1)+'px';
+    bar.style.top=clamp(area.top*ratio-bar.offsetHeight>=0?area.top*ratio-bar.offsetHeight:area.top*ratio,0,paper.clientHeight-bar.offsetHeight)+'px';
+    addBelow.hidden=false;
+    addBelow.style.left=clamp((x+right)/2-addBelow.offsetWidth/2,0,paper.clientWidth-addBelow.offsetWidth)+'px';
+    addBelow.style.top=clamp(bottom-addBelow.offsetHeight/2,0,paper.clientHeight-addBelow.offsetHeight)+'px';
   }
 
   function displayMark(mark){
@@ -58,6 +72,7 @@ export function canvasUI(ui,actions){
 
   function select(node,follow=false){
     selected=node;
+    if(hovered&&hovered===node)setHover(null);
     if(follow&&isVisible(node))node.scrollIntoView({block:'center',inline:'nearest',behavior:'instant'});
     draw();
   }
@@ -72,37 +87,82 @@ export function canvasUI(ui,actions){
     return targetIndex+(side==='after'?1:-1)===sourceIndex;
   }
 
+  // ¿Se puede soltar el bloque arrastrado en ese lado de ese nodo? (la regla la decide destination())
+  function allowed(node,side){
+    const source=gesture.node;
+    if(!node||node===source||source.contains(node))return false;
+    if(side==='inside'&&node===source.parentElement)return false;
+    return Boolean(destination(source,node,side));
+  }
+  const isSame=(node,side)=>side!=='inside'&&gesture.items.includes(node)&&samePosition(node,side);
+
+  // ¿Los hermanos de este nodo están en fila (uno al lado del otro)?
+  function sideBySide(node){
+    const parent=node.parentElement;
+    if(!parent)return false;
+    const r=node.getBoundingClientRect();
+    for(const other of orderedChildren(parent)){
+      if(other===node||!other.matches?.(unit)||!isVisible(other))continue;
+      const o=other.getBoundingClientRect();
+      return Math.min(r.bottom,o.bottom)-Math.max(r.top,o.top)>4&&(o.left>=r.right-3||r.left>=o.right-3);
+    }
+    return false;
+  }
+
+  // Zonas: bordes = antes/después, centro = dentro (si el destino lo admite).
+  function pickSide(pos,edge){
+    return pos<edge?['before','after','inside']:pos>1-edge?['after','before','inside']
+      :['inside',pos<.5?'before':'after',pos<.5?'after':'before'];
+  }
+
+  function hitNode(node,x,y){
+    const r=node.getBoundingClientRect(),horizontal=sideBySide(node);
+    const pos=horizontal?(x-r.left)/(r.width||1):(y-r.top)/(r.height||1);
+    for(const side of pickSide(pos,.32)){
+      if(allowed(node,side))return {node,side,horizontal,same:isSame(node,side)};
+    }
+    return null;
+  }
+
+  // x,y en coordenadas del documento de la página. Busca el bloque bajo el puntero y, si no admite
+  // el bloque arrastrado, sube por sus contenedores hasta encontrar un destino válido.
+  function pageTarget(x,y){
+    const under=doc.elementFromPoint(x,y);
+    if(!under||gesture.node.contains(under))return null;
+    let start=itemOf(under);
+    if(!start)return null;
+    if(under===start){
+      // El puntero está en un hueco entre bloques: usa el hijo más cercano.
+      let best=40,near=null;
+      for(const kid of orderedChildren(start)){
+        if(!kid.matches?.(unit)||!isVisible(kid)||kid===gesture.node||gesture.node.contains(kid))continue;
+        const distance=rectDistance(kid.getBoundingClientRect(),x,y);
+        if(distance<best){best=distance;near=kid;}
+      }
+      if(near)start=near;
+    }
+    for(let node=start;node;node=node.parentElement?.closest(unit)){
+      const hit=hitNode(node,x,y);
+      if(hit)return hit;
+    }
+    return null;
+  }
+
   function targetAt(e){
     const over=document.elementFromPoint(e.clientX,e.clientY);
     const row=over?.closest('.tree-row');
     if(row&&tree.contains(row)){
       const node=actions.nodes().get(row.dataset.key);
-      if(node===gesture.node||!gesture.items.includes(node))return null;
-      const r=row.getBoundingClientRect();
-      const side=e.clientY<(r.top+r.bottom)/2?'before':'after';
-      return {node,side,row,same:samePosition(node,side)};
-    }
-    if(over!==frame&&over!==grip)return null;
-    const br=frame.getBoundingClientRect(),x=(e.clientX-br.left)/scale(),y=(e.clientY-br.top)/scale();
-    const under=doc.elementFromPoint(x,y),parent=gesture.node.parentElement;
-    if(!under||!parent.contains(under))return null;
-    let node=under;
-    while(node&&node.parentElement!==parent)node=node.parentElement;
-    if(!gesture.items.includes(node)){
-      let best=25;node=null;
-      for(const candidate of gesture.items){
-        const distance=rectDistance(candidate.getBoundingClientRect(),x,y);
-        if(distance<best){node=candidate;best=distance;}
+      if(!node||node===gesture.node||gesture.node.contains(node))return null;
+      const r=row.getBoundingClientRect(),pos=(e.clientY-r.top)/(r.height||1);
+      for(const side of pickSide(pos,.28)){
+        if(allowed(node,side))return {node,side,row,same:isSame(node,side)};
       }
+      return null;
     }
-    if(!node||node===gesture.node)return null;
-    const r=node.getBoundingClientRect(),from=gesture.node.getBoundingClientRect();
-    const overlap=Math.min(r.bottom,from.bottom)-Math.max(r.top,from.top);
-    const horizontal=overlap>4&&(r.left>=from.right-3||from.left>=r.right-3);
-    const pos=horizontal?(x-r.left)/r.width:(y-r.top)/r.height;
-    const towardEnd=gesture.items.indexOf(node)>gesture.items.indexOf(gesture.node);
-    const side=pos<.32?'before':pos>.68?'after':towardEnd?'after':'before';
-    return {node,side,horizontal,same:samePosition(node,side)};
+    if(over!==frame&&!bar.contains(over))return null;
+    const br=frame.getBoundingClientRect();
+    return pageTarget((e.clientX-br.left)/scale(),(e.clientY-br.top)/scale());
   }
 
   function update(e){
@@ -136,7 +196,6 @@ export function canvasUI(ui,actions){
   function start(e,node,capture=paper,point=e){
     if(!actions.ready()||actions.choosing()||!node||!e.isPrimary||e.button!==0)return;
     const items=siblings(node);
-    if(items.length<2)return;
     if(capture===paper)e.preventDefault();
     gesture={node,id:e.pointerId,capture,x:point.clientX,y:point.clientY,items};
     if(capture===paper)capture.setPointerCapture(e.pointerId);
@@ -168,7 +227,7 @@ export function canvasUI(ui,actions){
     if(wasDragging){suppressClick=true;setTimeout(()=>{suppressClick=false;},0);}
     cancel();
     if(move&&!move.same)actions.move(source,move.node,move.side);
-    else if(wasDragging)actions.report(move?.same?'El bloque ya está en esa posición.':'Suelta junto a otro bloque de este grupo o usa Mover a.');
+    else if(wasDragging)actions.report(move?.same?'El bloque ya está en esa posición.':'Suelta sobre la posición marcada, en la página o en Estructura.');
     else if(overlay&&point.clientX>=frame.getBoundingClientRect().left)actions.openInspector();
   }
   paper.addEventListener('pointermove',e=>pointerMove(e));
@@ -180,19 +239,20 @@ export function canvasUI(ui,actions){
   new ResizeObserver(()=>{fit();if(indicator&&!gesture)displayMark(indicator);}).observe(paper);
 
   function attach(frameDoc){
-    cancel();doc=frameDoc;selected=null;
+    cancel();doc=frameDoc;selected=null;hovered=null;
     const css=doc.createElement('style');
     css.textContent=`
       html{scroll-behavior:auto!important;overflow-anchor:none}
       .reveal{opacity:1!important;transform:none!important;transition:none!important}
       html.xebax-edit :is(.float-wa,#chatLauncher,#aviso,#scrollProgress){display:none!important}
       html.xebax-edit [data-x-layout]{cursor:default;user-select:none}
-      html.xebax-edit [data-studio-writing]{user-select:text}
+      html.xebax-edit [data-studio-writing]{user-select:text;cursor:text}
+      html.xebax-edit [data-x-hover]{outline:1px dashed #179768;outline-offset:-1px}
       html.xebax-edit .xc-block:empty{display:grid;min-height:64px;place-items:center;border:1px dashed #789083}
       html.xebax-edit .xc-block:empty::before{content:"Completa este bloque en Ajustes";color:#53675e;font:14px system-ui}
     `;
     doc.head.append(css);
-    const item=element=>element.closest?.('[data-layout-type="row"],#heroVisual[data-x-layout]')||element.closest?.(unit);
+    const item=itemOf;
     const point=e=>{
       const r=frame.getBoundingClientRect(),ratio=scale();
       return {clientX:r.left+e.clientX*ratio,clientY:r.top+e.clientY*ratio};
@@ -204,7 +264,10 @@ export function canvasUI(ui,actions){
       e.preventDefault();e.stopImmediatePropagation();
       if(suppressClick)return;
       const unitNode=item(e.target);
-      if(unitNode)actions.onSelect(unitNode,false);
+      if(!unitNode)return;
+      const wasSelected=unitNode===selected;
+      actions.onSelect(unitNode,false);
+      if(wasSelected&&!actions.choosing())actions.onText(unitNode,e.target,e,true);
     };
     doc.defaultView.addEventListener('click',onClick,true);
     doc.defaultView.addEventListener('pointerdown',e=>{
@@ -217,8 +280,14 @@ export function canvasUI(ui,actions){
     doc.defaultView.addEventListener('blur',()=>{if(gesture?.capture===doc.body)cancel();});
     doc.defaultView.addEventListener('dragstart',e=>{if(!ui.preview())e.preventDefault();},true);
     doc.defaultView.addEventListener('load',draw,true);
+    doc.defaultView.addEventListener('mouseover',e=>{
+      if(ui.preview()||gesture?.active||!e.target.closest){setHover(null);return;}
+      const node=item(e.target);
+      setHover(node&&node!==selected?node:null);
+    },true);
+    doc.documentElement.addEventListener('mouseleave',()=>setHover(null));
     doc.defaultView.addEventListener('dblclick',e=>{
-      if(ui.preview()||actions.choosing())return;
+      if(ui.preview()||actions.choosing()||e.target.closest?.('[data-studio-writing]'))return;
       const unitNode=item(e.target);
       if(unitNode)actions.onText(unitNode,e.target,e);
     },true);

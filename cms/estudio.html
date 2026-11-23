@@ -11,6 +11,7 @@
 <body>
   <header class="topbar">
     <a class="brand" href="../resenas/admin.html"><img src="../img/logo-xebax-mark.webp" alt=""> Xebax Estudio</a>
+    <button id="inserter" class="inserter" type="button" aria-label="Añadir bloque" title="Añadir bloque" aria-expanded="false">+</button>
     <label class="page-picker"><span class="sr-only">Página</span><select id="pages"></select></label>
     <div class="toolbar history"><button id="undo" disabled>Deshacer</button><button id="redo" disabled>Rehacer</button></div>
     <div class="toolbar publication"><button id="preview" aria-pressed="false" disabled>Vista previa</button><button id="save" aria-label="Guardar borrador" disabled>Guardar borrador</button><button class="primary" id="publish" disabled>Publicar</button></div>
@@ -38,7 +39,14 @@
           <iframe id="frame" title="Página editable" sandbox="allow-scripts allow-same-origin"></iframe>
           <div id="loading" class="loading">Cargando la página…</div>
           <div id="selection" class="selection-box" hidden></div>
-          <button id="grip" class="grip" hidden aria-label="Arrastrar bloque"><span id="grip-caption"></span></button>
+          <div id="blockbar" class="blockbar" role="toolbar" aria-label="Herramientas del bloque" hidden>
+            <button id="grip" class="grip" type="button" aria-label="Arrastrar bloque" title="Arrastra para mover este bloque"><span id="grip-caption"></span></button>
+            <button id="bar-up" type="button" aria-label="Subir bloque" title="Subir">↑</button>
+            <button id="bar-down" type="button" aria-label="Bajar bloque" title="Bajar">↓</button>
+            <button id="bar-dup" type="button" aria-label="Duplicar bloque">Duplicar</button>
+            <button id="bar-del" class="danger" type="button" aria-label="Quitar bloque">Quitar</button>
+          </div>
+          <button id="add-below" class="add-below" type="button" hidden aria-label="Añadir un bloque después de este" title="Añadir bloque">+</button>
           <div id="drop" class="drop" hidden></div>
           <div id="drag-label" class="drag-label" hidden aria-hidden="true"></div>
         </div>

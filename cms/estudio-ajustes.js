@@ -33,6 +33,41 @@ export function blockOwner(state,node,page){
   return {owner,box,block:owner?.blocks?.find(b=>b.blockId===box?.dataset.xBlock)};
 }
 
+// Acciones de duplicar/quitar disponibles para un nodo (bloque propio o elemento de colección).
+// Las usan tanto el panel de Ajustes como la barra flotante del bloque.
+export function blockActions(ctx,node,flush=()=>true){
+  if(!node)return null;
+  const page=ctx.page(),state=ctx.state();
+  const {owner,block}=blockOwner(state,node,page);
+  if(block){
+    return {
+      duplicate:()=>{if(flush())ctx.duplicate(owner,block,copyBlock(block));},
+      remove:async()=>{
+        if(flush()&&await ctx.confirm('Quitar este bloque','Puedes recuperarlo con Deshacer antes de cerrar el editor.','Quitar'))ctx.remove(owner,block);
+      }
+    };
+  }
+  if(node.dataset.xItem){
+    const collectionId=node.parentElement?.dataset.xCollection;
+    const collection=page.sections?.flatMap(section=>section.collections).find(c=>c.id===collectionId);
+    if(collection){
+      return {
+        duplicate:()=>{if(flush())ctx.changeRow(collection,node.dataset.xItem,true);},
+        remove:async()=>{
+          if(flush()&&await ctx.confirm('Quitar este elemento','Puedes recuperar el elemento con Deshacer.','Quitar'))ctx.changeRow(collection,node.dataset.xItem,false);
+        }
+      };
+    }
+  }
+  return null;
+}
+
+function actionRow(acts){
+  const row=el('div',undefined,'inline-actions');
+  row.append(button('Duplicar',acts.duplicate),button('Quitar',acts.remove,'danger'));
+  return row;
+}
+
 export function studioInspector(host,ctx){
   let pending=null;
   function flush(reload=false){
@@ -135,10 +170,8 @@ export function studioInspector(host,ctx){
       form((box,changed)=>objectFields(box,copy,block.type,{changed,choose:ctx.choose,confirm:ctx.confirm,skip:['type','blockId']}),reload=>{
         ctx.commit(()=>Object.assign(block,structuredClone(copy)),{reload,message:'Contenido actualizado'});return true;
       });
-      const options=el('div',undefined,'inline-actions');
-      options.append(button('Duplicar',()=>{if(flush())ctx.duplicate(owner,block,copyBlock(block));}),
-        button('Quitar',async()=>{if(flush()&&await ctx.confirm('Quitar este bloque','Puedes recuperarlo con Deshacer antes de cerrar el editor.','Quitar'))ctx.remove(owner,block);},'danger'));
-      host.append(options);
+      const acts=blockActions(ctx,node,flush);
+      if(acts)host.append(actionRow(acts));
     }else{
       const specs=nativeFields(page,state,node);
       const edits=new Map();
@@ -182,21 +215,9 @@ export function studioInspector(host,ctx){
           ctx.commit(()=>Object.assign(owner,copy),{reload,message:'Sección actualizada'});return true;
         });
       }
-      if(node.dataset.xItem){
-        const collectionId=node.parentElement?.dataset.xCollection;
-        const collection=page.sections?.flatMap(section=>section.collections).find(c=>c.id===collectionId);
-        if(collection){
-          const actions=el('div',undefined,'inline-actions');
-          actions.append(button('Duplicar',()=>{if(flush())ctx.changeRow(collection,node.dataset.xItem,true);}),
-            button('Quitar',async()=>{
-              if(flush()&&await ctx.confirm('Quitar este elemento','Puedes recuperar el elemento con Deshacer.','Quitar')){
-                ctx.changeRow(collection,node.dataset.xItem,false);
-              }
-            },'danger'));
-          host.append(actions);
-        }
-      }
+      const acts=blockActions(ctx,node,flush);
+      if(acts)host.append(actionRow(acts));
     }
   }
-  return {render,flush,pending:()=>!!pending};
+  return {render,flush,pending:()=>!!pending,actions:node=>blockActions(ctx,node,flush)};
 }
