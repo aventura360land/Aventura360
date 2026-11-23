@@ -155,3 +155,23 @@ dialog.media{width:min(92vw,820px);max-height:80dvh}
   .canvas{padding:4px}
   .stage-status{padding:4px 7px}
 }
+
+.stage-bar{flex-wrap:wrap}
+.precision-toggle{min-height:30px;padding:4px 10px;font-size:12px}
+.precision-toggle[aria-pressed=true]{background:#0d6145;border-color:#0d6145;color:#fff}
+.geometry-handles{position:absolute;inset:0;z-index:4;pointer-events:none}
+.geometry-handles button{position:absolute;pointer-events:auto;touch-action:none;box-sizing:border-box}
+.geometry-handles button:focus-visible{outline:3px solid #173d2f;outline-offset:2px}
+.geometry-handles [data-geometry-axis=move]{min-height:27px;padding:3px 8px;background:#0d6145;border-color:#0d6145;color:white;font-size:12px;cursor:move;white-space:nowrap}
+.geometry-handles button:not([data-geometry-axis=move]){width:25px;height:25px;min-height:0;padding:0;background:transparent;border:0;display:grid;place-items:center}
+.geometry-handles button:not([data-geometry-axis=move])[hidden]{display:none}
+.geometry-handles button:not([data-geometry-axis=move])::after{content:"";width:13px;height:13px;box-sizing:border-box;border:2px solid #0d6145;border-radius:3px;background:#fff;box-shadow:0 0 0 1px #fff}
+.geometry-handles [data-geometry-axis=width]{cursor:ew-resize}
+.geometry-handles [data-geometry-axis=height]{cursor:ns-resize}
+.geometry-handles [data-geometry-axis=both]{cursor:nwse-resize}
+.paper:has(.geometry-handles:not([hidden])) .selection-box{outline-color:#0d6145}
+.drag-label{z-index:5}
+.geometry-fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.geometry-fields label{display:grid;gap:4px;font-size:12px}
+.geometry-fields input{width:100%;min-width:0}
+.geometry-panel .details-body{display:grid;gap:8px}

@@ -32,6 +32,7 @@
           <button type="button" data-screen="tablet" aria-pressed="false">Tableta</button>
           <button type="button" data-screen="phone" aria-pressed="false">Móvil</button>
         </div>
+        <button id="precision" class="precision-toggle" type="button" aria-pressed="false" disabled>Ajuste libre</button>
         <a id="visit" target="_blank" rel="noopener">Ver publicada</a>
       </div>
       <div id="canvas" class="canvas" data-screen="desktop">
@@ -47,6 +48,12 @@
             <button id="bar-del" class="danger" type="button" aria-label="Quitar bloque">Quitar</button>
           </div>
           <button id="add-below" class="add-below" type="button" hidden aria-label="Añadir un bloque después de este" title="Añadir bloque">+</button>
+          <div id="geometry-handles" class="geometry-handles" role="group" aria-label="Ajuste de posición y tamaño" hidden>
+            <button type="button" data-geometry-axis="move" aria-label="Mover con precisión" title="Arrastra para mover · Flechas: 1 px">Mover <span aria-hidden="true">✥</span></button>
+            <button type="button" data-geometry-axis="width" aria-label="Cambiar ancho" title="Arrastra para cambiar el ancho"></button>
+            <button type="button" data-geometry-axis="height" aria-label="Cambiar alto" title="Arrastra para cambiar el alto"></button>
+            <button type="button" data-geometry-axis="both" aria-label="Cambiar ancho y alto" title="Arrastra para cambiar el ancho y el alto"></button>
+          </div>
           <div id="drop" class="drop" hidden></div>
           <div id="drag-label" class="drag-label" hidden aria-hidden="true"></div>
         </div>

@@ -3,6 +3,7 @@ import {applyStyle,destination,layoutKey,pageLayout,spacings} from './disposicio
 import {blockTypes,copyBlock,idNuevo,slugify} from './modelo.js';
 import {safeUrl,validSrcset} from './plantilla.js';
 import {labelOf} from './estructura.js';
+import {deviceNames,geometryFields} from './geometria.js';
 
 function nativeFields(page,state,node){
   const result=new Map(),sections=page.sections||[];
@@ -69,7 +70,7 @@ function actionRow(acts){
 }
 
 export function studioInspector(host,ctx){
-  let pending=null;
+  let pending=null,syncGeometry=()=>{};
   function flush(reload=false){
     if(!pending)return true;
     const apply=pending;pending=null;
@@ -122,8 +123,44 @@ export function studioInspector(host,ctx){
     }));
   }
 
+  function geometryControls(node){
+    const panel=details('Posición y tamaño',box=>{
+      box.className='details-body';
+      const note=el('p'),fields=el('div',undefined,'geometry-fields'),inputs=new Map();
+      const isText=node.matches('h1,h2,h3,h4,h5,h6,p,a,button,span,strong,small,li,.xc-heading,.xc-text');
+      for(const {key,label,min,max} of geometryFields){
+        if(key==='fontSize'&&!isText)continue;
+        const wrap=el('label',label),input=el('input');
+        input.type='number';input.min=min;input.max=max;input.step=1;
+        input.placeholder=key==='x'||key==='y'?'0':'Automático';
+        let edited=false;
+        input.oninput=()=>{edited=true;};
+        function update(){
+          if(!edited)return;
+          edited=false;
+          const value=ctx.readGeometry(node);
+          if(input.validity.badInput){syncGeometry();return;}
+          if(input.value==='')delete value[key];else value[key]=input.valueAsNumber;
+          ctx.writeGeometry(node,value);
+        }
+        input.onchange=input.onblur=update;
+        input.onkeydown=e=>{if(e.key==='Enter'){e.preventDefault();update();}};
+        wrap.append(input);fields.append(wrap);inputs.set(key,input);
+      }
+      const reset=button('Restablecer posición y tamaño',()=>ctx.writeGeometry(node,{}));
+      syncGeometry=()=>{
+        const values=ctx.readGeometry(node);
+        note.textContent=`Solo en ${deviceNames[ctx.screen()]} · medidas en píxeles`;
+        for(const [key,input] of inputs)input.value=values[key]??'';
+        reset.disabled=Object.keys(values).length===0;
+      };
+      syncGeometry();box.append(note,fields,reset);
+    },ctx.precision());
+    panel.className='geometry-panel';host.append(panel);
+  }
+
   function render(node,tab){
-    pending=null;host.replaceChildren();
+    pending=null;syncGeometry=()=>{};host.replaceChildren();
     const page=ctx.page(),state=ctx.state();
     if(tab==='page'){
       host.append(el('h3',page.label||page.titulo));
@@ -162,6 +199,7 @@ export function studioInspector(host,ctx){
     const up=button('Subir',()=>ctx.step(-1)),down=button('Bajar',()=>ctx.step(1));
     up.disabled=index<=0;down.disabled=index<0||index>=order.length-1;
     moves.append(up,down,button('Mover a…',ctx.startMove));host.append(moves);
+    geometryControls(node);
     styleControls(node,page);
 
     const {owner,block}=blockOwner(state,node,page);
@@ -219,5 +257,5 @@ export function studioInspector(host,ctx){
       if(acts)host.append(actionRow(acts));
     }
   }
-  return {render,flush,pending:()=>!!pending,actions:node=>blockActions(ctx,node,flush)};
+  return {render,flush,syncGeometry:()=>syncGeometry(),pending:()=>!!pending,actions:node=>blockActions(ctx,node,flush)};
 }

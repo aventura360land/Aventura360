@@ -1,4 +1,5 @@
 import {destination,layoutKey,layoutUnits,orderedChildren} from './disposicion.js';
+import {normalizeGeometry} from './geometria.js';
 
 const unit='[data-x-layout]';
 const clamp=(n,min,max)=>Math.max(min,Math.min(n,Math.max(min,max)));
@@ -10,7 +11,8 @@ const itemOf=element=>element?.closest?.(rowSelector)||element?.closest?.(unit)|
 
 export function canvasUI(ui,actions){
   let doc,selected,indicator,gesture,frameRequest=0,suppressClick=false,hovered=null;
-  const {frame,paper,selection,grip,gripCaption,drop,dragLabel,tree,bar,up,down,addBelow}=ui;
+  const {frame,paper,selection,grip,gripCaption,drop,dragLabel,tree,bar,up,down,addBelow,handles}=ui;
+  const tools=Object.fromEntries([...handles.children].map(tool=>[tool.dataset.geometryAxis,tool]));
 
   function setHover(node){
     if(hovered===node)return;
@@ -35,14 +37,22 @@ export function canvasUI(ui,actions){
 
   function draw(){
     selection.hidden=bar.hidden=addBelow.hidden=true;
-    if(ui.preview()||!isVisible(selected)||gesture?.active)return;
+    const canDraw=!(ui.preview()||!isVisible(selected)||gesture?.active&&!gesture.axis);
+    const canAdjust=canDraw&&actions.ready()&&!actions.choosing();
+    if(!canAdjust||!ui.precision())handles.hidden=true;
+    if(!canDraw)return;
     const area=selected.getBoundingClientRect();
     const ratio=scale();
     const x=Math.max(area.left*ratio,0),y=Math.max(area.top*ratio,0);
     const right=Math.min(area.right*ratio,paper.clientWidth),bottom=Math.min(area.bottom*ratio,paper.clientHeight);
-    if(right<=x||bottom<=y)return;
+    if(right<=x||bottom<=y){handles.hidden=true;return;}
     selection.hidden=false;size(selection,x,y,right-x,bottom-y);
-    if(!actions.ready()||actions.choosing())return;
+    if(!canAdjust)return;
+    if(ui.precision()){
+      handles.hidden=false;
+      drawHandles({x,y,right,bottom},area,ratio);
+      return;
+    }
     const order=siblings(selected),index=order.indexOf(selected);
     up.disabled=index<=0;down.disabled=index<0||index>=order.length-1;
     actions.barState?.(selected);
@@ -52,6 +62,23 @@ export function canvasUI(ui,actions){
     addBelow.hidden=false;
     addBelow.style.left=clamp((x+right)/2-addBelow.offsetWidth/2,0,paper.clientWidth-addBelow.offsetWidth)+'px';
     addBelow.style.top=clamp(bottom-addBelow.offsetHeight/2,0,paper.clientHeight-addBelow.offsetHeight)+'px';
+  }
+
+  function drawHandles({x,y,right,bottom},area,ratio){
+    const move=tools.move;
+    move.style.left=clamp(x,0,paper.clientWidth-move.offsetWidth)+'px';
+    move.style.top=clamp(y-move.offsetHeight-4,0,paper.clientHeight-move.offsetHeight)+'px';
+    const onRight=area.right*ratio<=paper.clientWidth;
+    const onBottom=area.bottom*ratio<=paper.clientHeight;
+    for(const [tool,left,top,visible] of [
+      [tools.width,right,(y+bottom)/2,onRight&&bottom-y>=30],
+      [tools.height,(x+right)/2,bottom,onBottom&&right-x>=30],
+      [tools.both,right,bottom,onRight&&onBottom]
+    ]){
+      tool.hidden=!visible;
+      tool.style.left=clamp(left-12.5,0,paper.clientWidth-25)+'px';
+      tool.style.top=clamp(top-12.5,0,paper.clientHeight-25)+'px';
+    }
   }
 
   function displayMark(mark){
@@ -189,15 +216,19 @@ export function canvasUI(ui,actions){
 
   function cancel(){
     const active=gesture;gesture=null;cancelAnimationFrame(frameRequest);
+    if(active?.axis&&active.active){
+      actions.previewGeometry(active.node,active.profile);
+      active.node.removeAttribute('data-x-geometry-dragging');
+    }
     if(active?.capture.hasPointerCapture(active.id))active.capture.releasePointerCapture(active.id);
     dragLabel.hidden=true;displayMark(null);draw();
   }
 
-  function start(e,node,capture=paper,point=e){
-    if(!actions.ready()||actions.choosing()||!node||!e.isPrimary||e.button!==0)return;
-    const items=siblings(node);
+  function start(e,node,capture=paper,point=e,axis=null){
+    if(gesture||!actions.ready()||actions.choosing()||!node||!e.isPrimary||e.button!==0)return;
+    const items=axis?[]:siblings(node);
     if(capture===paper)e.preventDefault();
-    gesture={node,id:e.pointerId,capture,x:point.clientX,y:point.clientY,items};
+    gesture={node,id:e.pointerId,capture,x:point.clientX,y:point.clientY,items,axis};
     if(capture===paper)capture.setPointerCapture(e.pointerId);
   }
   grip.onpointerdown=e=>start(e,selected);
@@ -206,25 +237,85 @@ export function canvasUI(ui,actions){
     const direction={ArrowLeft:-1,ArrowUp:-1,ArrowRight:1,ArrowDown:1}[e.key];
     if(direction){e.preventDefault();actions.step(direction,selected);}
   };
+  for(const [axis,tool] of Object.entries(tools)){
+    tool.onpointerdown=e=>start(e,selected,paper,e,axis);
+    tool.onkeydown=e=>{
+      const deltas={ArrowLeft:[-1,0],ArrowRight:[1,0],ArrowUp:[0,-1],ArrowDown:[0,1]}[e.key];
+      if(!deltas||!selected||gesture||!actions.prepareGeometry(selected))return;
+      e.preventDefault();
+      const step=e.shiftKey?10:1,base=geometryBaseline(selected);
+      const next=geometryChange(axis,base,deltas[0]*step,deltas[1]*step);
+      actions.commitGeometry(selected,next);
+    };
+  }
   tree.addEventListener('pointerdown',e=>{
     const row=e.target.closest('.tree-grip')?.closest('.tree-row');
     if(row)start(e,actions.nodes().get(row.dataset.key));
   });
+  function geometryBaseline(node){
+    const area=node.getBoundingClientRect(),profile=actions.readGeometry(node);
+    return {profile,width:node.offsetWidth||area.width,height:node.offsetHeight||area.height};
+  }
+
+  function geometryChange(axis,base,dx,dy){
+    const {profile,width,height}=base;
+    const next={...profile};
+    if(axis==='move'){
+      next.x=(profile.x||0)+dx;next.y=(profile.y||0)+dy;
+    }
+    if((axis==='both'||axis==='width')&&dx)next.width=width+dx;
+    if((axis==='both'||axis==='height')&&dy)next.height=height+dy;
+    return normalizeGeometry(next);
+  }
+
+  function updateGeometry(e){
+    const ratio=gesture.ratio;
+    const dx=Math.round((e.clientX-gesture.x)/ratio),dy=Math.round((e.clientY-gesture.y)/ratio);
+    const next=geometryChange(gesture.axis,gesture,dx,dy);
+    gesture.next=next;
+    actions.previewGeometry(gesture.node,next);
+    draw();
+    const area=gesture.node.getBoundingClientRect(),r=paper.getBoundingClientRect();
+    dragLabel.textContent=gesture.axis==='move'
+      ?`X ${next.x||0} · Y ${next.y||0} px`
+      :`${Math.round(area.width)} × ${Math.round(area.height)} px`;
+    dragLabel.hidden=false;
+    dragLabel.style.left=clamp(e.clientX-r.left+15,6,paper.clientWidth-dragLabel.offsetWidth-6)+'px';
+    dragLabel.style.top=clamp(e.clientY-r.top+16,6,paper.clientHeight-dragLabel.offsetHeight-6)+'px';
+  }
+
   function pointerMove(e,point=e){
     if(gesture?.id!==e.pointerId)return;
     if(!e.buttons){cancel();return;}
     if(!gesture.active){
-      if(Math.hypot(point.clientX-gesture.x,point.clientY-gesture.y)<7)return;
+      if(Math.hypot(point.clientX-gesture.x,point.clientY-gesture.y)<(gesture.axis?2:7))return;
+      if(gesture.axis){
+        if(!actions.prepareGeometry(gesture.node)){cancel();return;}
+        Object.assign(gesture,geometryBaseline(gesture.node),{ratio:scale()});
+        gesture.node.setAttribute('data-x-geometry-dragging','');
+      }
       gesture.capture.setPointerCapture(e.pointerId);
-      gesture.active=true;actions.select(gesture.node,false);draw();frameRequest=requestAnimationFrame(autoscroll);
+      gesture.active=true;
+      if(!gesture.axis){
+        actions.select(gesture.node,false);draw();frameRequest=requestAnimationFrame(autoscroll);
+      }
     }
-    e.preventDefault();gesture.event=point;update(point);
+    e.preventDefault();
+    if(gesture.axis){updateGeometry(point);return;}
+    gesture.event=point;update(point);
   }
   function pointerUp(e,point=e){
     if(gesture?.id!==e.pointerId)return;
-    const move=gesture.active?targetAt(point):null,source=gesture.node,wasDragging=gesture.active;
-    const overlay=gesture.capture===paper;
+    const {node:source,axis,active:wasDragging}=gesture;
     if(wasDragging){suppressClick=true;setTimeout(()=>{suppressClick=false;},0);}
+    if(axis){
+      if(wasDragging)updateGeometry(point);
+      const next=gesture.next;
+      cancel();
+      if(next)actions.commitGeometry(source,next);
+      return;
+    }
+    const move=wasDragging?targetAt(point):null,overlay=gesture.capture===paper;
     cancel();
     if(move&&!move.same)actions.move(source,move.node,move.side);
     else if(wasDragging)actions.report(move?.same?'El bloque ya está en esa posición.':'Suelta sobre la posición marcada, en la página o en Estructura.');
@@ -246,13 +337,16 @@ export function canvasUI(ui,actions){
       .reveal{opacity:1!important;transform:none!important;transition:none!important}
       html.xebax-edit :is(.float-wa,#chatLauncher,#aviso,#scrollProgress){display:none!important}
       html.xebax-edit [data-x-layout]{cursor:default;user-select:none}
+      html.xebax-edit.xebax-precision [data-x-layout]{cursor:move}
+      html.xebax-edit.xebax-precision :is(.btn-primary,.btn-wa,.hero-cabana-link,.service-card,.nautical-card){transform:none!important;transition:none!important}
+      html.xebax-edit [data-x-geometry-dragging]{transition:none!important}
       html.xebax-edit [data-studio-writing]{user-select:text;cursor:text}
       html.xebax-edit [data-x-hover]{outline:1px dashed #179768;outline-offset:-1px}
       html.xebax-edit .xc-block:empty{display:grid;min-height:64px;place-items:center;border:1px dashed #789083}
       html.xebax-edit .xc-block:empty::before{content:"Completa este bloque en Ajustes";color:#53675e;font:14px system-ui}
     `;
     doc.head.append(css);
-    const item=itemOf;
+    const item=hit=>ui.precision()&&!actions.choosing()?hit.closest(unit):itemOf(hit);
     const point=e=>{
       const r=frame.getBoundingClientRect(),ratio=scale();
       return {clientX:r.left+e.clientX*ratio,clientY:r.top+e.clientY*ratio};
@@ -267,16 +361,19 @@ export function canvasUI(ui,actions){
       if(!unitNode)return;
       const wasSelected=unitNode===selected;
       actions.onSelect(unitNode,false);
-      if(wasSelected&&!actions.choosing())actions.onText(unitNode,e.target,e,true);
+      if(wasSelected&&!ui.precision()&&!actions.choosing())actions.onText(unitNode,e.target,e,true);
     };
     doc.defaultView.addEventListener('click',onClick,true);
     doc.defaultView.addEventListener('pointerdown',e=>{
-      if(e.pointerType!=='mouse'||e.target.closest?.('[data-studio-writing]'))return;
-      start(e,item(e.target),doc.body,point(e));
+      if(e.pointerType!=='mouse'||!e.target.closest||e.target.closest('[data-studio-writing]'))return;
+      const axis=ui.precision()?'move':null;
+      const node=axis&&selected?.contains(e.target)?selected:item(e.target);
+      start(e,node,doc.body,point(e),axis);
     },true);
     doc.defaultView.addEventListener('pointermove',e=>pointerMove(e,point(e)),true);
     doc.defaultView.addEventListener('pointerup',e=>pointerUp(e,point(e)),true);
     doc.defaultView.addEventListener('pointercancel',cancel,true);
+    doc.defaultView.addEventListener('lostpointercapture',()=>{if(gesture?.capture===doc.body)cancel();},true);
     doc.defaultView.addEventListener('blur',()=>{if(gesture?.capture===doc.body)cancel();});
     doc.defaultView.addEventListener('dragstart',e=>{if(!ui.preview())e.preventDefault();},true);
     doc.defaultView.addEventListener('load',draw,true);
@@ -287,14 +384,18 @@ export function canvasUI(ui,actions){
     },true);
     doc.documentElement.addEventListener('mouseleave',()=>setHover(null));
     doc.defaultView.addEventListener('dblclick',e=>{
-      if(ui.preview()||actions.choosing()||e.target.closest?.('[data-studio-writing]'))return;
+      if(ui.preview()||ui.precision()||actions.choosing()||e.target.closest?.('[data-studio-writing]'))return;
       const unitNode=item(e.target);
       if(unitNode)actions.onText(unitNode,e.target,e);
     },true);
     doc.defaultView.addEventListener('scroll',()=>{draw();if(indicator&&!gesture)displayMark(indicator);},{passive:true,capture:true});
-    doc.defaultView.addEventListener('keydown',actions.key,true);
+    doc.defaultView.addEventListener('keydown',e=>{
+      if(e.key==='Escape'&&gesture){e.preventDefault();cancel();return;}
+      actions.key(e);
+    },true);
     doc.defaultView.addEventListener('resize',draw);
     doc.documentElement.classList.toggle('xebax-edit',!ui.preview());
+    doc.documentElement.classList.toggle('xebax-precision',ui.precision());
     return new Map(layoutUnits(doc).map(node=>[layoutKey(node),node]));
   }
 

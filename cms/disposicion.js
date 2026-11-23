@@ -1,3 +1,5 @@
+import {applyGeometry,geometryCSS} from './geometria.js';
+
 // Las claves se calculan sobre la plantilla, antes de trasladar ningún nodo.
 // Cada fila y cada bloque tiene su propio espacio de claves, incluso al duplicarse.
 const keyAttr='data-x-layout';
@@ -134,6 +136,7 @@ export function applyStyle(node,style={}){
       delete node.dataset[original];delete node.dataset[priority];
     }
   }
+  applyGeometry(node,style.geometry);
 }
 export function mountLayout(doc,page,layout){
   const nodes=register(doc,page);
@@ -153,7 +156,6 @@ export function mountLayout(doc,page,layout){
       else if(!source.matches('[data-x-item],li,[role=listitem],[data-layout-type=section]'))slot.append(source);
     }
   }
-  if(layout?.styles)for(const [key,style] of Object.entries(layout.styles))if(nodes.has(key)&&style)applyStyle(nodes.get(key),style);
   const css=doc.createElement('style');css.textContent=`
     [data-layout-hidden]{display:none!important}
     [data-layout-ordered] > *{order:0!important}
@@ -164,7 +166,9 @@ export function mountLayout(doc,page,layout){
     :is(img,figure,picture,video,button,a,span,strong,small)[data-layout-align=left]{margin-inline:0 auto}
     :is(img,figure,picture,video,button,a,span,strong,small)[data-layout-align=center]{margin-inline:auto}
     :is(img,figure,picture,video,button,a,span,strong,small)[data-layout-align=right]{margin-inline:auto 0}
+    ${geometryCSS}
   `;doc.head.append(css);
+  if(layout?.styles)for(const [key,style] of Object.entries(layout.styles))if(nodes.has(key)&&style)applyStyle(nodes.get(key),style);
 }
 
 export function recordMove(state,page,a,b,position){
