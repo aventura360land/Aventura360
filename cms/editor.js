@@ -1,3 +1,4 @@
+import {studioURL} from './acceso-visual.js';
 import {validatePublish} from './publicacion.js';
 import {pageCanvas} from './lienzo.js';
 import {pagesList,mergePage,paginaURL} from './paginas.js';
@@ -109,10 +110,13 @@ export function createEditor({token,report,openReviews}){
     const title=activePage?.label||activePage?.titulo||definitions.find(d=>d[0]===k)?.[1]||'Contenido';host.append(el('h1',title));
     if(conflict)host.append(button('Cargar la versión actual del servidor',reloadDraft));
     const content=el('div');host.append(content);const c=ctx(),page=catalog.pages.find(p=>p.id===k);
-    if(k==='all-pages')pagesList(content,c,live,async p=>{
-      if(working||dirty&&!await save(false))return;
-      const url=new URL(paginaURL(p),location.href);url.searchParams.set('editar','1');location.assign(url);
-    },p=>open('canvas',p));
+    if(k==='all-pages'){
+      const studio=async (page,tab)=>{
+        if(working||dirty&&!await save(false))return;
+        location.assign(studioURL(page.id,null,tab));
+      };
+      pagesList(content,c,live,p=>studio(p),p=>studio(p,'page'));
+    }
     else if(k==='canvas'){disposeCanvas=pageCanvas(content,activePage,c,()=>open('all-pages'));syncHistoryButtons();}
     else if(k==='site-content'){
       const menu=el('div',undefined,'wp-options');
@@ -200,7 +204,7 @@ export function createEditor({token,report,openReviews}){
     for(const id of fileKeys)$(id).hidden=false;
     const id=new URL(location.href).searchParams.get('ajustes');
     const page=[...catalog.pages,...state.pages].find(p=>p.id===id);
-    if(page)open('canvas',page);else open('all-pages');
+    if(page)location.replace(studioURL(page.id,null,'page'));else open('all-pages');
   }
   function stop(){clearTimeout(groupTimer);groupTimer=0;undoStack=[];redoStack=[];baseline=null;disposeCanvas?.();disposeCanvas=null;activePage=null;live=createState();document.body.classList.remove('wp-editing');session++;dirty=false;conflict=false;state=null;previewNonce='';host.replaceChildren();host.hidden=true;nav.querySelectorAll('button:not(#reviews-nav)').forEach(b=>b.remove());for(const id of fileKeys)$(id).hidden=true;$('save-state').textContent='';for(const id of ['media-dialog','preview-dialog'])if($(id).open)$(id).close();}
   return {start,stop,showReviews:()=>open('reviews'),hasChanges:()=>dirty,isSaving:()=>working};

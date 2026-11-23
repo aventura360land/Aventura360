@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>Estudio · Xebax</title>
+  <link rel="stylesheet" href="./estudio.css">
+  <script type="module" src="./estudio.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="../resenas/admin.html"><img src="../img/logo-xebax-mark.webp" alt=""> Xebax Estudio</a>
+    <label class="page-picker"><span class="sr-only">Página</span><select id="pages"></select></label>
+    <div class="toolbar history"><button id="undo" disabled>Deshacer</button><button id="redo" disabled>Rehacer</button></div>
+    <div class="toolbar publication"><button id="preview" aria-pressed="false" disabled>Vista previa</button><button id="save" aria-label="Guardar borrador" disabled>Guardar borrador</button><button class="primary" id="publish" disabled>Publicar</button></div>
+  </header>
+  <div class="workspace" id="workspace">
+    <aside id="left" class="panel left" aria-label="Estructura y bloques">
+      <div class="panel-head"><h2>Contenido</h2><button class="pane-close" id="close-left">Cerrar</button></div>
+      <div class="tabs"><button id="layers-tab" aria-pressed="true">Estructura</button><button id="add-tab" aria-pressed="false">Añadir</button></div>
+      <div id="layers" class="panel-scroll"><div class="search"><input type="search" id="search" placeholder="Buscar en la página" aria-label="Buscar en la estructura"></div><div id="tree"></div></div>
+      <div id="insert" class="panel-scroll insert" hidden></div>
+      <footer class="panel-foot"><a href="../resenas/admin.html">Administración del sitio</a></footer>
+    </aside>
+    <main class="stage">
+      <div class="stage-bar">
+        <div class="toolbar drawers"><button id="open-left" aria-controls="left" aria-expanded="false">Contenido</button><button id="open-right" aria-controls="right" aria-expanded="false">Ajustes</button></div>
+        <div class="toolbar devices" aria-label="Vista del dispositivo">
+          <button type="button" data-screen="desktop" aria-pressed="true">Escritorio</button>
+          <button type="button" data-screen="tablet" aria-pressed="false">Tableta</button>
+          <button type="button" data-screen="phone" aria-pressed="false">Móvil</button>
+        </div>
+        <a id="visit" target="_blank" rel="noopener">Ver publicada</a>
+      </div>
+      <div id="canvas" class="canvas" data-screen="desktop">
+        <div class="paper" id="paper">
+          <iframe id="frame" title="Página editable" sandbox="allow-scripts allow-same-origin"></iframe>
+          <div id="loading" class="loading">Cargando la página…</div>
+          <div id="selection" class="selection-box" hidden></div>
+          <button id="grip" class="grip" hidden aria-label="Arrastrar bloque"><span id="grip-caption"></span></button>
+          <div id="drop" class="drop" hidden></div>
+          <div id="drag-label" class="drag-label" hidden aria-hidden="true"></div>
+        </div>
+      </div>
+      <footer class="stage-status"><span id="path">Página</span><output id="status" role="status">Abriendo el borrador…</output></footer>
+    </main>
+    <aside id="right" class="panel right" aria-label="Ajustes del editor">
+      <div class="panel-head"><h2>Ajustes</h2><button class="pane-close" id="close-right">Cerrar</button></div>
+      <div class="tabs"><button id="block-tab" aria-pressed="true">Bloque</button><button id="page-tab" aria-pressed="false">Página</button></div>
+      <div id="inspector" class="panel-scroll inspector"></div>
+    </aside>
+  </div>
+  <dialog id="confirm-dialog"><h2 id="confirm-title"></h2><p id="confirm-copy"></p><form method="dialog"><button value="cancel" autofocus>Cancelar</button><button value="yes" class="primary" id="confirm-action"></button></form></dialog>
+  <dialog id="media-dialog" class="media"><header><h2>Biblioteca de medios</h2><form method="dialog"><button aria-label="Cerrar biblioteca">Cerrar</button></form></header><div id="media-content"></div></dialog>
+</body>
+</html>

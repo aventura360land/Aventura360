@@ -8,13 +8,17 @@ export function loginForPage(id,slug){
   if(id==='pagina'&&slug)url.searchParams.set('p',slug);
   return url;
 }
+export function studioURL(id,slug,tab){
+  const url=new URL('./estudio.html',import.meta.url);
+  url.searchParams.set('page',id);
+  if(slug)url.searchParams.set('p',slug);
+  if(tab)url.searchParams.set('tab',tab);
+  return url;
+}
 export function pageAfterLogin(params){
   const id=params.get('editarPagina'),slug=params.get('p');
   if(!Object.hasOwn(files,id)||(id==='pagina'&&!slug))return null;
-  const url=new URL('../'+files[id],import.meta.url);
-  if(id==='pagina')url.searchParams.set('p',slug);
-  url.searchParams.set('editar','1');
-  return url;
+  return studioURL(id,slug);
 }
 export async function openDraft(){
   if(!editorSession())return null;

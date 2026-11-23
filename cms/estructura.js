@@ -4,6 +4,7 @@ export const unitSelector='[data-x-layout]';
 const glyphs={section:'▤',row:'▣',group:'▦',h1:'T',h2:'T',h3:'T',h4:'T',p:'¶',img:'▧',figure:'▧',picture:'▧',video:'▷',button:'↗',a:'↗',form:'▤'};
 
 export function labelOf(node){
+  if(node.matches('.xc-block')&&node.querySelector(':scope > .xc-gallery'))return {kind:'Galería',name:'Galería de imágenes'};
   if(node.id==='heroVisual')return {kind:'Imagen',name:node.querySelector('img')?.alt||'Imagen de portada'};
   const raw=describe(node),separator=raw.indexOf(' · ');
   const kind=separator===-1?raw:raw.slice(0,separator);
